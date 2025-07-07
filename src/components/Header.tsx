@@ -29,6 +29,9 @@ const Header = () => {
             <Link to="/contacto" className="text-foreground hover:text-primary transition-colors">
               Contacto
             </Link>
+            <Link to="/admin" className="text-foreground hover:text-primary transition-colors">
+              Admin
+            </Link>
           </nav>
 
           {/* Search */}
