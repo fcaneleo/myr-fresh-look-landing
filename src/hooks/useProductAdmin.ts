@@ -10,6 +10,7 @@ export interface AdminProduct {
   category: string;
   image_url: string | null;
   featured: boolean | null;
+  vigencia: boolean | null;
 }
 
 export const useProductAdmin = () => {
@@ -23,6 +24,7 @@ export const useProductAdmin = () => {
     const { data, error } = await supabase
       .from('products')
       .select('*')
+      .eq('vigencia', true)
       .order('id', { ascending: false });
     
     if (error) {
@@ -172,16 +174,16 @@ export const useProductAdmin = () => {
     }
   };
 
-  // Delete product
+  // Delete product (logical deletion)
   const deleteProduct = async (id: number) => {
     if (!confirm('¿Estás seguro de que quieres eliminar este producto?')) {
       return;
     }
 
-    console.log('Deleting product with ID:', id);
+    console.log('Logically deleting product with ID:', id);
     const { error } = await supabase
       .from('products')
-      .delete()
+      .update({ vigencia: false })
       .eq('id', id);
 
     if (error) {
