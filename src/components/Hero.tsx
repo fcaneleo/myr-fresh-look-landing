@@ -7,9 +7,9 @@ const Hero = () => {
   return (
     <section className="bg-gradient-to-br from-secondary/20 via-background to-accent/10 py-16">
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Content */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:pt-8">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
               PRODUCTOS DE
               <br />
