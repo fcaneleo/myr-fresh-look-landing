@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import { ShoppingCart } from "lucide-react";
 import { Product } from "../pages/Index";
+import { useEffect } from "react";
+import type { CarouselApi } from "@/components/ui/carousel";
 
 interface ProductCarouselProps {
   onAddToCart: (product: Product) => void;
@@ -59,8 +61,23 @@ const featuredProducts: Product[] = [
 ];
 
 const ProductCarousel = ({ onAddToCart }: ProductCarouselProps) => {
+  const [api, setApi] = React.useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [api]);
+
   return (
     <Carousel
+      setApi={setApi}
       opts={{
         align: "start",
         loop: true,
