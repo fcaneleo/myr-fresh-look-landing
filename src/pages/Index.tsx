@@ -61,13 +61,14 @@ const Index = () => {
         cartItemsCount={totalItems} 
         onCartClick={() => setIsCartOpen(true)} 
       />
-      <Hero />
       
       {/* Products Carousel */}
       <div className="container mx-auto px-4 py-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Nuestros Productos</h2>
         <AllProductsCarousel onAddToCart={addToCart} />
       </div>
+      
+      <Hero />
       
       <ProductGrid onAddToCart={addToCart} />
       <Cart 
