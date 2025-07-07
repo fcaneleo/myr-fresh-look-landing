@@ -38,7 +38,7 @@ const AllProductsCarousel = ({ onAddToCart }: AllProductsCarouselProps) => {
   if (loading) {
     return (
       <div className="w-full flex justify-center py-8">
-        <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+        <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -57,27 +57,27 @@ const AllProductsCarousel = ({ onAddToCart }: AllProductsCarouselProps) => {
           <CarouselItem key={product.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
             <Card className="h-full hover:shadow-lg transition-shadow">
               <CardContent className="p-4">
-                <div className="aspect-square bg-gradient-to-br from-blue-100 to-yellow-100 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
+                <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
                   <img 
                     src={product.image} 
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">
+                <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
                   {product.name}
                 </h3>
-                <p className="text-sm text-gray-600 mb-2 line-clamp-2">
+                <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
                   {product.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-blue-600">
+                  <span className="text-lg font-bold text-primary">
                     ${product.price}
                   </span>
                   <Button
                     size="sm"
                     onClick={() => onAddToCart(product)}
-                    className="bg-yellow-400 hover:bg-yellow-500 text-black"
+                    className="bg-accent hover:bg-accent/80 text-accent-foreground"
                   >
                     <ShoppingCart className="h-4 w-4" />
                   </Button>

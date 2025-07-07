@@ -56,7 +56,7 @@ const Index = () => {
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Header 
         cartItemsCount={totalItems} 
         onCartClick={() => setIsCartOpen(true)} 
@@ -64,11 +64,11 @@ const Index = () => {
       
       {/* Products Carousel */}
       <div className="container mx-auto px-4 py-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Nuestros Productos</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">Nuestros Productos</h2>
         <AllProductsCarousel onAddToCart={addToCart} />
       </div>
       
-      <Hero />
+      <Hero onAddToCart={addToCart} />
       
       <ProductGrid onAddToCart={addToCart} />
       <Cart 
