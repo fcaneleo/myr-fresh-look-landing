@@ -1,0 +1,96 @@
+import React, { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { ShoppingCart } from "lucide-react";
+import { Product } from "../pages/Index";
+import type { CarouselApi } from "@/components/ui/carousel";
+import { useProducts } from "../hooks/useProducts";
+
+interface AllProductsCarouselProps {
+  onAddToCart: (product: Product) => void;
+}
+
+const AllProductsCarousel = ({ onAddToCart }: AllProductsCarouselProps) => {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const { products, loading } = useProducts({ 
+    limit: 12 
+  });
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [api]);
+
+  if (loading) {
+    return (
+      <div className="w-full flex justify-center py-8">
+        <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  return (
+    <Carousel
+      setApi={setApi}
+      opts={{
+        align: "start",
+        loop: true,
+      }}
+      className="w-full"
+    >
+      <CarouselContent className="-ml-2 md:-ml-4">
+        {products.map((product) => (
+          <CarouselItem key={product.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+            <Card className="h-full hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <div className="aspect-square bg-gradient-to-br from-blue-100 to-yellow-100 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">
+                  {product.name}
+                </h3>
+                <p className="text-sm text-gray-600 mb-2 line-clamp-2">
+                  {product.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-blue-600">
+                    ${product.price}
+                  </span>
+                  <Button
+                    size="sm"
+                    onClick={() => onAddToCart(product)}
+                    className="bg-yellow-400 hover:bg-yellow-500 text-black"
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  );
+};
+
+export default AllProductsCarousel;

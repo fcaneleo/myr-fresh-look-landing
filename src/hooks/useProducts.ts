@@ -78,7 +78,7 @@ export const useProducts = (options: UseProductsOptions = {}) => {
       const transformedProducts: Product[] = data?.map(item => ({
         id: item.id,
         name: item.name,
-        price: parseFloat(item.price),
+        price: parseFloat(item.price.toString()),
         image: item.image_url || '/placeholder.svg',
         category: item.category,
         description: item.description || ''
