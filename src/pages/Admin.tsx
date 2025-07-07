@@ -260,7 +260,7 @@ const Admin = () => {
       description: product.description || "",
       price: product.price.toString(),
       category: product.category,
-      featured: product.featured || false
+      featured: Boolean(product.featured)
     });
     setImagePreview(product.image_url);
     setIsDialogOpen(true);
