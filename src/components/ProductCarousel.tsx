@@ -12,56 +12,18 @@ import {
 import { ShoppingCart } from "lucide-react";
 import { Product } from "../pages/Index";
 import type { CarouselApi } from "@/components/ui/carousel";
+import { useProducts } from "../hooks/useProducts";
 
 interface ProductCarouselProps {
   onAddToCart: (product: Product) => void;
 }
 
-const featuredProducts: Product[] = [
-  {
-    id: 101,
-    name: "Detergente Ariel Premium",
-    price: 4.99,
-    image: "/placeholder.svg",
-    category: "aseo",
-    description: "Detergente en polvo con tecnología avanzada"
-  },
-  {
-    id: 102,
-    name: "Perfume Giorgio Armani",
-    price: 24.99,
-    image: "/placeholder.svg",
-    category: "perfumeria",
-    description: "Fragancia masculina elegante y sofisticada"
-  },
-  {
-    id: 103,
-    name: "Shampoo Head & Shoulders",
-    price: 7.99,
-    image: "/placeholder.svg",
-    category: "aseo",
-    description: "Shampoo anticaspa con zinc pyrithione"
-  },
-  {
-    id: 104,
-    name: "Sobre Manila A4",
-    price: 0.99,
-    image: "/placeholder.svg",
-    category: "paqueteria",
-    description: "Sobre manila tamaño A4 resistente"
-  },
-  {
-    id: 105,
-    name: "Crema Nivea Original",
-    price: 3.49,
-    image: "/placeholder.svg",
-    category: "perfumeria",
-    description: "Crema hidratante para todo tipo de piel"
-  }
-];
-
 const ProductCarousel = ({ onAddToCart }: ProductCarouselProps) => {
   const [api, setApi] = React.useState<CarouselApi>();
+  const { products: featuredProducts, loading } = useProducts({ 
+    featured: true, 
+    limit: 8 
+  });
 
   useEffect(() => {
     if (!api) {
@@ -74,6 +36,14 @@ const ProductCarousel = ({ onAddToCart }: ProductCarouselProps) => {
 
     return () => clearInterval(interval);
   }, [api]);
+
+  if (loading) {
+    return (
+      <div className="w-full flex justify-center py-8">
+        <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <Carousel
