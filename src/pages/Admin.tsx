@@ -84,22 +84,32 @@ const Admin = () => {
 
   // Upload image to Supabase Storage
   const uploadImage = async (file: File): Promise<string | null> => {
+    console.log('Starting image upload:', file.name, file.size);
+    
     const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
+    const fileName = `product_${Date.now()}_${Math.random().toString(36).substring(2)}.${fileExt}`;
+    
+    console.log('Generated filename:', fileName);
     
     const { data, error } = await supabase.storage
       .from('product-images')
-      .upload(fileName, file);
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
 
     if (error) {
       console.error('Error uploading image:', error);
       return null;
     }
 
+    console.log('Upload successful:', data);
+
     const { data: { publicUrl } } = supabase.storage
       .from('product-images')
       .getPublicUrl(fileName);
 
+    console.log('Generated public URL:', publicUrl);
     return publicUrl;
   };
 
@@ -110,11 +120,25 @@ const Admin = () => {
     try {
       let imageUrl = editingProduct?.image_url || null;
       
+      console.log('Starting save product. Current image URL:', imageUrl);
+      console.log('Image file selected:', imageFile ? imageFile.name : 'None');
+      
       // Upload new image if selected
       if (imageFile) {
+        console.log('Uploading new image...');
         const uploadedUrl = await uploadImage(imageFile);
+        console.log('Upload result:', uploadedUrl);
         if (uploadedUrl) {
           imageUrl = uploadedUrl;
+          console.log('Image URL updated to:', imageUrl);
+        } else {
+          console.error('Failed to upload image');
+          toast({
+            title: "Error",
+            description: "No se pudo subir la imagen",
+            variant: "destructive"
+          });
+          return;
         }
       }
 
@@ -127,27 +151,39 @@ const Admin = () => {
         featured: formData.featured
       };
 
+      console.log('Product data to save:', productData);
+
       if (editingProduct) {
         // Update existing product
+        console.log('Updating product with ID:', editingProduct.id);
         const { error } = await supabase
           .from('products')
           .update(productData)
           .eq('id', editingProduct.id);
         
-        if (error) throw error;
+        if (error) {
+          console.error('Update error:', error);
+          throw error;
+        }
         
+        console.log('Product updated successfully');
         toast({
           title: "Producto actualizado",
           description: "El producto se ha actualizado correctamente"
         });
       } else {
         // Create new product
+        console.log('Creating new product');
         const { error } = await supabase
           .from('products')
           .insert([productData]);
         
-        if (error) throw error;
+        if (error) {
+          console.error('Insert error:', error);
+          throw error;
+        }
         
+        console.log('Product created successfully');
         toast({
           title: "Producto creado",
           description: "El producto se ha creado correctamente"
@@ -155,7 +191,7 @@ const Admin = () => {
       }
 
       resetForm();
-      fetchProducts();
+      await fetchProducts(); // Ensure we wait for the refresh
       setIsDialogOpen(false);
     } catch (error) {
       console.error('Error saving product:', error);
