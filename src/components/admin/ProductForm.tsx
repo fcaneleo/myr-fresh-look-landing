@@ -1,0 +1,230 @@
+import { useState } from "react";
+import { Upload, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { AdminProduct } from "@/hooks/useProductAdmin";
+
+interface ProductFormProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (
+    formData: {
+      name: string;
+      description: string;
+      price: string;
+      category: string;
+      featured: boolean;
+    },
+    imageFile: File | null
+  ) => Promise<boolean>;
+  editingProduct: AdminProduct | null;
+  isLoading: boolean;
+}
+
+export const ProductForm = ({ 
+  isOpen, 
+  onClose, 
+  onSave, 
+  editingProduct, 
+  isLoading 
+}: ProductFormProps) => {
+  const [formData, setFormData] = useState({
+    name: editingProduct?.name || "",
+    description: editingProduct?.description || "",
+    price: editingProduct?.price.toString() || "",
+    category: editingProduct?.category || "",
+    featured: Boolean(editingProduct?.featured)
+  });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(editingProduct?.image_url || null);
+
+  // Handle form changes
+  const handleInputChange = (field: string, value: string | boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  // Handle image selection
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Handle save
+  const handleSave = async () => {
+    const success = await onSave(formData, imageFile);
+    if (success) {
+      handleClose();
+    }
+  };
+
+  // Handle close and reset
+  const handleClose = () => {
+    setFormData({
+      name: "",
+      description: "",
+      price: "",
+      category: "",
+      featured: false
+    });
+    setImageFile(null);
+    setImagePreview(null);
+    onClose();
+  };
+
+  // Update form when editing product changes
+  useState(() => {
+    if (editingProduct) {
+      setFormData({
+        name: editingProduct.name,
+        description: editingProduct.description || "",
+        price: editingProduct.price.toString(),
+        category: editingProduct.category,
+        featured: Boolean(editingProduct.featured)
+      });
+      setImagePreview(editingProduct.image_url);
+    }
+  });
+
+  return (
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>
+            {editingProduct ? 'Editar Producto' : 'Nuevo Producto'}
+          </DialogTitle>
+        </DialogHeader>
+        
+        <div className="space-y-6">
+          {/* Image Upload */}
+          <div>
+            <Label htmlFor="image">Imagen del Producto</Label>
+            <div className="mt-2">
+              {imagePreview ? (
+                <div className="relative">
+                  <img 
+                    src={imagePreview} 
+                    alt="Preview" 
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="absolute top-2 right-2"
+                    onClick={() => {
+                      setImagePreview(null);
+                      setImageFile(null);
+                    }}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
+                  <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">Click para subir imagen</p>
+                </div>
+              )}
+              <Input
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+                className="mt-2"
+              />
+            </div>
+          </div>
+
+          {/* Product Name */}
+          <div>
+            <Label htmlFor="name">Nombre del Producto *</Label>
+            <Input
+              id="name"
+              value={formData.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              placeholder="Ej: Perfume Channel Elegance"
+            />
+          </div>
+
+          {/* Description */}
+          <div>
+            <Label htmlFor="description">Descripción</Label>
+            <Textarea
+              id="description"
+              value={formData.description}
+              onChange={(e) => handleInputChange('description', e.target.value)}
+              placeholder="Describe las características del producto..."
+              rows={3}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            {/* Price */}
+            <div>
+              <Label htmlFor="price">Precio (CLP) *</Label>
+              <Input
+                id="price"
+                type="number"
+                value={formData.price}
+                onChange={(e) => handleInputChange('price', e.target.value)}
+                placeholder="0"
+              />
+            </div>
+
+            {/* Category */}
+            <div>
+              <Label htmlFor="category">Categoría *</Label>
+              <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="aseo">Aseo</SelectItem>
+                  <SelectItem value="perfumeria">Perfumería</SelectItem>
+                  <SelectItem value="paqueteria">Paquetería</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Featured */}
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="featured"
+              checked={formData.featured}
+              onCheckedChange={(value) => handleInputChange('featured', value)}
+            />
+            <Label htmlFor="featured">Producto destacado</Label>
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end space-x-3 pt-4">
+            <Button variant="outline" onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button 
+              onClick={handleSave} 
+              disabled={!formData.name || !formData.price || !formData.category || isLoading}
+            >
+              {isLoading ? 'Guardando...' : editingProduct ? 'Actualizar' : 'Crear'}
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
