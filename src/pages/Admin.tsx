@@ -41,18 +41,21 @@ const Admin = () => {
 
   // Fetch products
   const fetchProducts = async () => {
+    console.log('Fetching products...');
     const { data, error } = await supabase
       .from('products')
       .select('*')
       .order('id', { ascending: false });
     
     if (error) {
+      console.error('Error fetching products:', error);
       toast({
         title: "Error",
         description: "No se pudieron cargar los productos",
         variant: "destructive"
       });
     } else {
+      console.log('Products fetched:', data?.length || 0, 'items');
       setProducts(data || []);
     }
   };
@@ -192,6 +195,7 @@ const Admin = () => {
 
       resetForm();
       await fetchProducts(); // Ensure we wait for the refresh
+      console.log('Products refreshed after save');
       setIsDialogOpen(false);
     } catch (error) {
       console.error('Error saving product:', error);
@@ -211,23 +215,26 @@ const Admin = () => {
       return;
     }
 
+    console.log('Deleting product with ID:', id);
     const { error } = await supabase
       .from('products')
       .delete()
       .eq('id', id);
 
     if (error) {
+      console.error('Error deleting product:', error);
       toast({
         title: "Error",
         description: "No se pudo eliminar el producto",
         variant: "destructive"
       });
     } else {
+      console.log('Product deleted successfully');
       toast({
         title: "Producto eliminado",
         description: "El producto se ha eliminado correctamente"
       });
-      fetchProducts();
+      await fetchProducts(); // Make sure to wait for refresh
     }
   };
 
