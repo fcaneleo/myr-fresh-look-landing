@@ -1,4 +1,5 @@
 
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -10,7 +11,6 @@ import {
 } from "@/components/ui/carousel";
 import { ShoppingCart } from "lucide-react";
 import { Product } from "../pages/Index";
-import { useEffect } from "react";
 import type { CarouselApi } from "@/components/ui/carousel";
 
 interface ProductCarouselProps {
