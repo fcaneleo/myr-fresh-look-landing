@@ -3,13 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Truck, Shield, Clock } from "lucide-react";
 import ProductCarousel from "./ProductCarousel";
-import { Product } from "../pages/Index";
 
-interface HeroProps {
-  onAddToCart: (product: Product) => void;
-}
-
-const Hero = ({ onAddToCart }: HeroProps) => {
+const Hero = () => {
   return (
     <section className="bg-gradient-to-br from-secondary/20 via-background to-accent/10 py-16">
       <div className="container mx-auto px-4">
@@ -38,7 +33,7 @@ const Hero = ({ onAddToCart }: HeroProps) => {
           {/* Featured Products Carousel */}
           <div className="relative">
             <h3 className="text-lg font-semibold text-foreground mb-4">Productos Destacados</h3>
-            <ProductCarousel onAddToCart={onAddToCart} />
+            <ProductCarousel />
           </div>
         </div>
 

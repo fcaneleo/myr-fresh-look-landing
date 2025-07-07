@@ -1,13 +1,8 @@
 
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import { Product } from "../pages/Index";
 
-interface ProductGridProps {
-  onAddToCart: (product: Product) => void;
-}
-
-const ProductGrid = ({ onAddToCart }: ProductGridProps) => {
+const ProductGrid = () => {
   const products: Product[] = [
     { id: 1, name: "Ariel Detergente", price: 4.99, image: "", category: "Aseo", description: "Detergente en polvo para ropa" },
     { id: 2, name: "Downy Suavizante", price: 3.49, image: "", category: "Aseo", description: "Suavizante de telas" },
@@ -28,23 +23,23 @@ const ProductGrid = ({ onAddToCart }: ProductGridProps) => {
   const getProductColor = (category: string) => {
     switch (category) {
       case "Aseo":
-        return "from-blue-200 to-blue-300 text-blue-700";
+        return "from-primary/20 to-primary/30 text-primary";
       case "Perfumería":
-        return "from-purple-200 to-purple-300 text-purple-700";
+        return "from-secondary/30 to-accent/20 text-primary";
       case "Paquetería":
-        return "from-green-200 to-green-300 text-green-700";
+        return "from-accent/20 to-success/20 text-success";
       default:
-        return "from-gray-200 to-gray-300 text-gray-700";
+        return "from-muted to-muted text-muted-foreground";
     }
   };
 
   return (
-    <section id="tienda" className="py-16 bg-white">
+    <section id="tienda" className="py-16 bg-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Nuestra Tienda</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-foreground mb-4">Nuestra Tienda</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Descubre nuestra amplia selección de productos de alta calidad para el hogar y cuidado personal
           </p>
         </div>
@@ -55,7 +50,7 @@ const ProductGrid = ({ onAddToCart }: ProductGridProps) => {
             <Button
               key={category}
               variant={category === "Todos" ? "default" : "outline"}
-              className={category === "Todos" ? "bg-blue-600 hover:bg-blue-700" : ""}
+              className={category === "Todos" ? "bg-primary hover:bg-primary/80" : ""}
             >
               {category}
             </Button>
@@ -65,7 +60,7 @@ const ProductGrid = ({ onAddToCart }: ProductGridProps) => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
+            <div key={product.id} className="bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
               {/* Product Image Placeholder */}
               <div className={`h-40 bg-gradient-to-br ${getProductColor(product.category)} rounded-lg mb-4 flex items-center justify-center`}>
                 <span className="font-bold text-center px-2">{product.name}</span>
@@ -73,21 +68,16 @@ const ProductGrid = ({ onAddToCart }: ProductGridProps) => {
               
               {/* Product Info */}
               <div className="space-y-2">
-                <span className="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
+                <span className="inline-block bg-muted text-muted-foreground text-xs px-2 py-1 rounded-full">
                   {product.category}
                 </span>
-                <h3 className="font-semibold text-gray-900">{product.name}</h3>
-                <p className="text-gray-600 text-sm">{product.description}</p>
+                <h3 className="font-semibold text-foreground">{product.name}</h3>
+                <p className="text-muted-foreground text-sm">{product.description}</p>
                 <div className="flex items-center justify-between pt-2">
-                  <span className="text-xl font-bold text-blue-600">${product.price}</span>
-                  <Button
-                    size="sm"
-                    onClick={() => onAddToCart(product)}
-                    className="bg-yellow-400 hover:bg-yellow-500 text-black"
-                  >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Agregar
-                  </Button>
+                  <span className="text-xl font-bold text-primary">${product.price}</span>
+                  <div className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
+                    Ver más
+                  </div>
                 </div>
               </div>
             </div>

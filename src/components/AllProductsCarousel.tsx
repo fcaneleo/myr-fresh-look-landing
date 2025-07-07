@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -8,16 +7,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { ShoppingCart } from "lucide-react";
-import { Product } from "../pages/Index";
 import type { CarouselApi } from "@/components/ui/carousel";
 import { useProducts } from "../hooks/useProducts";
 
-interface AllProductsCarouselProps {
-  onAddToCart: (product: Product) => void;
-}
-
-const AllProductsCarousel = ({ onAddToCart }: AllProductsCarouselProps) => {
+const AllProductsCarousel = () => {
   const [api, setApi] = React.useState<CarouselApi>();
   const { products, loading } = useProducts({ 
     limit: 12 
@@ -74,13 +67,9 @@ const AllProductsCarousel = ({ onAddToCart }: AllProductsCarouselProps) => {
                   <span className="text-lg font-bold text-primary">
                     ${product.price}
                   </span>
-                  <Button
-                    size="sm"
-                    onClick={() => onAddToCart(product)}
-                    className="bg-accent hover:bg-accent/80 text-accent-foreground"
-                  >
-                    <ShoppingCart className="h-4 w-4" />
-                  </Button>
+                  <div className="text-xs text-muted-foreground capitalize bg-muted px-2 py-1 rounded-full">
+                    {product.category}
+                  </div>
                 </div>
               </CardContent>
             </Card>
