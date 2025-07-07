@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,14 +34,14 @@ export const ProductForm = ({
   isLoading 
 }: ProductFormProps) => {
   const [formData, setFormData] = useState({
-    name: editingProduct?.name || "",
-    description: editingProduct?.description || "",
-    price: editingProduct?.price.toString() || "",
-    category: editingProduct?.category || "",
-    featured: Boolean(editingProduct?.featured)
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    featured: false
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(editingProduct?.image_url || null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   // Handle form changes
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -87,7 +87,7 @@ export const ProductForm = ({
   };
 
   // Update form when editing product changes
-  useState(() => {
+  useEffect(() => {
     if (editingProduct) {
       setFormData({
         name: editingProduct.name,
@@ -97,8 +97,19 @@ export const ProductForm = ({
         featured: Boolean(editingProduct.featured)
       });
       setImagePreview(editingProduct.image_url);
+      setImageFile(null);
+    } else {
+      setFormData({
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        featured: false
+      });
+      setImagePreview(null);
+      setImageFile(null);
     }
-  });
+  }, [editingProduct]);
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
