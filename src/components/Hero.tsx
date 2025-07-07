@@ -6,7 +6,7 @@ const Hero = () => {
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Content */}
-          <div className="space-y-16 lg:pt-8">
+          <div className="space-y-16 lg:pt-80">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight my-0 py-0 -mt-4">
               PRODUCTOS DE
               <br />
