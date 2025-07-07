@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Truck, Shield, Clock } from "lucide-react";
 
 const Hero = () => {
@@ -21,9 +22,11 @@ const Hero = () => {
               Encuentra todo lo que necesitas en aseo, perfumería y paquetería. 
               Productos de calidad con entrega rápida a tu hogar.
             </p>
-            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-8 py-3 rounded-lg">
-              VER OFERTAS
-            </Button>
+            <Link to="/ofertas">
+              <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-8 py-3 rounded-lg">
+                VER OFERTAS
+              </Button>
+            </Link>
           </div>
 
           {/* Featured Products */}
