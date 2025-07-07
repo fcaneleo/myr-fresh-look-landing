@@ -1,16 +1,13 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Truck, Shield, Clock, MapPin, Phone, MessageCircle } from "lucide-react";
-
 const Hero = () => {
-  return (
-    <section className="bg-gradient-to-br from-secondary/20 via-background to-accent/10 py-16">
+  return <section className="bg-gradient-to-br from-secondary/20 via-background to-accent/10 py-16">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Content */}
           <div className="space-y-6 lg:pt-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight my-0 py-0">
               PRODUCTOS DE
               <br />
               <span className="text-primary">CALIDAD</span>
@@ -23,7 +20,7 @@ const Hero = () => {
               Productos de calidad con entrega rápida a tu hogar.
             </p>
             <Link to="/ofertas">
-              <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold px-8 py-3 rounded-lg">
+              <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold rounded-lg py-[12px] px-[32px] my-[30px]">
                 VER OFERTAS
               </Button>
             </Link>
@@ -66,11 +63,7 @@ const Hero = () => {
                       <p className="text-sm text-muted-foreground">+56 9 XXXX XXXX</p>
                     </div>
                   </div>
-                  <Button 
-                    size="sm" 
-                    className="bg-success hover:bg-success/80 text-success-foreground"
-                    onClick={() => window.open('https://wa.me/56912345678?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}
-                  >
+                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('https://wa.me/56912345678?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}>
                     <MessageCircle className="h-4 w-4 mr-1" />
                     WhatsApp
                   </Button>
@@ -80,16 +73,9 @@ const Hero = () => {
 
             {/* Google Maps */}
             <div className="bg-card rounded-lg shadow-sm border overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13317.234567890123!2d-70.87654321!3d-33.60987654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a6b12345%3A0x987654321abcdef!2sPe%C3%B1aflor%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e0!3m2!1ses!2scl!4v1234567890123!5m2!1ses!2scl"
-                width="100%"
-                height="200"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="w-full"
-              ></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13317.234567890123!2d-70.87654321!3d-33.60987654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a6b12345%3A0x987654321abcdef!2sPe%C3%B1aflor%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e0!3m2!1ses!2scl!4v1234567890123!5m2!1ses!2scl" width="100%" height="200" style={{
+              border: 0
+            }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full"></iframe>
               <div className="p-3 bg-muted/50">
                 <p className="text-xs text-muted-foreground text-center">
                   📍 Visítanos en el centro de Peñaflor, cerca de la plaza principal
@@ -124,8 +110,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
