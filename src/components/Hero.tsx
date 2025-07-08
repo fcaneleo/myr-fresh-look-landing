@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Truck, Shield, Clock, MapPin, Phone, Clock3 } from "lucide-react";
-
+import { Truck, Shield, Clock, MapPin, Phone, MessageCircle } from "lucide-react";
 const Hero = () => {
-  return (
-    <section className="bg-gradient-to-br from-secondary/20 via-background to-accent/10 py-16">
+  return <section className="bg-gradient-to-br from-secondary/20 via-background to-accent/10 py-16">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Content */}
@@ -34,51 +32,60 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Nuestra Tienda */}
+          {/* Store Information & Map */}
           <div className="relative">
             <h3 className="text-lg font-semibold text-foreground mb-4">Nuestra Tienda</h3>
-            <div className="bg-card p-6 rounded-lg shadow-sm border">
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <MapPin className="h-5 w-5 text-primary mt-1" />
+            
+            {/* Store Info Cards */}
+            <div className="grid grid-cols-1 gap-4 mb-6">
+              {/* Address & Hours */}
+              <div className="bg-card p-4 rounded-lg shadow-sm border">
+                <div className="flex items-start space-x-3 mb-3">
+                  <MapPin className="h-5 w-5 text-primary mt-0.5" />
                   <div>
                     <h4 className="font-semibold text-foreground">Dirección</h4>
-                    <p className="text-muted-foreground">4030 Av. Vicuña Mackenna, Peñaflor</p>
+                    <p className="text-sm text-muted-foreground">Cerca de la Plaza de Peñaflor</p>
+                    <p className="text-xs text-muted-foreground">Peñaflor, Región Metropolitana</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <Clock3 className="h-5 w-5 text-primary mt-1" />
+                  <Clock className="h-5 w-5 text-primary mt-0.5" />
                   <div>
                     <h4 className="font-semibold text-foreground">Horarios</h4>
-                    <p className="text-muted-foreground">Lunes a Viernes: 9:00 - 19:00</p>
-                    <p className="text-muted-foreground">Sábados: 9:00 - 18:00</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <Phone className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-foreground">Contacto</h4>
-                    <p className="text-muted-foreground">WhatsApp: +56 9 1234 5678</p>
-                    <p className="text-muted-foreground">Teléfono: (2) 2345 6789</p>
+                    <p className="text-sm text-muted-foreground">Lun - Vie: 9:00 - 19:00</p>
+                    <p className="text-sm text-muted-foreground">Sábado: 9:00 - 14:00</p>
                   </div>
                 </div>
               </div>
-              
-              <div className="mt-6 pt-4 border-t">
-                <div className="aspect-video w-full rounded-lg overflow-hidden">
-                  <iframe
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dO5A5p6dVNkVqo&q=4030+Av.+Vicuña+Mackenna,+Peñaflor,+Chile"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Ubicación MyR - 4030 Av. Vicuña Mackenna, Peñaflor"
-                  />
+
+              {/* Contact */}
+              <div className="bg-card p-4 rounded-lg shadow-sm border">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-3">
+                    <Phone className="h-5 w-5 text-primary" />
+                    <div>
+                      <h4 className="font-semibold text-foreground">Contacto</h4>
+                      <p className="text-sm text-muted-foreground">+56 9 XXXX XXXX</p>
+                    </div>
+                  </div>
+                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('https://wa.me/56912345678?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}>
+                    <MessageCircle className="h-4 w-4 mr-1" />
+                    WhatsApp
+                  </Button>
                 </div>
+              </div>
+            </div>
+
+            {/* Google Maps */}
+            <div className="bg-card rounded-lg shadow-sm border overflow-hidden">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13317.234567890123!2d-70.87654321!3d-33.60987654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a6b12345%3A0x987654321abcdef!2sPe%C3%B1aflor%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e0!3m2!1ses!2scl!4v1234567890123!5m2!1ses!2scl" width="100%" height="200" style={{
+              border: 0
+            }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full"></iframe>
+              <div className="p-3 bg-muted/50">
+                <p className="text-xs text-muted-foreground text-center">
+                  📍 Visítanos en el centro de Peñaflor, cerca de la plaza principal
+                </p>
               </div>
             </div>
           </div>
@@ -109,8 +116,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
