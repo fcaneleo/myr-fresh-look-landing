@@ -7,7 +7,7 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Content */}
           <div className="space-y-16 lg:pt-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight my-0 py-0 -mt-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight my-0 py-0 -mt-4 px-[100px] mx-[90px]">
               PRODUCTOS DE
               <br />
               <span className="text-primary">CALIDAD</span>
