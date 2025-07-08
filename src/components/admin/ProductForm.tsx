@@ -19,6 +19,7 @@ interface ProductFormProps {
       price: string;
       category: string;
       featured: boolean;
+      oferta: boolean;
     },
     imageFile: File | null
   ) => Promise<boolean>;
@@ -38,7 +39,8 @@ export const ProductForm = ({
     description: "",
     price: "",
     category: "",
-    featured: false
+    featured: false,
+    oferta: false
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -79,7 +81,8 @@ export const ProductForm = ({
       description: "",
       price: "",
       category: "",
-      featured: false
+      featured: false,
+      oferta: false
     });
     setImageFile(null);
     setImagePreview(null);
@@ -94,7 +97,8 @@ export const ProductForm = ({
         description: editingProduct.description || "",
         price: editingProduct.price.toString(),
         category: editingProduct.category,
-        featured: Boolean(editingProduct.featured)
+        featured: Boolean(editingProduct.featured),
+        oferta: Boolean(editingProduct.oferta)
       });
       setImagePreview(editingProduct.image_url);
       setImageFile(null);
@@ -104,7 +108,8 @@ export const ProductForm = ({
         description: "",
         price: "",
         category: "",
-        featured: false
+        featured: false,
+        oferta: false
       });
       setImagePreview(null);
       setImageFile(null);
@@ -220,6 +225,16 @@ export const ProductForm = ({
               onCheckedChange={(value) => handleInputChange('featured', value)}
             />
             <Label htmlFor="featured">Producto destacado</Label>
+          </div>
+
+          {/* Oferta */}
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="oferta"
+              checked={formData.oferta}
+              onCheckedChange={(value) => handleInputChange('oferta', value)}
+            />
+            <Label htmlFor="oferta">Producto en oferta</Label>
           </div>
 
           {/* Actions */}

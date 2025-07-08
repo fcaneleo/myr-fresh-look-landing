@@ -36,6 +36,7 @@ const Admin = () => {
       price: string;
       category: string;
       featured: boolean;
+      oferta: boolean;
     },
     imageFile: File | null
   ) => {
