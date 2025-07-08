@@ -1,8 +1,83 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Truck, Shield, Clock, MapPin, Phone, MessageCircle } from "lucide-react";
+import { Truck, Shield, Clock } from "lucide-react";
+import { useProducts } from "@/hooks/useProducts";
+
+const ProductsInOffer = () => {
+  const { products, loading } = useProducts({ 
+    limit: 4,
+    // Note: We need to update useProducts hook to support the 'oferta' filter
+  });
+
+  // For now, we'll filter for products with 'oferta' on the frontend
+  // Later we should update the useProducts hook to support this filter
+  const offerProducts = products.filter((product: any) => product.oferta);
+
+  if (loading) {
+    return (
+      <div className="relative">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Productos en Oferta</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="bg-card p-4 rounded-lg shadow-sm border animate-pulse">
+              <div className="w-full h-32 bg-muted rounded mb-3"></div>
+              <div className="h-4 bg-muted rounded mb-2"></div>
+              <div className="h-3 bg-muted rounded w-3/4"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (offerProducts.length === 0) {
+    return (
+      <div className="relative">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Productos en Oferta</h3>
+        <div className="bg-card p-8 rounded-lg shadow-sm border text-center">
+          <p className="text-muted-foreground">No hay productos en oferta disponibles en este momento.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <h3 className="text-lg font-semibold text-foreground mb-4">Productos en Oferta</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {offerProducts.slice(0, 4).map((product: any) => (
+          <div key={product.id} className="bg-card p-4 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+            <div className="relative mb-3">
+              <img 
+                src={product.image || '/placeholder.svg'} 
+                alt={product.name}
+                className="w-full h-32 object-cover rounded"
+              />
+              <div className="absolute top-2 right-2 bg-accent text-accent-foreground text-xs font-bold px-2 py-1 rounded">
+                OFERTA
+              </div>
+            </div>
+            <h4 className="font-semibold text-foreground text-sm mb-1 line-clamp-2">{product.name}</h4>
+            <p className="text-primary font-bold text-lg">${product.price?.toLocaleString()}</p>
+          </div>
+        ))}
+      </div>
+      {offerProducts.length > 4 && (
+        <div className="mt-4 text-center">
+          <Link to="/ofertas">
+            <Button variant="outline" size="sm">
+              Ver todas las ofertas
+            </Button>
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Hero = () => {
-  return <section className="bg-gradient-to-br from-secondary/20 via-background to-accent/10 py-16">
+  return (
+    <section className="bg-gradient-to-br from-secondary/20 via-background to-accent/10 py-16">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Content */}
@@ -32,63 +107,8 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Store Information & Map */}
-          <div className="relative">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Nuestra Tienda</h3>
-            
-            {/* Store Info Cards */}
-            <div className="grid grid-cols-1 gap-4 mb-6">
-              {/* Address & Hours */}
-              <div className="bg-card p-4 rounded-lg shadow-sm border">
-                <div className="flex items-start space-x-3 mb-3">
-                  <MapPin className="h-5 w-5 text-primary mt-0.5" />
-                  <div>
-                    <h4 className="font-semibold text-foreground">Dirección</h4>
-                    <p className="text-sm text-muted-foreground">Cerca de la Plaza de Peñaflor</p>
-                    <p className="text-xs text-muted-foreground">Peñaflor, Región Metropolitana</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <Clock className="h-5 w-5 text-primary mt-0.5" />
-                  <div>
-                    <h4 className="font-semibold text-foreground">Horarios</h4>
-                    <p className="text-sm text-muted-foreground">Lun - Vie: 9:00 - 19:00</p>
-                    <p className="text-sm text-muted-foreground">Sábado: 9:00 - 14:00</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact */}
-              <div className="bg-card p-4 rounded-lg shadow-sm border">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-3">
-                    <Phone className="h-5 w-5 text-primary" />
-                    <div>
-                      <h4 className="font-semibold text-foreground">Contacto</h4>
-                      <p className="text-sm text-muted-foreground">+56 9 XXXX XXXX</p>
-                    </div>
-                  </div>
-                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('https://wa.me/56912345678?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}>
-                    <MessageCircle className="h-4 w-4 mr-1" />
-                    WhatsApp
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Google Maps */}
-            <div className="bg-card rounded-lg shadow-sm border overflow-hidden">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13317.234567890123!2d-70.87654321!3d-33.60987654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a6b12345%3A0x987654321abcdef!2sPe%C3%B1aflor%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e0!3m2!1ses!2scl!4v1234567890123!5m2!1ses!2scl" width="100%" height="200" style={{
-              border: 0
-            }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full"></iframe>
-              <div className="p-3 bg-muted/50">
-                <p className="text-xs text-muted-foreground text-center">
-                  📍 Visítanos en el centro de Peñaflor, cerca de la plaza principal
-                </p>
-              </div>
-            </div>
-          </div>
+          {/* Products in Offer */}
+          <ProductsInOffer />
         </div>
 
         {/* Features */}
@@ -116,6 +136,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Hero;
