@@ -1,7 +1,8 @@
 
-import { Search, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import SearchInput from "./SearchInput";
 
 const Header = () => {
   return (
@@ -36,13 +37,8 @@ const Header = () => {
 
           {/* Search */}
           <div className="flex items-center space-x-3">
-            <div className="hidden md:flex items-center bg-muted rounded-full px-4 py-2">
-              <Search className="h-4 w-4 text-muted-foreground mr-2" />
-              <input
-                type="text"
-                placeholder="Buscar productos..."
-                className="bg-transparent outline-none text-sm w-40 text-foreground placeholder:text-muted-foreground"
-              />
+            <div className="hidden md:block">
+              <SearchInput />
             </div>
 
             <Button variant="ghost" size="sm" className="md:hidden">
