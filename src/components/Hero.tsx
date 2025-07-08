@@ -1,79 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Truck, Shield, Clock } from "lucide-react";
-import { useProducts } from "@/hooks/useProducts";
-
-const ProductsInOffer = () => {
-  const { products, loading } = useProducts({ 
-    limit: 4,
-    // Note: We need to update useProducts hook to support the 'oferta' filter
-  });
-
-  // For now, we'll filter for products with 'oferta' on the frontend
-  // Later we should update the useProducts hook to support this filter
-  const offerProducts = products.filter((product: any) => product.oferta);
-
-  if (loading) {
-    return (
-      <div className="relative">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Productos en Oferta</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-card p-4 rounded-lg shadow-sm border animate-pulse">
-              <div className="w-full h-32 bg-muted rounded mb-3"></div>
-              <div className="h-4 bg-muted rounded mb-2"></div>
-              <div className="h-3 bg-muted rounded w-3/4"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (offerProducts.length === 0) {
-    return (
-      <div className="relative">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Productos en Oferta</h3>
-        <div className="bg-card p-8 rounded-lg shadow-sm border text-center">
-          <p className="text-muted-foreground">No hay productos en oferta disponibles en este momento.</p>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative">
-      <h3 className="text-lg font-semibold text-foreground mb-4">Productos en Oferta</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {offerProducts.slice(0, 4).map((product: any) => (
-          <div key={product.id} className="bg-card p-4 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-            <div className="relative mb-3">
-              <img 
-                src={product.image || '/placeholder.svg'} 
-                alt={product.name}
-                className="w-full h-32 object-cover rounded"
-              />
-              <div className="absolute top-2 right-2 bg-accent text-accent-foreground text-xs font-bold px-2 py-1 rounded">
-                OFERTA
-              </div>
-            </div>
-            <h4 className="font-semibold text-foreground text-sm mb-1 line-clamp-2">{product.name}</h4>
-            <p className="text-primary font-bold text-lg">${product.price?.toLocaleString()}</p>
-          </div>
-        ))}
-      </div>
-      {offerProducts.length > 4 && (
-        <div className="mt-4 text-center">
-          <Link to="/ofertas">
-            <Button variant="outline" size="sm">
-              Ver todas las ofertas
-            </Button>
-          </Link>
-        </div>
-      )}
-    </div>
-  );
-};
+import { Truck, Shield, Clock, MapPin, Phone, Clock3 } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -107,8 +34,45 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Products in Offer */}
-          <ProductsInOffer />
+          {/* Nuestra Tienda */}
+          <div className="relative">
+            <h3 className="text-lg font-semibold text-foreground mb-4">Nuestra Tienda</h3>
+            <div className="bg-card p-6 rounded-lg shadow-sm border">
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3">
+                  <MapPin className="h-5 w-5 text-primary mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-foreground">Dirección</h4>
+                    <p className="text-muted-foreground">Peñaflor, cerca de la plaza principal</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-3">
+                  <Clock3 className="h-5 w-5 text-primary mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-foreground">Horarios</h4>
+                    <p className="text-muted-foreground">Lunes a Viernes: 9:00 - 19:00</p>
+                    <p className="text-muted-foreground">Sábados: 9:00 - 18:00</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-3">
+                  <Phone className="h-5 w-5 text-primary mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-foreground">Contacto</h4>
+                    <p className="text-muted-foreground">WhatsApp: +56 9 1234 5678</p>
+                    <p className="text-muted-foreground">Teléfono: (2) 2345 6789</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 pt-4 border-t">
+                <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
+                  <p className="text-muted-foreground text-sm">Mapa de ubicación</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Features */}
