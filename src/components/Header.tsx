@@ -11,9 +11,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground px-3 py-2 rounded-lg font-bold text-xl">
-              MyR
-            </div>
+            <img 
+              src="/lovable-uploads/c56e675a-3d2a-45d4-b9a0-af1986053f3e.png" 
+              alt="MyR - Tu tienda de confianza" 
+              className="h-12 w-auto"
+            />
             <span className="hidden md:block text-sm text-muted-foreground">
               Aseo, Perfumería & Paquetería
             </span>
