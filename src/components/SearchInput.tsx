@@ -114,9 +114,8 @@ const SearchInput = () => {
     }
   };
 
-  // Handle product selection
   const handleProductSelect = (product: SearchResult) => {
-    navigate(`/product/${product.id}`);
+    navigate(`/producto/${product.id}`);
     setQuery("");
     setIsOpen(false);
     setSelectedIndex(-1);
