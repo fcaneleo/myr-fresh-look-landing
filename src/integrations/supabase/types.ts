@@ -23,6 +23,7 @@ export type Database = {
           id: number
           image_url: string | null
           name: string
+          oferta: boolean | null
           price: number
           updated_at: string | null
           vigencia: boolean | null
@@ -35,6 +36,7 @@ export type Database = {
           id?: number
           image_url?: string | null
           name: string
+          oferta?: boolean | null
           price: number
           updated_at?: string | null
           vigencia?: boolean | null
@@ -47,6 +49,7 @@ export type Database = {
           id?: number
           image_url?: string | null
           name?: string
+          oferta?: boolean | null
           price?: number
           updated_at?: string | null
           vigencia?: boolean | null
