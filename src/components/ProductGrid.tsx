@@ -1,8 +1,10 @@
 
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Product } from "../pages/Index";
 
 const ProductGrid = () => {
+  const navigate = useNavigate();
   const products: Product[] = [
     { id: 1, name: "Ariel Detergente", price: 4.99, image: "", category: "Aseo", description: "Detergente en polvo para ropa" },
     { id: 2, name: "Downy Suavizante", price: 3.49, image: "", category: "Aseo", description: "Suavizante de telas" },
@@ -59,8 +61,12 @@ const ProductGrid = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div key={product.id} className="bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
+        {products.map((product) => (
+          <div 
+            key={product.id} 
+            className="bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 cursor-pointer"
+            onClick={() => navigate(`/producto/${product.id}`)}
+          >
               {/* Product Image Placeholder */}
               <div className={`h-40 bg-gradient-to-br ${getProductColor(product.category)} rounded-lg mb-4 flex items-center justify-center`}>
                 <span className="font-bold text-center px-2">{product.name}</span>

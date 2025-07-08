@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -11,6 +12,7 @@ import type { CarouselApi } from "@/components/ui/carousel";
 import { useProducts } from "../hooks/useProducts";
 
 const AllProductsCarousel = () => {
+  const navigate = useNavigate();
   const [api, setApi] = React.useState<CarouselApi>();
   const { products, loading } = useProducts({ 
     limit: 12 
@@ -48,7 +50,10 @@ const AllProductsCarousel = () => {
       <CarouselContent className="-ml-2 md:-ml-4">
         {products.map((product) => (
           <CarouselItem key={product.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-            <Card className="h-full hover:shadow-lg transition-shadow">
+            <Card 
+              className="h-full hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => navigate(`/producto/${product.id}`)}
+            >
               <CardContent className="p-4">
                 <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
                   <img 

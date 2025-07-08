@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Product } from "../pages/Index";
 import { useProducts } from "../hooks/useProducts";
@@ -15,6 +16,7 @@ interface InfiniteProductListProps {
 }
 
 const InfiniteProductList = ({ filters }: InfiniteProductListProps) => {
+  const navigate = useNavigate();
   const [offset, setOffset] = useState(0);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   
@@ -69,7 +71,11 @@ const InfiniteProductList = ({ filters }: InfiniteProductListProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {allProducts.map((product) => (
-          <Card key={product.id} className="hover:shadow-lg transition-shadow">
+          <Card 
+            key={product.id} 
+            className="hover:shadow-lg transition-shadow cursor-pointer"
+            onClick={() => navigate(`/producto/${product.id}`)}
+          >
             <CardContent className="p-4">
               <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center">
                 <img 
