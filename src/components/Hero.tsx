@@ -24,7 +24,7 @@ const Hero = () => {
               Productos de calidad con entrega rápida a tu hogar.
             </p>
             <Link to="/ofertas">
-              <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold rounded-lg py-[12px] px-[32px] my-[30px]">
+              <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold rounded-lg py-[12px] my-[30px] px-[32px] mx-[255px]">
                 VER OFERTAS
               </Button>
             </Link>
