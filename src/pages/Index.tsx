@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import AllProductsCarousel from "../components/AllProductsCarousel";
 import ProductGrid from "../components/ProductGrid";
+import Footer from "../components/Footer";
 
 export interface Product {
   id: number;
@@ -31,6 +32,8 @@ const Index = () => {
       <Hero />
       
       <ProductGrid />
+      
+      <Footer />
     </div>
   );
 };

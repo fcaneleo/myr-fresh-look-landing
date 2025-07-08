@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import ProductCarousel from "../components/ProductCarousel";
 import ProductFilters from "../components/ProductFilters";
 import InfiniteProductList from "../components/InfiniteProductList";
+import Footer from "../components/Footer";
 
 const Ofertas = () => {
   const [selectedFilters, setSelectedFilters] = useState({
@@ -64,6 +65,8 @@ const Ofertas = () => {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };
