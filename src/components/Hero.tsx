@@ -43,7 +43,7 @@ const Hero = () => {
                   <MapPin className="h-5 w-5 text-primary mt-1" />
                   <div>
                     <h4 className="font-semibold text-foreground">Dirección</h4>
-                    <p className="text-muted-foreground">Peñaflor, cerca de la plaza principal</p>
+                    <p className="text-muted-foreground">4030 Av. Vicuña Mackenna, Peñaflor</p>
                   </div>
                 </div>
                 
@@ -67,8 +67,17 @@ const Hero = () => {
               </div>
               
               <div className="mt-6 pt-4 border-t">
-                <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
-                  <p className="text-muted-foreground text-sm">Mapa de ubicación</p>
+                <div className="aspect-video w-full rounded-lg overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dO5A5p6dVNkVqo&q=4030+Av.+Vicuña+Mackenna,+Peñaflor,+Chile"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Ubicación MyR - 4030 Av. Vicuña Mackenna, Peñaflor"
+                  />
                 </div>
               </div>
             </div>
