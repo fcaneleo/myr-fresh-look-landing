@@ -19,7 +19,7 @@ const Hero = () => {
             </div>
             
             
-            <p className="text-muted-foreground max-w-md">
+            <p className="text-muted-foreground max-w-md px-[20px] mx-[150px]">
               Encuentra todo lo que necesitas en aseo, perfumería y paquetería. 
               Productos de calidad con entrega rápida a tu hogar.
             </p>
