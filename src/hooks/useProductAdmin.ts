@@ -10,6 +10,7 @@ export interface AdminProduct {
   category: string;
   image_url: string | null;
   featured: boolean | null;
+  oferta: boolean | null;
   vigencia: boolean | null;
 }
 
@@ -79,6 +80,7 @@ export const useProductAdmin = () => {
       price: string;
       category: string;
       featured: boolean;
+      oferta: boolean;
     },
     imageFile: File | null,
     editingProduct: AdminProduct | null
@@ -116,7 +118,8 @@ export const useProductAdmin = () => {
         price: parseFloat(formData.price),
         category: formData.category,
         image_url: imageUrl,
-        featured: formData.featured
+        featured: formData.featured,
+        oferta: formData.oferta
       };
 
       console.log('Product data to save:', productData);

@@ -5,6 +5,7 @@ import { Product } from '@/pages/Index';
 interface UseProductsOptions {
   category?: string;
   featured?: boolean;
+  oferta?: boolean;
   limit?: number;
   offset?: number;
   priceRange?: [number, number];
@@ -33,6 +34,10 @@ export const useProducts = (options: UseProductsOptions = {}) => {
 
       if (options.featured !== undefined) {
         query = query.eq('featured', options.featured);
+      }
+
+      if (options.oferta !== undefined) {
+        query = query.eq('oferta', options.oferta);
       }
 
       if (options.priceRange) {
@@ -110,6 +115,7 @@ export const useProducts = (options: UseProductsOptions = {}) => {
   }, [
     options.category,
     options.featured,
+    options.oferta,
     options.limit,
     options.offset,
     options.priceRange?.[0],

@@ -30,6 +30,11 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
             Destacado
           </Badge>
         )}
+        {product.oferta && (
+          <Badge className="absolute top-2 right-2 bg-accent">
+            Oferta
+          </Badge>
+        )}
       </div>
       
       <CardHeader className="pb-2">
