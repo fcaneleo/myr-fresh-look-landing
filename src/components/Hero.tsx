@@ -12,6 +12,16 @@ const Hero = () => {
               <br />
               <span className="text-primary">CALIDAD</span>
             </h1>
+            
+            {/* Logo completo */}
+            <div className="flex justify-center my-8">
+              <img 
+                src="/lovable-uploads/4c58c728-7ddd-449a-b4f9-e16c5e043918.png" 
+                alt="MyR - Tu tienda de confianza, Peñaflor Chile" 
+                className="w-64 h-auto"
+              />
+            </div>
+            
             <p className="text-xl text-muted-foreground">
               ENTREGA A DOMICILIO
             </p>
