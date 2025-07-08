@@ -7,20 +7,24 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Content */}
           <div className="space-y-16 lg:pt-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight my-0 py-0 -mt-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight my-0 py-0 -mt-4 px-[100px] mx-[90px]">
               PRODUCTOS DE
               <br />
               <span className="text-primary">CALIDAD</span>
             </h1>
-            <p className="text-xl text-muted-foreground">
-              ENTREGA A DOMICILIO
-            </p>
-            <p className="text-muted-foreground max-w-md">
+            
+            {/* Logo completo */}
+            <div className="flex justify-center my-8">
+              <img src="/lovable-uploads/4c58c728-7ddd-449a-b4f9-e16c5e043918.png" alt="MyR - Tu tienda de confianza, Peñaflor Chile" className="w-64 h-auto" />
+            </div>
+            
+            
+            <p className="text-muted-foreground max-w-md px-[20px] mx-[150px]">
               Encuentra todo lo que necesitas en aseo, perfumería y paquetería. 
               Productos de calidad con entrega rápida a tu hogar.
             </p>
             <Link to="/ofertas">
-              <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold rounded-lg py-[12px] px-[32px] my-[30px]">
+              <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold rounded-lg py-[12px] my-[30px] px-[32px] mx-[255px]">
                 VER OFERTAS
               </Button>
             </Link>
