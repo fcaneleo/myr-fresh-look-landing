@@ -118,9 +118,9 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-foreground">
+    <div className="w-full">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-2 sm:gap-0">
+        <h2 className="text-lg sm:text-xl font-semibold text-foreground">
           Todos los Productos ({totalCount} productos)
         </h2>
         <div className="text-sm text-muted-foreground">
@@ -135,15 +135,15 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
             {products.map((product) => (
               <Card 
                 key={product.id} 
                 className="hover:shadow-lg transition-shadow cursor-pointer"
                 onClick={() => navigate(`/producto/${product.id}`)}
               >
-                <CardContent className="p-4">
-                  <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative">
+                <CardContent className="p-3 sm:p-4">
+                  <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-2 sm:mb-3 flex items-center justify-center relative">
                     <img 
                       src={product.image} 
                       alt={product.name}
@@ -151,30 +151,30 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
                     />
                     {/* Badges */}
                     {product.featured && (
-                      <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
+                      <Badge className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-primary text-primary-foreground text-xs">
                         Destacado
                       </Badge>
                     )}
                     {product.oferta && (
-                      <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground">
+                      <Badge className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-accent text-accent-foreground text-xs">
                         Oferta
                       </Badge>
                     )}
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
+                  <h3 className="font-semibold text-foreground mb-1 line-clamp-2 text-sm sm:text-base">
                     {product.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-2 capitalize">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-1 sm:mb-2 capitalize">
                     {product.category}
                   </p>
-                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+                  <p className="text-xs text-muted-foreground mb-2 sm:mb-3 line-clamp-2">
                     {product.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-primary">
+                    <span className="text-base sm:text-lg font-bold text-primary">
                       ${product.price.toLocaleString()}
                     </span>
-                    <div className="text-xs text-muted-foreground capitalize bg-muted px-2 py-1 rounded-full">
+                    <div className="text-xs text-muted-foreground capitalize bg-muted px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
                       {product.category}
                     </div>
                   </div>
@@ -191,24 +191,28 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center space-x-2 mt-8">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-2 mt-6 sm:mt-8">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
+                className="w-full sm:w-auto"
               >
                 <ChevronLeft className="h-4 w-4" />
                 Anterior
               </Button>
               
-              {renderPaginationButtons()}
+              <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto max-w-full">
+                {renderPaginationButtons()}
+              </div>
               
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
+                className="w-full sm:w-auto"
               >
                 Siguiente
                 <ChevronRight className="h-4 w-4" />

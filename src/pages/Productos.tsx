@@ -46,10 +46,10 @@ const Productos = () => {
       </div>
 
       {/* Filters and Product List */}
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 pb-8">
+        <div className="flex flex-col lg:grid lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Filters Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 order-2 lg:order-1">
             <ProductFilters 
               filters={selectedFilters}
               onFiltersChange={setSelectedFilters}
@@ -57,7 +57,7 @@ const Productos = () => {
           </div>
           
           {/* Product List */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 order-1 lg:order-2">
             <PaginatedProductList 
               filters={selectedFilters}
             />
