@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,6 +48,7 @@ export const ProductForm = ({
   const [familias, setFamilias] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Handle form changes
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -82,6 +83,11 @@ export const ProductForm = ({
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  // Handle click on upload area
+  const handleUploadAreaClick = () => {
+    fileInputRef.current?.click();
   };
 
   // Handle save
@@ -195,18 +201,22 @@ export const ProductForm = ({
                   </Button>
                 </div>
               ) : (
-                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center hover:border-muted-foreground/50 transition-colors">
+                <div 
+                  className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center hover:border-muted-foreground/50 transition-colors cursor-pointer"
+                  onClick={handleUploadAreaClick}
+                >
                   <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                   <p className="text-sm text-muted-foreground">Click para subir imagen</p>
                   <p className="text-xs text-muted-foreground mt-1">JPG, PNG, WEBP (máx. 10MB)</p>
                 </div>
               )}
               <Input
+                ref={fileInputRef}
                 id="image"
                 type="file"
                 accept="image/*"
                 onChange={handleImageSelect}
-                className="mt-2"
+                className="mt-2 hidden"
                 disabled={isUploading}
               />
               {uploadError && (
