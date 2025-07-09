@@ -96,7 +96,7 @@ const ProductDetail = () => {
 
   const handleWhatsAppContact = () => {
     const message = `Hola, me interesa el producto: ${product?.descripcion} - $${product?.precio.toLocaleString('es-CL')}`;
-    const whatsappUrl = `https://wa.me/56912345678?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/56930837263?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
