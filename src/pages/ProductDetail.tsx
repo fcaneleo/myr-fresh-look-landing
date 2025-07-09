@@ -102,7 +102,7 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pt-20">
         <Header />
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
@@ -115,7 +115,7 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pt-20">
         <Header />
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
@@ -131,7 +131,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-20">
       <Header />
       
       <div className="container mx-auto px-4 py-8">
