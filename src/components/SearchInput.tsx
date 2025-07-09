@@ -29,22 +29,27 @@ const SearchInput = () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('products')
-        .select('*')
+        .from('productos')
+        .select(`
+          *,
+          familias (
+            nombre
+          )
+        `)
         .eq('vigencia', true)
-        .or(`name.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%,category.ilike.%${searchQuery}%`)
+        .or(`descripcion.ilike.%${searchQuery}%,descripcion_larga.ilike.%${searchQuery}%`)
         .limit(8);
 
       if (error) throw error;
 
       const transformedResults: SearchResult[] = data?.map(item => ({
         id: item.id,
-        name: item.name,
-        price: parseFloat(item.price.toString()),
+        name: item.descripcion,
+        price: parseFloat(item.precio.toString()),
         image: item.image_url || '/placeholder.svg',
-        category: item.category,
-        description: item.description || '',
-        highlight: highlightMatch(item.name, searchQuery)
+        category: item.familias?.nombre || '',
+        description: item.descripcion_larga || '',
+        highlight: highlightMatch(item.descripcion, searchQuery)
       })) || [];
 
       setResults(transformedResults);
