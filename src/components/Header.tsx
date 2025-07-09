@@ -23,9 +23,9 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/e6b57251-7b96-4b30-bc97-3e6da25c9e4b.png" 
+              src="/lovable-uploads/31a47a1a-2c0f-4721-9b13-40c8745b3bd2.png" 
               alt="RyM - Tu tienda de confianza" 
-              className="h-12 w-auto rounded-full"
+              className="h-12 w-12 rounded-full object-cover"
             />
             <span className="hidden md:block text-sm text-muted-foreground">
               Aseo, Perfumería & Paquetería

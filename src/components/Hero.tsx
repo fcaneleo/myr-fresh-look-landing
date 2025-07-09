@@ -14,9 +14,9 @@ const Hero = () => {
             </h1>
             
             {/* Logo completo */}
-            <div className="flex justify-center my-8">
-              <img src="/lovable-uploads/e6b57251-7b96-4b30-bc97-3e6da25c9e4b.png" alt="RyM - Tu tienda de confianza, Peñaflor Chile" className="w-48 md:w-64 h-auto rounded-full" />
-            </div>
+             <div className="flex justify-center my-8">
+               <img src="/lovable-uploads/31a47a1a-2c0f-4721-9b13-40c8745b3bd2.png" alt="RyM - Tu tienda de confianza, Peñaflor Chile" className="w-48 md:w-64 h-48 md:h-64 rounded-full object-cover" />
+             </div>
             
             <p className="text-muted-foreground max-w-md mx-auto text-center px-4 mb-8">
               Encuentra todo lo que necesitas en aseo, perfumería y paquetería. 
