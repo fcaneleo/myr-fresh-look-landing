@@ -66,7 +66,7 @@ const Hero = () => {
                     <Phone className="h-5 w-5 text-primary" />
                     <div>
                       <h4 className="font-semibold text-foreground">Contacto</h4>
-                      <p className="text-sm text-muted-foreground">+56 9 XXXX XXXX</p>
+                      <p className="text-sm text-muted-foreground"> +56 9 3083 7263</p>
                     </div>
                   </div>
                   <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('https://wa.me/56912345678?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}>
