@@ -3,7 +3,7 @@ const Footer = () => {
   const socialLinks = [{
     name: "WhatsApp",
     icon: MessageCircle,
-    url: "https://example.com/whatsapp",
+    url: "https://wa.me/56930837263?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos",
     className: "hover:text-green-500"
   }, {
     name: "Instagram",
