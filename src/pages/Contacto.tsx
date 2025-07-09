@@ -111,7 +111,7 @@ const Contacto = () => {
                     <Mail className="h-5 w-5 text-primary" />
                     <div>
                       <p className="font-medium text-foreground">Email</p>
-                      <p className="text-sm text-muted-foreground">contacto@myr.cl</p>
+                      <p className="text-sm text-muted-foreground">comercializadorarym@gmail.com</p>
                     </div>
                   </div>
                   <Button size="sm" variant="outline" onClick={() => window.open('mailto:contacto@myr.cl')}>
