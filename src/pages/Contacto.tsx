@@ -64,7 +64,7 @@ const Contacto = () => {
                   <h4 className="font-semibold text-foreground mb-2">Horarios de Atención</h4>
                   <div className="space-y-1">
                     <p className="text-muted-foreground">Lunes a Viernes: 9:00 - 19:00</p>
-                    <p className="text-muted-foreground">Sábado: 9:00 - 14:00</p>
+                    <p className="text-muted-foreground">Sábado: 9:00 - 18:00</p>
                     <p className="text-muted-foreground">Domingo: Cerrado</p>
                   </div>
                 </div>
