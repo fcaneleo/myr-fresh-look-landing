@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -8,7 +7,7 @@ import ProductFilters from "../components/ProductFilters";
 import PaginatedProductList from "../components/PaginatedProductList";
 import Footer from "../components/Footer";
 
-const Ofertas = () => {
+const Productos = () => {
   const [selectedFilters, setSelectedFilters] = useState({
     category: "all",
     priceRange: [0, 55000],
@@ -71,4 +70,4 @@ const Ofertas = () => {
   );
 };
 
-export default Ofertas;
+export default Productos;

@@ -24,9 +24,9 @@ const Hero = () => {
             </p>
             
             <div className="flex justify-center">
-              <Link to="/ofertas">
+              <Link to="/productos">
                 <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold rounded-lg py-3 mx-0 px-[75px]">
-                  VER OFERTAS
+                  VER PRODUCTOS
                 </Button>
               </Link>
             </div>
