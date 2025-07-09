@@ -180,7 +180,7 @@ const Admin = () => {
               placeholder="Buscar productos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-10 border-primary focus:border-primary ring-primary"
             />
           </div>
           {searchTerm && (
