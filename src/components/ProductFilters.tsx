@@ -57,15 +57,11 @@ const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Todas las categorías</SelectItem>
-                {categoriesLoading ? (
-                  <SelectItem value="" disabled>Cargando categorías...</SelectItem>
-                ) : (
-                  categories.map((category) => (
-                    <SelectItem key={category.id} value={category.nombre}>
-                      {category.nombre}
-                    </SelectItem>
-                  ))
-                )}
+                {!categoriesLoading && categories.map((category) => (
+                  <SelectItem key={category.id} value={category.nombre}>
+                    {category.nombre}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
