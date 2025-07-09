@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useProductAdmin, AdminProduct } from "@/hooks/useProductAdmin";
 import { ProductForm } from "@/components/admin/ProductForm";
 import { ProductGrid } from "@/components/admin/ProductGrid";
@@ -11,10 +13,26 @@ const Admin = () => {
   const { products, isLoading, fetchProducts, saveProduct, deleteProduct } = useProductAdmin();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (isAuthenticated) {
+      fetchProducts();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (username === "admin" && password === "admin") {
+      setIsAuthenticated(true);
+      setAuthError("");
+    } else {
+      setAuthError("Usuario o contraseña incorrectos");
+    }
+  };
 
   // Open edit dialog
   const openEditDialog = (product: AdminProduct) => {
@@ -54,6 +72,54 @@ const Admin = () => {
     setEditingProduct(null);
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center">
+                <Lock className="h-8 w-8 text-primary" />
+              </div>
+            </div>
+            <CardTitle>Acceso Administrativo</CardTitle>
+            <CardDescription>
+              Ingresa tus credenciales para acceder al panel de administración
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <Input
+                  type="text"
+                  placeholder="Usuario"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <Input
+                  type="password"
+                  placeholder="Contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {authError && (
+                <p className="text-destructive text-sm text-center">{authError}</p>
+              )}
+              <Button type="submit" className="w-full">
+                Iniciar Sesión
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background pt-20">
       <Header />
@@ -65,22 +131,31 @@ const Admin = () => {
             <p className="text-muted-foreground">Gestiona el catálogo de productos de tu tienda</p>
           </div>
           
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={openCreateDialog} className="bg-primary hover:bg-primary/90">
-                <Plus className="h-4 w-4 mr-2" />
-                Nuevo Producto
-              </Button>
-            </DialogTrigger>
-            
-            <ProductForm
-              isOpen={isDialogOpen}
-              onClose={handleCloseDialog}
-              onSave={handleSaveProduct}
-              editingProduct={editingProduct}
-              isLoading={isLoading}
-            />
-          </Dialog>
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              onClick={() => setIsAuthenticated(false)}
+              className="text-muted-foreground"
+            >
+              Cerrar Sesión
+            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button onClick={openCreateDialog} className="bg-primary hover:bg-primary/90">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nuevo Producto
+                </Button>
+              </DialogTrigger>
+              
+              <ProductForm
+                isOpen={isDialogOpen}
+                onClose={handleCloseDialog}
+                onSave={handleSaveProduct}
+                editingProduct={editingProduct}
+                isLoading={isLoading}
+              />
+            </Dialog>
+          </div>
         </div>
 
         <ProductGrid

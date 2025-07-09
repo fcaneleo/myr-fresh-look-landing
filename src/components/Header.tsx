@@ -43,9 +43,6 @@ const Header = () => {
             <Link to="/contacto" className="text-foreground hover:text-primary transition-colors">
               Contacto
             </Link>
-            <Link to="/admin" className="text-foreground hover:text-primary transition-colors">
-              Admin
-            </Link>
           </nav>
 
           {/* Search & Mobile Menu Button */}
@@ -94,13 +91,6 @@ const Header = () => {
                 onClick={closeMobileMenu}
               >
                 Contacto
-              </Link>
-              <Link 
-                to="/admin" 
-                className="block text-foreground hover:text-primary transition-colors py-2"
-                onClick={closeMobileMenu}
-              >
-                Admin
               </Link>
               
               {/* Mobile Search */}
