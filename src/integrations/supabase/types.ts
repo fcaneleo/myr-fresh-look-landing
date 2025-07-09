@@ -14,6 +14,137 @@ export type Database = {
   }
   public: {
     Tables: {
+      familias: {
+        Row: {
+          codigo: number
+          created_at: string | null
+          descripcion: string
+          id: number
+          nombre: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          codigo: number
+          created_at?: string | null
+          descripcion: string
+          id?: number
+          nombre?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          codigo?: number
+          created_at?: string | null
+          descripcion?: string
+          id?: number
+          nombre?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      productos: {
+        Row: {
+          ajuste: number | null
+          cantidad_mayor: number | null
+          codigo: number
+          codigo_proveedor: number | null
+          codigo_proveedor2: string | null
+          codigo_proveedor3: string | null
+          codigo_texto: string
+          con_impuesto: boolean | null
+          costo: number
+          costo_neto: number | null
+          created_at: string | null
+          descripcion: string
+          descripcion_larga: string | null
+          familia_id: number
+          featured: boolean | null
+          id: number
+          image_url: string | null
+          oferta: boolean | null
+          precio: number
+          precio_mayor: number | null
+          promocion: boolean | null
+          servicio: boolean | null
+          stock: number
+          stock_minimo: number | null
+          tipo_impuesto: number | null
+          unidad_medida: number
+          updated_at: string | null
+          valor_impuesto: number | null
+          vigencia: boolean | null
+        }
+        Insert: {
+          ajuste?: number | null
+          cantidad_mayor?: number | null
+          codigo: number
+          codigo_proveedor?: number | null
+          codigo_proveedor2?: string | null
+          codigo_proveedor3?: string | null
+          codigo_texto: string
+          con_impuesto?: boolean | null
+          costo: number
+          costo_neto?: number | null
+          created_at?: string | null
+          descripcion: string
+          descripcion_larga?: string | null
+          familia_id: number
+          featured?: boolean | null
+          id?: number
+          image_url?: string | null
+          oferta?: boolean | null
+          precio: number
+          precio_mayor?: number | null
+          promocion?: boolean | null
+          servicio?: boolean | null
+          stock: number
+          stock_minimo?: number | null
+          tipo_impuesto?: number | null
+          unidad_medida: number
+          updated_at?: string | null
+          valor_impuesto?: number | null
+          vigencia?: boolean | null
+        }
+        Update: {
+          ajuste?: number | null
+          cantidad_mayor?: number | null
+          codigo?: number
+          codigo_proveedor?: number | null
+          codigo_proveedor2?: string | null
+          codigo_proveedor3?: string | null
+          codigo_texto?: string
+          con_impuesto?: boolean | null
+          costo?: number
+          costo_neto?: number | null
+          created_at?: string | null
+          descripcion?: string
+          descripcion_larga?: string | null
+          familia_id?: number
+          featured?: boolean | null
+          id?: number
+          image_url?: string | null
+          oferta?: boolean | null
+          precio?: number
+          precio_mayor?: number | null
+          promocion?: boolean | null
+          servicio?: boolean | null
+          stock?: number
+          stock_minimo?: number | null
+          tipo_impuesto?: number | null
+          unidad_medida?: number
+          updated_at?: string | null
+          valor_impuesto?: number | null
+          vigencia?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "productos_familia_id_fkey"
+            columns: ["familia_id"]
+            isOneToOne: false
+            referencedRelation: "familias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           category: string
@@ -58,7 +189,44 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      vista_productos_completa: {
+        Row: {
+          ajuste: number | null
+          cantidad_mayor: number | null
+          categoria_nombre: string | null
+          codigo: number | null
+          codigo_proveedor: number | null
+          codigo_proveedor2: string | null
+          codigo_proveedor3: string | null
+          codigo_texto: string | null
+          con_impuesto: boolean | null
+          costo: number | null
+          costo_neto: number | null
+          created_at: string | null
+          descripcion: string | null
+          familia_id: number | null
+          id: number | null
+          precio: number | null
+          precio_mayor: number | null
+          promocion: boolean | null
+          servicio: boolean | null
+          stock: number | null
+          stock_minimo: number | null
+          tipo_impuesto: number | null
+          unidad_medida: number | null
+          updated_at: string | null
+          valor_impuesto: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "productos_familia_id_fkey"
+            columns: ["familia_id"]
+            isOneToOne: false
+            referencedRelation: "familias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never

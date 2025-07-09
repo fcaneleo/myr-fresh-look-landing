@@ -4,10 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 
 export interface AdminProduct {
   id: number;
-  name: string;
-  description: string | null;
-  price: number;
-  category: string;
+  descripcion: string;
+  descripcion_larga: string | null;
+  precio: number;
+  familia_nombre: string;
+  familia_id: number;
   image_url: string | null;
   featured: boolean | null;
   oferta: boolean | null;
@@ -23,8 +24,13 @@ export const useProductAdmin = () => {
   const fetchProducts = async () => {
     console.log('Fetching products...');
     const { data, error } = await supabase
-      .from('products')
-      .select('*')
+      .from('productos')
+      .select(`
+        *,
+        familias (
+          nombre
+        )
+      `)
       .eq('vigencia', true)
       .order('id', { ascending: false });
     
@@ -37,7 +43,20 @@ export const useProductAdmin = () => {
       });
     } else {
       console.log('Products fetched:', data?.length || 0, 'items');
-      setProducts(data || []);
+      // Transform data to match AdminProduct interface
+      const transformedProducts: AdminProduct[] = data?.map(item => ({
+        id: item.id,
+        descripcion: item.descripcion,
+        descripcion_larga: item.descripcion_larga,
+        precio: parseFloat(item.precio.toString()),
+        familia_nombre: item.familias?.nombre || '',
+        familia_id: item.familia_id,
+        image_url: item.image_url,
+        featured: item.featured,
+        oferta: item.oferta,
+        vigencia: item.vigencia
+      })) || [];
+      setProducts(transformedProducts);
     }
   };
 
@@ -70,6 +89,21 @@ export const useProductAdmin = () => {
 
     console.log('Generated public URL:', publicUrl);
     return publicUrl;
+  };
+
+  // Fetch families for categories
+  const fetchFamilies = async () => {
+    const { data, error } = await supabase
+      .from('familias')
+      .select('*')
+      .order('nombre', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching families:', error);
+      return [];
+    }
+    
+    return data || [];
   };
 
   // Save product (create or update)
@@ -112,11 +146,24 @@ export const useProductAdmin = () => {
         }
       }
 
+      // Find familia_id by category name
+      const familias = await fetchFamilies();
+      const familia = familias.find(f => f.nombre.toLowerCase() === formData.category.toLowerCase());
+      
+      if (!familia && !editingProduct) {
+        toast({
+          title: "Error",
+          description: "Categoría no encontrada",
+          variant: "destructive"
+        });
+        return false;
+      }
+
       const productData = {
-        name: formData.name,
-        description: formData.description || null,
-        price: parseFloat(formData.price),
-        category: formData.category,
+        descripcion: formData.name,
+        descripcion_larga: formData.description || null,
+        precio: parseFloat(formData.price),
+        familia_id: familia?.id || editingProduct?.familia_id,
         image_url: imageUrl,
         featured: formData.featured,
         oferta: formData.oferta
@@ -128,7 +175,7 @@ export const useProductAdmin = () => {
         // Update existing product
         console.log('Updating product with ID:', editingProduct.id);
         const { error } = await supabase
-          .from('products')
+          .from('productos')
           .update(productData)
           .eq('id', editingProduct.id);
         
@@ -143,11 +190,21 @@ export const useProductAdmin = () => {
           description: "El producto se ha actualizado correctamente"
         });
       } else {
-        // Create new product
+        // Create new product - need to add required fields
+        const completeProductData = {
+          ...productData,
+          codigo: Date.now(), // temporary solution for required campo
+          codigo_texto: `PROD_${Date.now()}`,
+          costo: 0,
+          stock: 0,
+          unidad_medida: 1,
+          vigencia: true
+        };
+        
         console.log('Creating new product');
         const { error } = await supabase
-          .from('products')
-          .insert([productData]);
+          .from('productos')
+          .insert([completeProductData]);
         
         if (error) {
           console.error('Insert error:', error);
@@ -185,7 +242,7 @@ export const useProductAdmin = () => {
 
     console.log('Logically deleting product with ID:', id);
     const { error } = await supabase
-      .from('products')
+      .from('productos')
       .update({ vigencia: false })
       .eq('id', id);
 
@@ -210,6 +267,7 @@ export const useProductAdmin = () => {
     products,
     isLoading,
     fetchProducts,
+    fetchFamilies,
     saveProduct,
     deleteProduct
   };
