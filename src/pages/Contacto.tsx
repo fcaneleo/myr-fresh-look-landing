@@ -49,7 +49,7 @@ const Contacto = () => {
                 <MapPin className="h-6 w-6 text-primary mt-1" />
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Dirección</h4>
-                  <p className="text-muted-foreground">Avenida Vicuña Mackena 4030</p>
+                  <p className="text-muted-foreground">Avenida Vicuña Mackena 4015 Local E</p>
                   <p className="text-muted-foreground">Peñaflor, Región Metropolitana</p>
                   <p className="text-muted-foreground">Chile</p>
                 </div>
