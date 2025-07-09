@@ -10,10 +10,10 @@ import Footer from "@/components/Footer";
 
 interface ProductDetail {
   id: number;
-  name: string;
-  description: string | null;
-  price: number;
-  category: string;
+  descripcion: string;
+  descripcion_larga: string | null;
+  precio: number;
+  familia_nombre: string;
   image_url: string | null;
   featured: boolean | null;
 }
@@ -31,8 +31,13 @@ const ProductDetail = () => {
 
       try {
         const { data, error } = await supabase
-          .from('products')
-          .select('*')
+          .from('productos')
+          .select(`
+            *,
+            familias (
+              nombre
+            )
+          `)
           .eq('id', parseInt(id))
           .eq('vigencia', true)
           .single();
@@ -48,7 +53,18 @@ const ProductDetail = () => {
           return;
         }
 
-        setProduct(data);
+        // Transform data to match ProductDetail interface
+        const transformedProduct: ProductDetail = {
+          id: data.id,
+          descripcion: data.descripcion,
+          descripcion_larga: data.descripcion_larga,
+          precio: parseFloat(data.precio.toString()),
+          familia_nombre: data.familias?.nombre || '',
+          image_url: data.image_url,
+          featured: data.featured
+        };
+
+        setProduct(transformedProduct);
       } catch (error) {
         console.error('Error:', error);
         toast({
@@ -79,14 +95,14 @@ const ProductDetail = () => {
   };
 
   const handleWhatsAppContact = () => {
-    const message = `Hola, me interesa el producto: ${product?.name} - $${product?.price.toLocaleString('es-CL')}`;
+    const message = `Hola, me interesa el producto: ${product?.descripcion} - $${product?.precio.toLocaleString('es-CL')}`;
     const whatsappUrl = `https://wa.me/56912345678?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pt-20">
         <Header />
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
@@ -99,7 +115,7 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pt-20">
         <Header />
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
@@ -115,7 +131,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-20">
       <Header />
       
       <div className="container mx-auto px-4 py-8">
@@ -135,13 +151,13 @@ const ProductDetail = () => {
             {product.image_url ? (
               <img 
                 src={product.image_url} 
-                alt={product.name}
+                alt={product.descripcion}
                 className="w-full h-full object-cover rounded-lg shadow-lg"
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/30 rounded-lg shadow-lg flex items-center justify-center">
                 <span className="text-primary font-bold text-xl text-center px-4">
-                  {product.name}
+                  {product.descripcion}
                 </span>
               </div>
             )}
@@ -156,24 +172,24 @@ const ProductDetail = () => {
           <div className="space-y-6">
             <div>
               <Badge variant="secondary" className="mb-2">
-                {getCategoryDisplayName(product.category)}
+                {getCategoryDisplayName(product.familia_nombre)}
               </Badge>
               <h1 className="text-3xl font-bold text-foreground mb-4">
-                {product.name}
+                {product.descripcion}
               </h1>
               <div className="text-4xl font-bold text-primary mb-6">
-                ${product.price.toLocaleString('es-CL')}
+                ${product.precio.toLocaleString('es-CL')}
               </div>
             </div>
 
             {/* Description */}
-            {product.description && (
+            {product.descripcion_larga && (
               <div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
                   Descripción
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {product.description}
+                  {product.descripcion_larga}
                 </p>
               </div>
             )}
@@ -198,7 +214,7 @@ const ProductDetail = () => {
             <div className="border-t border-border pt-6 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Categoría:</span>
-                <span className="text-foreground">{getCategoryDisplayName(product.category)}</span>
+                <span className="text-foreground">{getCategoryDisplayName(product.familia_nombre)}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Disponibilidad:</span>

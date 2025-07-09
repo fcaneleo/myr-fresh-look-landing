@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { AdminProduct } from "@/hooks/useProductAdmin";
+import { AdminProduct, useProductAdmin } from "@/hooks/useProductAdmin";
 
 interface ProductFormProps {
   isOpen: boolean;
@@ -34,6 +34,7 @@ export const ProductForm = ({
   editingProduct, 
   isLoading 
 }: ProductFormProps) => {
+  const { fetchFamilies } = useProductAdmin();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -44,6 +45,7 @@ export const ProductForm = ({
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [familias, setFamilias] = useState<any[]>([]);
 
   // Handle form changes
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -89,14 +91,23 @@ export const ProductForm = ({
     onClose();
   };
 
+  // Load families on component mount
+  useEffect(() => {
+    const loadFamilias = async () => {
+      const familiasList = await fetchFamilies();
+      setFamilias(familiasList);
+    };
+    loadFamilias();
+  }, []);
+
   // Update form when editing product changes
   useEffect(() => {
     if (editingProduct) {
       setFormData({
-        name: editingProduct.name,
-        description: editingProduct.description || "",
-        price: editingProduct.price.toString(),
-        category: editingProduct.category,
+        name: editingProduct.descripcion,
+        description: editingProduct.descripcion_larga || "",
+        price: editingProduct.precio.toString(),
+        category: editingProduct.familia_nombre,
         featured: Boolean(editingProduct.featured),
         oferta: Boolean(editingProduct.oferta)
       });
@@ -209,9 +220,11 @@ export const ProductForm = ({
                   <SelectValue placeholder="Selecciona categoría" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="aseo">Aseo</SelectItem>
-                  <SelectItem value="perfumeria">Perfumería</SelectItem>
-                  <SelectItem value="paqueteria">Paquetería</SelectItem>
+                  {familias.map((familia) => (
+                    <SelectItem key={familia.id} value={familia.nombre}>
+                      {familia.nombre}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
   CarouselContent,
@@ -14,9 +15,7 @@ import { useProducts } from "../hooks/useProducts";
 const AllProductsCarousel = () => {
   const navigate = useNavigate();
   const [api, setApi] = React.useState<CarouselApi>();
-  const { products, loading } = useProducts({ 
-    limit: 12 
-  });
+  const { products, loading } = useProducts();
 
   useEffect(() => {
     if (!api) {
@@ -54,14 +53,25 @@ const AllProductsCarousel = () => {
               className="h-full hover:shadow-lg transition-shadow cursor-pointer"
               onClick={() => navigate(`/producto/${product.id}`)}
             >
-              <CardContent className="p-4">
-                <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+               <CardContent className="p-4">
+                 <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
+                   <img 
+                     src={product.image} 
+                     alt={product.name}
+                     className="w-full h-full object-cover"
+                   />
+                   {/* Badges */}
+                   {product.featured && (
+                     <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
+                       Destacado
+                     </Badge>
+                   )}
+                   {product.oferta && (
+                     <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground">
+                       Oferta
+                     </Badge>
+                   )}
+                 </div>
                 <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
                   {product.name}
                 </h3>

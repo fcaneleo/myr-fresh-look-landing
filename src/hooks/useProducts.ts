@@ -24,12 +24,27 @@ export const useProducts = (options: UseProductsOptions = {}) => {
       setError(null);
 
       let query = supabase
-        .from('products')
-        .select('*');
+        .from('productos')
+        .select(`
+          *,
+          familias (
+            nombre
+          )
+        `)
+        .eq('vigencia', true);
 
-      // Apply filters
+      // Apply filters  
       if (options.category && options.category !== 'all') {
-        query = query.eq('category', options.category);
+        // Get familia_id first, then filter by it
+        const { data: familiaData } = await supabase
+          .from('familias')
+          .select('id')
+          .eq('nombre', options.category)
+          .single();
+        
+        if (familiaData) {
+          query = query.eq('familia_id', familiaData.id);
+        }
       }
 
       if (options.featured !== undefined) {
@@ -42,26 +57,26 @@ export const useProducts = (options: UseProductsOptions = {}) => {
 
       if (options.priceRange) {
         query = query
-          .gte('price', options.priceRange[0])
-          .lte('price', options.priceRange[1]);
+          .gte('precio', options.priceRange[0])
+          .lte('precio', options.priceRange[1]);
       }
 
       // Apply sorting
       switch (options.sortBy) {
         case 'name-desc':
-          query = query.order('name', { ascending: false });
+          query = query.order('descripcion', { ascending: false });
           break;
         case 'price-asc':
-          query = query.order('price', { ascending: true });
+          query = query.order('precio', { ascending: true });
           break;
         case 'price-desc':
-          query = query.order('price', { ascending: false });
+          query = query.order('precio', { ascending: false });
           break;
         case 'newest':
           query = query.order('created_at', { ascending: false });
           break;
         default:
-          query = query.order('name', { ascending: true });
+          query = query.order('descripcion', { ascending: true });
       }
 
       // Apply pagination
@@ -82,11 +97,13 @@ export const useProducts = (options: UseProductsOptions = {}) => {
       // Transform data to match Product interface
       const transformedProducts: Product[] = data?.map(item => ({
         id: item.id,
-        name: item.name,
-        price: parseFloat(item.price.toString()),
+        name: item.descripcion,
+        price: parseFloat(item.precio.toString()),
         image: item.image_url || '/placeholder.svg',
-        category: item.category,
-        description: item.description || ''
+        category: item.familias?.nombre || '',
+        description: item.descripcion_larga || '',
+        featured: Boolean(item.featured),
+        oferta: Boolean(item.oferta)
       })) || [];
 
       if (options.offset && options.offset > 0) {

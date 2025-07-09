@@ -25,7 +25,7 @@ const Hero = () => {
             
             <div className="flex justify-center">
               <Link to="/ofertas">
-                <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold rounded-lg py-3 px-8">
+                <Button className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold rounded-lg py-3 mx-0 px-[75px]">
                   VER OFERTAS
                 </Button>
               </Link>
@@ -44,7 +44,7 @@ const Hero = () => {
                   <MapPin className="h-5 w-5 text-primary mt-0.5" />
                   <div>
                     <h4 className="font-semibold text-foreground">Dirección</h4>
-                    <p className="text-sm text-muted-foreground">Cerca de la Plaza de Peñaflor</p>
+                    <p className="text-sm text-muted-foreground">Avenida Vicuña Mackena 4015 Local E</p>
                     <p className="text-xs text-muted-foreground">Peñaflor, Región Metropolitana</p>
                   </div>
                 </div>
@@ -54,7 +54,7 @@ const Hero = () => {
                   <div>
                     <h4 className="font-semibold text-foreground">Horarios</h4>
                     <p className="text-sm text-muted-foreground">Lun - Vie: 9:00 - 19:00</p>
-                    <p className="text-sm text-muted-foreground">Sábado: 9:00 - 14:00</p>
+                    <p className="text-sm text-muted-foreground">Sábado: 9:00 - 18:00</p>
                   </div>
                 </div>
               </div>
@@ -66,10 +66,10 @@ const Hero = () => {
                     <Phone className="h-5 w-5 text-primary" />
                     <div>
                       <h4 className="font-semibold text-foreground">Contacto</h4>
-                      <p className="text-sm text-muted-foreground">+56 9 XXXX XXXX</p>
+                      <p className="text-sm text-muted-foreground"> +56 9 3083 7263</p>
                     </div>
                   </div>
-                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('https://wa.me/56912345678?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}>
+                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('https://wa.me/56930837263?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}>
                     <MessageCircle className="h-4 w-4 mr-1" />
                     WhatsApp
                   </Button>

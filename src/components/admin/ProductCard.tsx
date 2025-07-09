@@ -17,7 +17,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
         {product.image_url ? (
           <img 
             src={product.image_url} 
-            alt={product.name}
+            alt={product.descripcion}
             className="w-full h-full object-cover"
           />
         ) : (
@@ -38,19 +38,19 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
       </div>
       
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">{product.name}</CardTitle>
+        <CardTitle className="text-lg">{product.descripcion}</CardTitle>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-primary">
-            ${product.price.toLocaleString('es-CL')}
+            ${product.precio.toLocaleString('es-CL')}
           </span>
-          <Badge variant="secondary">{product.category}</Badge>
+          <Badge variant="secondary">{product.familia_nombre}</Badge>
         </div>
       </CardHeader>
       
       <CardContent className="pt-0">
-        {product.description && (
+        {product.descripcion_larga && (
           <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-            {product.description}
+            {product.descripcion_larga}
           </p>
         )}
         
