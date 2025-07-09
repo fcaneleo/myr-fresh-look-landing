@@ -84,7 +84,7 @@ const Contacto = () => {
                       <p className="text-sm text-muted-foreground">+56 9 3083 7263</p>
                     </div>
                   </div>
-                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('tel:+56912345678')}>
+                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('tel:+56930837263')}>
                     <Phone className="h-4 w-4 mr-1" />
                     Llamar
                   </Button>
