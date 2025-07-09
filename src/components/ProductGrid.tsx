@@ -11,25 +11,45 @@ const ProductGrid = () => {
   
   // Fetch products with oferta=true and apply category filter
   const { products: ofertas, loading, error } = useProducts({
-    category: selectedCategory === "all" ? undefined : selectedCategory.toLowerCase(),
+    category: selectedCategory === "all" ? undefined : selectedCategory,
     oferta: true // Only show products with oferta=true
   });
 
   const categories = [
     { label: "Todos", value: "all" },
-    { label: "Aseo", value: "aseo" },
-    { label: "Perfumería", value: "perfumeria" },
-    { label: "Paquetería", value: "paqueteria" }
+    { label: "Aseo Hogar", value: "ASEO HOGAR" },
+    { label: "Aseo Personal", value: "ASEO PERSONAL" },
+    { label: "Belleza", value: "BELLEZA" },
+    { label: "Cuidado Capilar", value: "CUIDADO CAPILAR" },
+    { label: "Cuidado Personal", value: "CUIDADO PERSONAL" },
+    { label: "Desodorantes", value: "DESODORANTES" },
+    { label: "Maquillaje", value: "MAQUILLAJE" },
+    { label: "Maquillajes TikTok", value: "MAQUILLAJES-TIKTOK" },
+    { label: "Perfumería", value: "PERFUMERIA" },
+    { label: "Perfumes", value: "PERFUMES" },
+    { label: "Tinturas", value: "TINTURAS" }
   ];
 
   const getProductColor = (category: string) => {
     switch (category) {
-      case "Aseo":
-        return "from-primary/20 to-primary/30 text-primary";
-      case "Perfumería":
-        return "from-secondary/30 to-accent/20 text-primary";
-      case "Paquetería":
-        return "from-accent/20 to-success/20 text-success";
+      case "ASEO HOGAR":
+      case "ASEO PERSONAL":
+        return "from-blue-200 to-blue-300 text-blue-700";
+      case "BELLEZA":
+      case "MAQUILLAJE":
+      case "MAQUILLAJES-TIKTOK":
+        return "from-pink-200 to-pink-300 text-pink-700";
+      case "CUIDADO CAPILAR":
+        return "from-green-200 to-green-300 text-green-700";
+      case "CUIDADO PERSONAL":
+        return "from-purple-200 to-purple-300 text-purple-700";
+      case "DESODORANTES":
+        return "from-cyan-200 to-cyan-300 text-cyan-700";
+      case "PERFUMERIA":
+      case "PERFUMES":
+        return "from-amber-200 to-amber-300 text-amber-700";
+      case "TINTURAS":
+        return "from-indigo-200 to-indigo-300 text-indigo-700";
       default:
         return "from-muted to-muted text-muted-foreground";
     }
@@ -47,12 +67,15 @@ const ProductGrid = () => {
         </div>
 
         {/* Categories Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 max-w-5xl mx-auto">
           {categories.map((category) => (
             <Button
               key={category.value}
               variant={selectedCategory === category.value ? "default" : "outline"}
-              className={selectedCategory === category.value ? "bg-primary hover:bg-primary/80" : ""}
+              size="sm"
+              className={`text-xs md:text-sm whitespace-nowrap ${
+                selectedCategory === category.value ? "bg-primary hover:bg-primary/80" : ""
+              }`}
               onClick={() => setSelectedCategory(category.value)}
             >
               {category.label}
