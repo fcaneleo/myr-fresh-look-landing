@@ -174,6 +174,7 @@ export const useProductAdmin = () => {
       if (editingProduct) {
         // Update existing product
         console.log('Updating product with ID:', editingProduct.id);
+        console.log('Image URL to save:', imageUrl);
         const { error } = await supabase
           .from('productos')
           .update(productData)
@@ -184,6 +185,14 @@ export const useProductAdmin = () => {
           throw error;
         }
         
+        // Verify the update worked
+        const { data: verifyData } = await supabase
+          .from('productos')
+          .select('image_url')
+          .eq('id', editingProduct.id)
+          .single();
+        
+        console.log('Updated product image_url in DB:', verifyData?.image_url);
         console.log('Product updated successfully');
         toast({
           title: "Producto actualizado",
