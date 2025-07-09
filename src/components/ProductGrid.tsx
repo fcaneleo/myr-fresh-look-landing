@@ -105,17 +105,27 @@ const ProductGrid = () => {
             className="bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 cursor-pointer"
             onClick={() => navigate(`/producto/${product.id}`)}
           >
-              {/* Product Image Placeholder */}
-              <div className={`h-40 bg-gradient-to-br ${getProductColor(product.category)} rounded-lg mb-4 flex items-center justify-center relative`}>
-                <span className="font-bold text-center px-2">{product.name}</span>
+              {/* Product Image */}
+              <div className="h-40 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+                {product.image && product.image !== '/placeholder.svg' ? (
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover rounded-lg hover:scale-105 transition-transform duration-300"
+                  />
+                ) : (
+                  <div className={`w-full h-full bg-gradient-to-br ${getProductColor(product.category)} rounded-lg flex items-center justify-center hover:scale-105 transition-transform duration-300`}>
+                    <span className="font-bold text-center px-2 text-sm leading-tight">{product.name}</span>
+                  </div>
+                )}
                 {/* Badges */}
                 {product.featured && (
-                  <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
+                  <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground z-10">
                     Destacado
                   </Badge>
                 )}
                 {product.oferta && (
-                  <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground">
+                  <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground z-10">
                     Oferta
                   </Badge>
                 )}
