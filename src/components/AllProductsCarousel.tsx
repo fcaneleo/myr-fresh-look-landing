@@ -15,9 +15,7 @@ import { useProducts } from "../hooks/useProducts";
 const AllProductsCarousel = () => {
   const navigate = useNavigate();
   const [api, setApi] = React.useState<CarouselApi>();
-  const { products, loading } = useProducts({ 
-    limit: 12 
-  });
+  const { products, loading } = useProducts();
 
   useEffect(() => {
     if (!api) {
