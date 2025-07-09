@@ -25,7 +25,7 @@ const Header = () => {
             <img 
               src="/lovable-uploads/e6b57251-7b96-4b30-bc97-3e6da25c9e4b.png" 
               alt="RyM - Tu tienda de confianza" 
-              className="h-12 w-auto"
+              className="h-12 w-auto rounded-full"
             />
             <span className="hidden md:block text-sm text-muted-foreground">
               Aseo, Perfumería & Paquetería
