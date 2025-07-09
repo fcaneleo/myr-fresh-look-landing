@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Product } from "../pages/Index";
 import { useProducts } from "../hooks/useProducts";
 
@@ -105,8 +106,19 @@ const ProductGrid = () => {
             onClick={() => navigate(`/producto/${product.id}`)}
           >
               {/* Product Image Placeholder */}
-              <div className={`h-40 bg-gradient-to-br ${getProductColor(product.category)} rounded-lg mb-4 flex items-center justify-center`}>
+              <div className={`h-40 bg-gradient-to-br ${getProductColor(product.category)} rounded-lg mb-4 flex items-center justify-center relative`}>
                 <span className="font-bold text-center px-2">{product.name}</span>
+                {/* Badges */}
+                {product.featured && (
+                  <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
+                    Destacado
+                  </Badge>
+                )}
+                {product.oferta && (
+                  <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground">
+                    Oferta
+                  </Badge>
+                )}
               </div>
               
               {/* Product Info */}

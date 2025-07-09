@@ -101,7 +101,9 @@ export const useProducts = (options: UseProductsOptions = {}) => {
         price: parseFloat(item.precio.toString()),
         image: item.image_url || '/placeholder.svg',
         category: item.familias?.nombre || '',
-        description: item.descripcion_larga || ''
+        description: item.descripcion_larga || '',
+        featured: Boolean(item.featured),
+        oferta: Boolean(item.oferta)
       })) || [];
 
       if (options.offset && options.offset > 0) {
