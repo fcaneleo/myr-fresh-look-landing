@@ -99,7 +99,7 @@ const Contacto = () => {
                       <p className="text-sm text-muted-foreground">Atención inmediata</p>
                     </div>
                   </div>
-                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('https://wa.me/56912345678?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}>
+                  <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('https://wa.me/56930837263?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos', '_blank')}>
                     <MessageCircle className="h-4 w-4 mr-1" />
                     WhatsApp
                   </Button>
