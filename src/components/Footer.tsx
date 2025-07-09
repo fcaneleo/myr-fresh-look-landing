@@ -13,12 +13,12 @@ const Footer = () => {
   }, {
     name: "Facebook",
     icon: Facebook,
-    url: "",
+    url: "https://www.facebook.com/",
     className: "hover:text-blue-500"
   }, {
     name: "YouTube",
     icon: Youtube,
-    url: "",
+    url: "https://www.youtube.com/",
     className: "hover:text-red-500"
   }];
   return <footer className="bg-muted/30 border-t border-border">
