@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import ProductCarousel from "../components/ProductCarousel";
 import ProductFilters from "../components/ProductFilters";
-import InfiniteProductList from "../components/InfiniteProductList";
+import PaginatedProductList from "../components/PaginatedProductList";
 import Footer from "../components/Footer";
 
 const Ofertas = () => {
   const [selectedFilters, setSelectedFilters] = useState({
     category: "all",
-    priceRange: [0, 50],
+    priceRange: [0, 55000],
     sortBy: "name"
   });
 
@@ -26,17 +26,17 @@ const Ofertas = () => {
             Inicio
           </Link>
           <ChevronLeft className="h-4 w-4 rotate-180" />
-          <span className="font-medium text-foreground">Ofertas</span>
+          <span className="font-medium text-foreground">Productos</span>
         </div>
       </div>
 
       {/* Page Title */}
       <div className="container mx-auto px-4 pb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-          Ofertas Especiales
+          Todos los Productos
         </h1>
         <p className="text-muted-foreground">
-          Descubre los mejores precios en productos de aseo, perfumería y paquetería
+          Explora nuestro catálogo completo de productos de aseo, perfumería y paquetería
         </p>
       </div>
 
@@ -59,7 +59,7 @@ const Ofertas = () => {
           
           {/* Product List */}
           <div className="lg:col-span-3">
-            <InfiniteProductList 
+            <PaginatedProductList 
               filters={selectedFilters}
             />
           </div>
