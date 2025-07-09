@@ -8,7 +8,7 @@ const Footer = () => {
   }, {
     name: "Instagram",
     icon: Instagram,
-    url: "https://example.com/instagram",
+    url: "https://www.instagram.com/comercializadora.rym?igsh=M2V3cm5udDVuNzY1",
     className: "hover:text-pink-500"
   }, {
     name: "Facebook",
