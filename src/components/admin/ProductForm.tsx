@@ -46,6 +46,8 @@ export const ProductForm = ({
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [familias, setFamilias] = useState<any[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   // Handle form changes
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -58,7 +60,21 @@ export const ProductForm = ({
   // Handle image selection
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    setUploadError(null);
+    
     if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        setUploadError('Por favor selecciona un archivo de imagen válido');
+        return;
+      }
+      
+      // Validate file size (max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        setUploadError('La imagen debe ser menor a 10MB');
+        return;
+      }
+      
       setImageFile(file);
       const reader = new FileReader();
       reader.onload = () => {
@@ -70,9 +86,18 @@ export const ProductForm = ({
 
   // Handle save
   const handleSave = async () => {
-    const success = await onSave(formData, imageFile);
-    if (success) {
-      handleClose();
+    setIsUploading(true);
+    setUploadError(null);
+    
+    try {
+      const success = await onSave(formData, imageFile);
+      if (success) {
+        handleClose();
+      }
+    } catch (error) {
+      setUploadError('Error al guardar el producto. Intenta nuevamente.');
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -88,6 +113,8 @@ export const ProductForm = ({
     });
     setImageFile(null);
     setImagePreview(null);
+    setUploadError(null);
+    setIsUploading(false);
     onClose();
   };
 
@@ -148,6 +175,11 @@ export const ProductForm = ({
                     alt="Preview" 
                     className="w-full h-48 object-cover rounded-lg"
                   />
+                  {isUploading && (
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
+                      <div className="text-white text-sm">Subiendo imagen...</div>
+                    </div>
+                  )}
                   <Button
                     variant="destructive"
                     size="sm"
@@ -155,15 +187,18 @@ export const ProductForm = ({
                     onClick={() => {
                       setImagePreview(null);
                       setImageFile(null);
+                      setUploadError(null);
                     }}
+                    disabled={isUploading}
                   >
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
               ) : (
-                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
+                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center hover:border-muted-foreground/50 transition-colors">
                   <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                   <p className="text-sm text-muted-foreground">Click para subir imagen</p>
+                  <p className="text-xs text-muted-foreground mt-1">JPG, PNG, WEBP (máx. 10MB)</p>
                 </div>
               )}
               <Input
@@ -172,7 +207,11 @@ export const ProductForm = ({
                 accept="image/*"
                 onChange={handleImageSelect}
                 className="mt-2"
+                disabled={isUploading}
               />
+              {uploadError && (
+                <p className="text-destructive text-sm mt-2">{uploadError}</p>
+              )}
             </div>
           </div>
 
@@ -257,9 +296,9 @@ export const ProductForm = ({
             </Button>
             <Button 
               onClick={handleSave} 
-              disabled={!formData.name || !formData.price || !formData.category || isLoading}
+              disabled={!formData.name || !formData.price || !formData.category || isLoading || isUploading}
             >
-              {isLoading ? 'Guardando...' : editingProduct ? 'Actualizar' : 'Crear'}
+              {isUploading ? 'Subiendo imagen...' : isLoading ? 'Guardando...' : editingProduct ? 'Actualizar' : 'Crear'}
             </Button>
           </div>
         </div>
