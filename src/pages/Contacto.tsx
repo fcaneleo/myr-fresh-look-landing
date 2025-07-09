@@ -81,7 +81,7 @@ const Contacto = () => {
                     <Phone className="h-5 w-5 text-primary" />
                     <div>
                       <p className="font-medium text-foreground">Teléfono</p>
-                      <p className="text-sm text-muted-foreground">+56 9 XXXX XXXX</p>
+                      <p className="text-sm text-muted-foreground">+56 9 3083 7263</p>
                     </div>
                   </div>
                   <Button size="sm" className="bg-success hover:bg-success/80 text-success-foreground" onClick={() => window.open('tel:+56912345678')}>
