@@ -23,8 +23,8 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/c56e675a-3d2a-45d4-b9a0-af1986053f3e.png" 
-              alt="MyR - Tu tienda de confianza" 
+              src="/lovable-uploads/e6b57251-7b96-4b30-bc97-3e6da25c9e4b.png" 
+              alt="RyM - Tu tienda de confianza" 
               className="h-12 w-auto"
             />
             <span className="hidden md:block text-sm text-muted-foreground">

@@ -26,7 +26,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           {/* Logo/Brand */}
           <div className="text-center md:text-left">
-            <h3 className="text-xl font-bold text-primary">MyR</h3>
+            <h3 className="text-xl font-bold text-primary">RyM</h3>
             <p className="text-sm text-muted-foreground">
               Tu tienda de confianza en Peñaflor
             </p>

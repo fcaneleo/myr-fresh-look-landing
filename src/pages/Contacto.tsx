@@ -37,7 +37,7 @@ const Contacto = () => {
             
             {/* Store Name */}
             <div className="bg-card p-6 rounded-lg shadow-sm border">
-              <h3 className="text-xl font-semibold text-foreground mb-4">MyR - Aseo, Perfumería & Paquetería</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-4">RyM - Aseo, Perfumería & Paquetería</h3>
               <p className="text-muted-foreground">
                 Tu tienda de confianza en Peñaflor para productos de aseo, perfumería y paquetería.
               </p>
