@@ -40,16 +40,24 @@ const Productos = () => {
       </div>
 
       {/* Featured Products Carousel */}
-      <div className="container mx-auto px-4 mb-12">
+      <div className="container mx-auto px-4 mb-8 lg:mb-12">
         <h2 className="text-2xl font-bold text-foreground mb-6">Productos Destacados</h2>
         <ProductCarousel />
+      </div>
+
+      {/* Mobile Filters - Show only on mobile, below featured products */}
+      <div className="container mx-auto px-4 mb-6 lg:hidden">
+        <ProductFilters 
+          filters={selectedFilters}
+          onFiltersChange={setSelectedFilters}
+        />
       </div>
 
       {/* Filters and Product List */}
       <div className="container mx-auto px-4 pb-8">
         <div className="flex flex-col lg:grid lg:grid-cols-4 gap-6 lg:gap-8">
-          {/* Filters Sidebar */}
-          <div className="lg:col-span-1 order-2 lg:order-1">
+          {/* Desktop Filters Sidebar - Hidden on mobile */}
+          <div className="hidden lg:block lg:col-span-1">
             <ProductFilters 
               filters={selectedFilters}
               onFiltersChange={setSelectedFilters}
@@ -57,7 +65,7 @@ const Productos = () => {
           </div>
           
           {/* Product List */}
-          <div className="lg:col-span-3 order-1 lg:order-2">
+          <div className="lg:col-span-3">
             <PaginatedProductList 
               filters={selectedFilters}
             />
