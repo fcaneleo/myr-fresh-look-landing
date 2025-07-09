@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Plus, Lock } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { Plus, Lock, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,7 @@ const Admin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -71,6 +72,18 @@ const Admin = () => {
     setIsDialogOpen(false);
     setEditingProduct(null);
   };
+
+  // Filter products based on search term
+  const filteredProducts = useMemo(() => {
+    if (!searchTerm.trim()) return products;
+    
+    const term = searchTerm.toLowerCase();
+    return products.filter(product => 
+      product.descripcion.toLowerCase().includes(term) ||
+      product.descripcion_larga?.toLowerCase().includes(term) ||
+      product.familia_nombre.toLowerCase().includes(term)
+    );
+  }, [products, searchTerm]);
 
   if (!isAuthenticated) {
     return (
@@ -158,8 +171,27 @@ const Admin = () => {
           </div>
         </div>
 
+        {/* Search Bar */}
+        <div className="mb-6">
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Buscar productos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          {searchTerm && (
+            <p className="text-sm text-muted-foreground mt-2">
+              Mostrando {filteredProducts.length} de {products.length} productos
+            </p>
+          )}
+        </div>
+
         <ProductGrid
-          products={products}
+          products={filteredProducts}
           onEditProduct={openEditDialog}
           onDeleteProduct={deleteProduct}
         />
