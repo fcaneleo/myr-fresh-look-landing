@@ -54,7 +54,7 @@ const Hero = () => {
                   <div>
                     <h4 className="font-semibold text-foreground">Horarios</h4>
                     <p className="text-sm text-muted-foreground">Lun - Vie: 9:00 - 19:00</p>
-                    <p className="text-sm text-muted-foreground">Sábado: 9:00 - 14:00</p>
+                    <p className="text-sm text-muted-foreground">Sábado: 9:00 - 18:00</p>
                   </div>
                 </div>
               </div>
