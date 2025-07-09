@@ -114,7 +114,7 @@ const Contacto = () => {
                       <p className="text-sm text-muted-foreground">comercializadorarym@gmail.com</p>
                     </div>
                   </div>
-                  <Button size="sm" variant="outline" onClick={() => window.open('mailto:contacto@myr.cl')}>
+                  <Button size="sm" variant="outline" onClick={() => window.open('mailto:comercializadorarym@gmail.com')}>
                     <Mail className="h-4 w-4 mr-1" />
                     Enviar Email
                   </Button>
