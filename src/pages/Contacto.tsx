@@ -127,7 +127,7 @@ const Contacto = () => {
           <div>
             <h2 className="text-2xl font-bold text-foreground mb-6">Nuestra Ubicación</h2>
             <div className="bg-card rounded-lg shadow-sm border overflow-hidden">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.123456789!2d-70.875!3d-33.609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDM2JzMyLjQiUyA3MMKwNTInMzAuMCJX!5e0!3m2!1ses!2scl!4v1641234567890!5m2!1ses!2scl&q=Avenida+Vicuña+Mackena+4015,+Peñaflor,+Chile" width="100%" height="400" style={{
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.1!2d-70.90341575766996!3d-33.61071501051266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDM2JzM4LjYiUyA3MMKwNTQnMTIuMyJX!5e0!3m2!1ses!2scl!4v1641234567890!5m2!1ses!2scl&q=-33.61071501051266,-70.90341575766996" width="100%" height="400" style={{
               border: 0
             }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full" />
               <div className="p-4 bg-muted/50">
@@ -135,7 +135,7 @@ const Contacto = () => {
                   📍 Visítanos en el centro de Peñaflor, cerca de la plaza principal
                 </p>
                 <div className="flex justify-center mt-3">
-                  <Button variant="outline" size="sm" onClick={() => window.open('https://maps.google.com/?q=Avenida+Vicuña+Mackena+4015,+Peñaflor,+Chile', '_blank')}>
+                  <Button variant="outline" size="sm" onClick={() => window.open('https://maps.google.com/?q=-33.61071501051266,-70.90341575766996', '_blank')}>
                     <MapPin className="h-4 w-4 mr-1" />
                     Ver en Google Maps
                   </Button>
