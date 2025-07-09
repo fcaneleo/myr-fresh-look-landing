@@ -44,7 +44,7 @@ const Hero = () => {
                   <MapPin className="h-5 w-5 text-primary mt-0.5" />
                   <div>
                     <h4 className="font-semibold text-foreground">Dirección</h4>
-                    <p className="text-sm text-muted-foreground">Cerca de la Plaza de Peñaflor</p>
+                    <p className="text-sm text-muted-foreground">Avenida Vicuña Mackena 4030</p>
                     <p className="text-xs text-muted-foreground">Peñaflor, Región Metropolitana</p>
                   </div>
                 </div>
