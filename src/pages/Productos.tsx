@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useCategories } from "@/hooks/useCategories";
 import Header from "../components/Header";
 import ProductCarousel from "../components/ProductCarousel";
 import ProductFilters from "../components/ProductFilters";
@@ -8,11 +9,28 @@ import PaginatedProductList from "../components/PaginatedProductList";
 import Footer from "../components/Footer";
 
 const Productos = () => {
+  const [searchParams] = useSearchParams();
+  const { categories } = useCategories();
+  const categoriaId = searchParams.get('categoria');
+  
   const [selectedFilters, setSelectedFilters] = useState({
-    category: "all",
+    category: categoriaId || "all",
     priceRange: [0, 55000],
     sortBy: "name"
   });
+
+  // Update filters when URL parameter changes
+  useEffect(() => {
+    setSelectedFilters(prev => ({
+      ...prev,
+      category: categoriaId || "all"
+    }));
+  }, [categoriaId]);
+
+  // Find the current category name for display
+  const currentCategory = categoriaId 
+    ? categories.find(cat => cat.id.toString() === categoriaId)
+    : null;
 
   return (
     <div className="min-h-screen bg-background pt-20">
@@ -32,10 +50,13 @@ const Productos = () => {
       {/* Page Title */}
       <div className="container mx-auto px-4 pb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-          Todos los Productos
+          {currentCategory ? currentCategory.nombre : "Todos los Productos"}
         </h1>
         <p className="text-muted-foreground">
-          Explora nuestro catálogo completo de productos de aseo, perfumería y paquetería
+          {currentCategory 
+            ? `Productos de la categoría ${currentCategory.nombre}`
+            : "Explora nuestro catálogo completo de productos de aseo, perfumería y paquetería"
+          }
         </p>
       </div>
 
