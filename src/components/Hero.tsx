@@ -15,7 +15,7 @@ const Hero = () => {
             
             {/* Logo completo */}
              <div className="flex justify-center my-8">
-               <img src="/lovable-uploads/a9272eb1-cfea-44f4-94c4-659945618890.png" alt="R&M - Tu tienda de confianza, Peñaflor Chile" className="w-48 md:w-64 h-48 md:h-64 rounded object-cover" />
+               <img src="/lovable-uploads/a9272eb1-cfea-44f4-94c4-659945618890.png" alt="R&M - Tu tienda de confianza, Peñaflor Chile" className="w-48 md:w-64 h-48 md:h-64 rounded-full object-cover" />
              </div>
             
             <p className="text-muted-foreground max-w-md mx-auto text-center px-4 mb-8">
