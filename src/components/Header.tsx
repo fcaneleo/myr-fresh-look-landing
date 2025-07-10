@@ -85,9 +85,34 @@ const Header = () => {
               <Link to="/" className="block text-foreground hover:text-primary transition-colors py-2" onClick={closeMobileMenu}>
                 Inicio
               </Link>
-              <Link to="/productos" className="block text-foreground hover:text-primary transition-colors py-2" onClick={closeMobileMenu}>
-                Productos
-              </Link>
+              
+              {/* Mobile Products Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-between text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent focus:outline-none focus:ring-0 h-auto p-2"
+                  >
+                    Productos
+                    <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-full z-50" align="start" side="bottom">
+                  <DropdownMenuItem asChild>
+                    <Link to="/productos" className="w-full cursor-pointer" onClick={closeMobileMenu}>
+                      Todos los Productos
+                    </Link>
+                  </DropdownMenuItem>
+                  {categories.map((category) => (
+                    <DropdownMenuItem key={category.id} asChild>
+                      <Link to={`/productos?categoria=${category.id}`} className="w-full cursor-pointer" onClick={closeMobileMenu}>
+                        {category.nombre}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
               <Link to="/contacto" className="block text-foreground hover:text-primary transition-colors py-2" onClick={closeMobileMenu}>
                 Contacto
               </Link>
