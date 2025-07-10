@@ -38,20 +38,23 @@ const Header = () => {
             {/* Products Dropdown Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
+                <Button 
+                  variant="ghost" 
+                  className="text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent focus:outline-none focus:ring-0 h-auto p-2 flex items-center"
+                >
                   Productos
-                  <ChevronDown className="ml-1 h-4 w-4" />
+                  <ChevronDown className="ml-1 h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 z-50" align="start" sideOffset={5}>
+              <DropdownMenuContent className="w-56 z-50 mt-1" align="start" side="bottom">
                 <DropdownMenuItem asChild>
-                  <Link to="/productos" className="w-full">
+                  <Link to="/productos" className="w-full cursor-pointer">
                     Todos los Productos
                   </Link>
                 </DropdownMenuItem>
                 {categories.map((category) => (
                   <DropdownMenuItem key={category.id} asChild>
-                    <Link to={`/productos?categoria=${category.id}`} className="w-full">
+                    <Link to={`/productos?categoria=${category.id}`} className="w-full cursor-pointer">
                       {category.nombre}
                     </Link>
                   </DropdownMenuItem>
