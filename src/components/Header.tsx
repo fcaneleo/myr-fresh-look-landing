@@ -38,12 +38,12 @@ const Header = () => {
             {/* Products Dropdown Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent">
+                <Button variant="ghost" className="text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
                   Productos
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
+              <DropdownMenuContent className="w-56 z-50" align="start" sideOffset={5}>
                 <DropdownMenuItem asChild>
                   <Link to="/productos" className="w-full">
                     Todos los Productos
