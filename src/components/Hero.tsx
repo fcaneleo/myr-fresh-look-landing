@@ -97,7 +97,7 @@ const Hero = () => {
             <div className="bg-accent/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Truck className="h-8 w-8 text-accent-foreground" />
             </div>
-            <h3 className="font-semibold text-foreground mb-2">Entrega Rápida</h3>
+            <h3 className="font-semibold text-foreground mb-2">Próximamente Entrega Rápida</h3>
             <p className="text-muted-foreground text-sm">Recibe tus productos en menos de 24 horas</p>
           </div>
           <div className="text-center">
