@@ -35,15 +35,23 @@ export const useProducts = (options: UseProductsOptions = {}) => {
 
       // Apply filters  
       if (options.category && options.category !== 'all') {
-        // Get familia_id first, then filter by it
-        const { data: familiaData } = await supabase
-          .from('familias')
-          .select('id')
-          .eq('nombre', options.category)
-          .single();
+        // Check if category is an ID (numeric) or name (string)
+        const isNumericId = !isNaN(Number(options.category));
         
-        if (familiaData) {
-          query = query.eq('familia_id', familiaData.id);
+        if (isNumericId) {
+          // Filter directly by familia_id
+          query = query.eq('familia_id', parseInt(options.category));
+        } else {
+          // Get familia_id by name first, then filter by it
+          const { data: familiaData } = await supabase
+            .from('familias')
+            .select('id')
+            .eq('nombre', options.category)
+            .single();
+          
+          if (familiaData) {
+            query = query.eq('familia_id', familiaData.id);
+          }
         }
       }
 
