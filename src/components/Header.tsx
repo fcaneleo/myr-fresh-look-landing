@@ -2,18 +2,14 @@ import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import SearchInput from "./SearchInput";
 import { useCategories } from "@/hooks/useCategories";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { categories } = useCategories();
-  
+  const {
+    categories
+  } = useCategories();
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -26,7 +22,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <img src="/lovable-uploads/a930b442-6baa-492c-85a0-2afe4e300666.png" alt="R&M - Tu tienda de confianza" className="h-12 w-auto rounded-full" />
-            <span className="hidden md:block text-sm text-muted-foreground">Perfumería, Artículos de belleza, Capilar &amp; Aseo</span>
+            <span className="hidden md:block text-sm text-muted-foreground">Cuidado personal, Aseo, Perfumería & Belleza</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -38,34 +34,22 @@ const Header = () => {
             {/* Products Dropdown Menu */}
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  className="text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent focus:outline-none focus:ring-0 h-10 px-3 flex items-center justify-center min-w-fit"
-                >
+                <Button variant="ghost" className="text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent focus:outline-none focus:ring-0 h-10 px-3 flex items-center justify-center min-w-fit">
                   Productos
                   <ChevronDown className="ml-1 h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent 
-                className="w-56 z-[9999]" 
-                align="start" 
-                side="bottom" 
-                sideOffset={8}
-                avoidCollisions={true}
-                collisionPadding={16}
-              >
+              <DropdownMenuContent className="w-56 z-[9999]" align="start" side="bottom" sideOffset={8} avoidCollisions={true} collisionPadding={16}>
                 <DropdownMenuItem asChild>
                   <Link to="/productos" className="w-full cursor-pointer">
                     Todos los Productos
                   </Link>
                 </DropdownMenuItem>
-                {categories.map((category) => (
-                  <DropdownMenuItem key={category.id} asChild>
+                {categories.map(category => <DropdownMenuItem key={category.id} asChild>
                     <Link to={`/productos?categoria=${category.id}`} className="w-full cursor-pointer">
                       {category.nombre}
                     </Link>
-                  </DropdownMenuItem>
-                ))}
+                  </DropdownMenuItem>)}
               </DropdownMenuContent>
             </DropdownMenu>
             
@@ -96,34 +80,22 @@ const Header = () => {
               {/* Mobile Products Dropdown */}
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    className="w-full justify-between text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent focus:outline-none focus:ring-0 h-10 p-2"
-                  >
+                  <Button variant="ghost" className="w-full justify-between text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent focus:outline-none focus:ring-0 h-10 p-2">
                     Productos
                     <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent 
-                  className="w-[calc(100vw-2rem)] z-[9999]" 
-                  align="start" 
-                  side="bottom" 
-                  sideOffset={8}
-                  avoidCollisions={true}
-                  collisionPadding={16}
-                >
+                <DropdownMenuContent className="w-[calc(100vw-2rem)] z-[9999]" align="start" side="bottom" sideOffset={8} avoidCollisions={true} collisionPadding={16}>
                   <DropdownMenuItem asChild>
                     <Link to="/productos" className="w-full cursor-pointer" onClick={closeMobileMenu}>
                       Todos los Productos
                     </Link>
                   </DropdownMenuItem>
-                  {categories.map((category) => (
-                    <DropdownMenuItem key={category.id} asChild>
+                  {categories.map(category => <DropdownMenuItem key={category.id} asChild>
                       <Link to={`/productos?categoria=${category.id}`} className="w-full cursor-pointer" onClick={closeMobileMenu}>
                         {category.nombre}
                       </Link>
-                    </DropdownMenuItem>
-                  ))}
+                    </DropdownMenuItem>)}
                 </DropdownMenuContent>
               </DropdownMenu>
               
