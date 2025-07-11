@@ -116,7 +116,7 @@ export const useProductAdmin = () => {
       featured: boolean;
       oferta: boolean;
     },
-    imageFile: File | null,
+    imageFile: File | null | 'REMOVE_IMAGE',
     editingProduct: AdminProduct | null
   ) => {
     setIsLoading(true);
@@ -125,10 +125,15 @@ export const useProductAdmin = () => {
       let imageUrl = editingProduct?.image_url || null;
       
       console.log('Starting save product. Current image URL:', imageUrl);
-      console.log('Image file selected:', imageFile ? imageFile.name : 'None');
+      console.log('Image file selected:', typeof imageFile === 'string' ? imageFile : (imageFile ? imageFile.name : 'None'));
       
+      // Check if we're explicitly removing the image
+      if (imageFile === 'REMOVE_IMAGE') {
+        imageUrl = null;
+        console.log('Image explicitly removed - setting URL to null');
+      }
       // Upload new image if selected
-      if (imageFile) {
+      else if (imageFile && typeof imageFile !== 'string') {
         console.log('Uploading new image...');
         const uploadedUrl = await uploadImage(imageFile);
         console.log('Upload result:', uploadedUrl);

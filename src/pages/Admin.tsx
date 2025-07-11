@@ -57,7 +57,7 @@ const Admin = () => {
       featured: boolean;
       oferta: boolean;
     },
-    imageFile: File | null
+    imageFile: File | null | 'REMOVE_IMAGE'
   ) => {
     const success = await saveProduct(formData, imageFile, editingProduct);
     if (success) {
@@ -138,23 +138,23 @@ const Admin = () => {
       <Header />
       
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-bold text-foreground">Administrar Productos</h1>
             <p className="text-muted-foreground">Gestiona el catálogo de productos de tu tienda</p>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
             <Button 
               variant="outline" 
               onClick={() => setIsAuthenticated(false)}
-              className="text-muted-foreground"
+              className="text-muted-foreground order-2 sm:order-1"
             >
               Cerrar Sesión
             </Button>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button onClick={openCreateDialog} className="bg-primary hover:bg-primary/90">
+                <Button onClick={openCreateDialog} className="bg-primary hover:bg-primary/90 order-1 sm:order-2">
                   <Plus className="h-4 w-4 mr-2" />
                   Nuevo Producto
                 </Button>

@@ -21,7 +21,7 @@ interface ProductFormProps {
       featured: boolean;
       oferta: boolean;
     },
-    imageFile: File | null
+    imageFile: File | null | 'REMOVE_IMAGE'
   ) => Promise<boolean>;
   editingProduct: AdminProduct | null;
   isLoading: boolean;
@@ -48,6 +48,7 @@ export const ProductForm = ({
   const [familias, setFamilias] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [imageRemoved, setImageRemoved] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Handle form changes
@@ -96,7 +97,9 @@ export const ProductForm = ({
     setUploadError(null);
     
     try {
-      const success = await onSave(formData, imageFile);
+      // If image was removed and no new image selected, pass special flag
+      const imageToSave = imageRemoved && !imageFile ? 'REMOVE_IMAGE' : imageFile;
+      const success = await onSave(formData, imageToSave as any);
       if (success) {
         handleClose();
       }
@@ -121,6 +124,7 @@ export const ProductForm = ({
     setImagePreview(null);
     setUploadError(null);
     setIsUploading(false);
+    setImageRemoved(false);
     onClose();
   };
 
@@ -146,6 +150,7 @@ export const ProductForm = ({
       });
       setImagePreview(editingProduct.image_url);
       setImageFile(null);
+      setImageRemoved(false);
     } else {
       setFormData({
         name: "",
@@ -157,6 +162,7 @@ export const ProductForm = ({
       });
       setImagePreview(null);
       setImageFile(null);
+      setImageRemoved(false);
     }
   }, [editingProduct]);
 
@@ -194,6 +200,7 @@ export const ProductForm = ({
                       setImagePreview(null);
                       setImageFile(null);
                       setUploadError(null);
+                      setImageRemoved(true);
                     }}
                     disabled={isUploading}
                   >
