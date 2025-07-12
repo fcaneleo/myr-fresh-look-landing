@@ -77,7 +77,7 @@ const SearchInput = () => {
     return () => clearTimeout(delayedSearch);
   }, [query]);
 
-  // Handle clicks outside
+  // Handle clicks outside and touch events
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -86,9 +86,25 @@ const SearchInput = () => {
       }
     };
 
+    // Prevent body scroll when dropdown is open on mobile
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isOpen && searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        e.preventDefault();
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -180,7 +196,15 @@ const SearchInput = () => {
 
       {/* Search Results Dropdown */}
       {isOpen && query.trim() && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-popover border border-border rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+        <div 
+          className="absolute top-full left-0 right-0 mt-2 bg-popover border border-border rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto touch-pan-y"
+          onTouchStart={() => {
+            // Hide keyboard on mobile when touching the dropdown
+            if (inputRef.current) {
+              inputRef.current.blur();
+            }
+          }}
+        >
           {loading ? (
             <div className="p-4 text-center text-muted-foreground">
               Buscando...
