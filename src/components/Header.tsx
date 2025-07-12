@@ -26,7 +26,7 @@ const Header = () => {
             </Link>
             <div className="flex flex-col">
               <span className="hidden md:block text-sm text-muted-foreground">Perfumería, Belleza, Cuidado Capilar & Más</span>
-              <span className="block md:hidden text-xs text-muted-foreground leading-tight max-w-[120px] truncate">Perfumería, Belleza, Cuidado Capilar & Más</span>
+              <span className="block md:hidden text-xs text-muted-foreground leading-tight max-w-[200px] truncate">Perfumería, Belleza, Cuidado Capilar & Más</span>
             </div>
           </div>
 
