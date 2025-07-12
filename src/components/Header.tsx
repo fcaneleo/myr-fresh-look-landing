@@ -21,9 +21,13 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <img src="/lovable-uploads/a930b442-6baa-492c-85a0-2afe4e300666.png" alt="R&M - Tu tienda de confianza" className="h-12 w-auto rounded-full" />
-            <span className="hidden md:block text-sm text-muted-foreground">Perfumería, Belleza, Cuidado Capilar & Más
-          </span>
+            <Link to="/" className="flex items-center space-x-2">
+              <img src="/lovable-uploads/a930b442-6baa-492c-85a0-2afe4e300666.png" alt="R&M - Tu tienda de confianza" className="h-12 w-auto rounded-full" />
+              <div className="flex flex-col">
+                <span className="hidden md:block text-sm text-muted-foreground">Perfumería, Belleza, Cuidado Capilar & Más</span>
+                <span className="block md:hidden text-xs text-muted-foreground leading-tight max-w-[120px] truncate">Perfumería, Belleza, Cuidado Capilar & Más</span>
+              </div>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
