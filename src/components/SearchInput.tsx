@@ -176,7 +176,8 @@ const SearchInput = () => {
             }}
             onKeyDown={handleKeyDown}
             placeholder="Buscar productos..."
-            className="bg-transparent outline-none text-sm flex-1 text-foreground placeholder:text-muted-foreground"
+            className="bg-transparent outline-none flex-1 text-foreground placeholder:text-muted-foreground text-base sm:text-sm"
+            style={{ fontSize: '16px' }}
           />
           {query && (
             <button
