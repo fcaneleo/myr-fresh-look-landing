@@ -27,7 +27,7 @@ const Admin = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === "admin" && password === "admin") {
+    if (username === "admin" && password === "Vale8253") {
       setIsAuthenticated(true);
       setAuthError("");
     } else {
