@@ -22,10 +22,10 @@ const Admin = () => {
   const [filters, setFilters] = useState<AdminFilters>({
     oferta: false,
     featured: false,
-    categoria: "",
+    categoria: "all",
     minPrice: "",
     maxPrice: "",
-    sortBy: ""
+    sortBy: "default"
   });
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const Admin = () => {
       filtered = filtered.filter(product => product.featured === true);
     }
     
-    if (filters.categoria) {
+    if (filters.categoria && filters.categoria !== "all") {
       filtered = filtered.filter(product => product.familia_nombre === filters.categoria);
     }
     
@@ -139,6 +139,7 @@ const Admin = () => {
       case 'oldest':
         filtered.sort((a, b) => a.id - b.id);
         break;
+      case 'default':
       default:
         // Keep default order (by id desc)
         break;

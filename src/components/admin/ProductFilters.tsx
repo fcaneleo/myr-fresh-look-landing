@@ -45,10 +45,10 @@ export const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps
     onFiltersChange({
       oferta: false,
       featured: false,
-      categoria: "",
+      categoria: "all",
       minPrice: "",
       maxPrice: "",
-      sortBy: ""
+      sortBy: "default"
     });
   };
 
@@ -96,7 +96,7 @@ export const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps
                 <SelectValue placeholder="Todas" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todas las categorías</SelectItem>
+                <SelectItem value="all">Todas las categorías</SelectItem>
                 {familias.map((familia) => (
                   <SelectItem key={familia.id} value={familia.nombre}>
                     {familia.nombre}
@@ -140,7 +140,7 @@ export const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps
                 <SelectValue placeholder="Defecto" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Por defecto</SelectItem>
+                <SelectItem value="default">Por defecto</SelectItem>
                 <SelectItem value="name_asc">Nombre A-Z</SelectItem>
                 <SelectItem value="name_desc">Nombre Z-A</SelectItem>
                 <SelectItem value="price_asc">Precio menor a mayor</SelectItem>
