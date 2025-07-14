@@ -204,8 +204,12 @@ export type Database = {
           costo_neto: number | null
           created_at: string | null
           descripcion: string | null
+          descripcion_larga: string | null
           familia_id: number | null
+          featured: boolean | null
           id: number | null
+          image_url: string | null
+          oferta: boolean | null
           precio: number | null
           precio_mayor: number | null
           promocion: boolean | null
@@ -216,6 +220,7 @@ export type Database = {
           unidad_medida: number | null
           updated_at: string | null
           valor_impuesto: number | null
+          vigencia: boolean | null
         }
         Relationships: [
           {
