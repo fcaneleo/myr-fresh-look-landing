@@ -55,7 +55,7 @@ const ProductosMayor = () => {
         <p className="text-muted-foreground">
           {currentCategory 
             ? `Productos de ${currentCategory.nombre} con precios especiales para compras por mayor`
-            : "Productos con precios especiales para compras por mayor (mínimo $100)"
+            : "Productos con precios especiales para compras por mayor (mínimo 3 unidades por producto)"
           }
         </p>
       </div>
