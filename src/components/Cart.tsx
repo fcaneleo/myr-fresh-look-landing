@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { X, Plus, Minus, ShoppingBag } from "lucide-react";
 import { CartItem } from "../pages/Index";
+import { formatPrice } from "@/lib/formatPrice";
 
 interface CartProps {
   isOpen: boolean;
@@ -50,7 +51,7 @@ const Cart = ({ isOpen, onClose, items, onRemoveItem, onUpdateQuantity }: CartPr
                   
                   <div className="flex-1">
                     <h3 className="font-medium text-sm">{item.name}</h3>
-                    <p className="text-blue-600 font-bold">${item.price}</p>
+                    <p className="text-blue-600 font-bold">{formatPrice(item.price)}</p>
                     
                     <div className="flex items-center space-x-2 mt-2">
                       <Button
@@ -72,7 +73,7 @@ const Cart = ({ isOpen, onClose, items, onRemoveItem, onUpdateQuantity }: CartPr
                   </div>
                   
                   <div className="text-right">
-                    <p className="font-bold text-sm">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-bold text-sm">{formatPrice(item.price * item.quantity)}</p>
                     <Button
                       size="sm"
                       variant="ghost"
@@ -93,7 +94,7 @@ const Cart = ({ isOpen, onClose, items, onRemoveItem, onUpdateQuantity }: CartPr
           <div className="border-t p-4 space-y-4">
             <div className="flex justify-between items-center text-lg font-bold">
               <span>Total:</span>
-              <span className="text-blue-600">${total.toFixed(2)}</span>
+              <span className="text-blue-600">{formatPrice(total)}</span>
             </div>
             <Button className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold">
               Proceder al Pago

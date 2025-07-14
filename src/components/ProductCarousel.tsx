@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/carousel";
 import type { CarouselApi } from "@/components/ui/carousel";
 import { useProducts } from "../hooks/useProducts";
+import { formatPrice } from "@/lib/formatPrice";
 
 const ProductCarousel = () => {
   const navigate = useNavigate();
@@ -84,12 +85,12 @@ const ProductCarousel = () => {
                 </p>
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-lg font-bold text-primary">
-                      ${product.price}
-                    </span>
-                    <span className="text-xs text-muted-foreground line-through">
-                      ${(product.price * 1.25).toFixed(2)}
-                    </span>
+                     <span className="text-lg font-bold text-primary">
+                       {formatPrice(product.price)}
+                     </span>
+                     <span className="text-xs text-muted-foreground line-through">
+                       {formatPrice(product.price * 1.25)}
+                     </span>
                   </div>
                   <div className="text-xs text-muted-foreground capitalize bg-muted px-2 py-1 rounded-full">
                     {product.category}

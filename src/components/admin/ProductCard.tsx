@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AdminProduct } from "@/hooks/useProductAdmin";
+import { formatPrice } from "@/lib/formatPrice";
 
 interface ProductCardProps {
   product: AdminProduct;
@@ -41,7 +42,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
         <CardTitle className="text-lg">{product.descripcion}</CardTitle>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-primary">
-            ${product.precio.toLocaleString('es-CL')}
+            {formatPrice(product.precio)}
           </span>
           <Badge variant="secondary">{product.familia_nombre}</Badge>
         </div>

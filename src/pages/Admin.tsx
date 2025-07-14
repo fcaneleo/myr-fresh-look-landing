@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useProductAdmin, AdminProduct } from "@/hooks/useProductAdmin";
 import { ProductForm } from "@/components/admin/ProductForm";
 import { ProductGrid } from "@/components/admin/ProductGrid";
+import { ProductFilters, AdminFilters } from "@/components/admin/ProductFilters";
 import Header from "../components/Header";
 
 const Admin = () => {
@@ -18,6 +19,14 @@ const Admin = () => {
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState<AdminFilters>({
+    oferta: false,
+    featured: false,
+    categoria: "",
+    minPrice: "",
+    maxPrice: "",
+    sortBy: ""
+  });
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -73,17 +82,70 @@ const Admin = () => {
     setEditingProduct(null);
   };
 
-  // Filter products based on search term
+  // Filter and sort products
   const filteredProducts = useMemo(() => {
-    if (!searchTerm.trim()) return products;
+    let filtered = [...products];
     
-    const term = searchTerm.toLowerCase();
-    return products.filter(product => 
-      product.descripcion.toLowerCase().includes(term) ||
-      product.descripcion_larga?.toLowerCase().includes(term) ||
-      product.familia_nombre.toLowerCase().includes(term)
-    );
-  }, [products, searchTerm]);
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(product => 
+        product.descripcion.toLowerCase().includes(term) ||
+        product.descripcion_larga?.toLowerCase().includes(term) ||
+        product.familia_nombre.toLowerCase().includes(term)
+      );
+    }
+    
+    // Apply admin filters
+    if (filters.oferta) {
+      filtered = filtered.filter(product => product.oferta === true);
+    }
+    
+    if (filters.featured) {
+      filtered = filtered.filter(product => product.featured === true);
+    }
+    
+    if (filters.categoria) {
+      filtered = filtered.filter(product => product.familia_nombre === filters.categoria);
+    }
+    
+    if (filters.minPrice) {
+      const minPrice = parseFloat(filters.minPrice);
+      filtered = filtered.filter(product => product.precio >= minPrice);
+    }
+    
+    if (filters.maxPrice) {
+      const maxPrice = parseFloat(filters.maxPrice);
+      filtered = filtered.filter(product => product.precio <= maxPrice);
+    }
+    
+    // Apply sorting
+    switch (filters.sortBy) {
+      case 'name_asc':
+        filtered.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+        break;
+      case 'name_desc':
+        filtered.sort((a, b) => b.descripcion.localeCompare(a.descripcion));
+        break;
+      case 'price_asc':
+        filtered.sort((a, b) => a.precio - b.precio);
+        break;
+      case 'price_desc':
+        filtered.sort((a, b) => b.precio - a.precio);
+        break;
+      case 'newest':
+        filtered.sort((a, b) => b.id - a.id);
+        break;
+      case 'oldest':
+        filtered.sort((a, b) => a.id - b.id);
+        break;
+      default:
+        // Keep default order (by id desc)
+        break;
+    }
+    
+    return filtered;
+  }, [products, searchTerm, filters]);
 
   if (!isAuthenticated) {
     return (
@@ -183,12 +245,18 @@ const Admin = () => {
               className="pl-10 border-primary focus:border-primary ring-primary"
             />
           </div>
-          {searchTerm && (
+          {(searchTerm || Object.values(filters).some(f => f)) && (
             <p className="text-sm text-muted-foreground mt-2">
               Mostrando {filteredProducts.length} de {products.length} productos
             </p>
           )}
         </div>
+
+        {/* Filters */}
+        <ProductFilters
+          filters={filters}
+          onFiltersChange={setFilters}
+        />
 
         <ProductGrid
           products={filteredProducts}

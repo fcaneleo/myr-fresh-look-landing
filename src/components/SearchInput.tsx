@@ -3,6 +3,7 @@ import { Search, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Product } from "@/pages/Index";
+import { formatPrice } from "@/lib/formatPrice";
 
 interface SearchResult extends Product {
   highlight?: string;
@@ -236,7 +237,7 @@ const SearchInput = () => {
                           {getCategoryDisplayName(product.category)}
                         </span>
                         <span className="text-sm font-bold text-primary">
-                          ${product.price.toLocaleString('es-CL')}
+                          {formatPrice(product.price)}
                         </span>
                       </div>
                     </div>

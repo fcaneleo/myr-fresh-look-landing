@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { formatPrice } from "@/lib/formatPrice";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -95,7 +96,7 @@ const ProductDetail = () => {
   };
 
   const handleWhatsAppContact = () => {
-    const message = `Hola, me interesa el producto: ${product?.descripcion} - $${product?.precio.toLocaleString('es-CL')}`;
+    const message = `Hola, me interesa el producto: ${product?.descripcion} - ${formatPrice(product?.precio || 0)}`;
     const whatsappUrl = `https://wa.me/56930837263?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -178,7 +179,7 @@ const ProductDetail = () => {
                 {product.descripcion}
               </h1>
               <div className="text-4xl font-bold text-primary mb-6">
-                ${product.precio.toLocaleString('es-CL')}
+                {formatPrice(product.precio)}
               </div>
             </div>
 

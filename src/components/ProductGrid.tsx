@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Product } from "../pages/Index";
 import { useProducts } from "../hooks/useProducts";
+import { formatPrice } from "@/lib/formatPrice";
 
 const ProductGrid = () => {
   const navigate = useNavigate();
@@ -139,7 +140,7 @@ const ProductGrid = () => {
                 <h3 className="font-semibold text-foreground">{product.name}</h3>
                 <p className="text-muted-foreground text-sm">{product.description}</p>
                 <div className="flex items-center justify-between pt-2">
-                  <span className="text-xl font-bold text-primary">${product.price}</span>
+                  <span className="text-xl font-bold text-primary">{formatPrice(product.price)}</span>
                   <div className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
                     Ver más
                   </div>

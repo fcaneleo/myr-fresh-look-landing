@@ -4,6 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { useCategories } from "../hooks/useCategories";
+import { formatPrice } from "@/lib/formatPrice";
 
 interface FilterState {
   category: string;
@@ -81,8 +82,8 @@ const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps) => {
                 className="w-full"
               />
               <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                <span>${filters.priceRange[0].toLocaleString()}</span>
-                <span>${filters.priceRange[1].toLocaleString()}</span>
+                <span>{formatPrice(filters.priceRange[0])}</span>
+                <span>{formatPrice(filters.priceRange[1])}</span>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Product } from "../pages/Index";
 import { useProducts } from "../hooks/useProducts";
+import { formatPrice } from "@/lib/formatPrice";
 
 interface FilterState {
   category: string;
@@ -106,9 +107,9 @@ const InfiniteProductList = ({ filters }: InfiniteProductListProps) => {
                 {product.description}
               </p>
               <div className="flex items-center justify-between">
-                <span className="text-lg font-bold text-primary">
-                  ${product.price}
-                </span>
+                 <span className="text-lg font-bold text-primary">
+                   {formatPrice(product.price)}
+                 </span>
                 <div className="text-xs text-muted-foreground capitalize bg-muted px-2 py-1 rounded-full">
                   {product.category}
                 </div>

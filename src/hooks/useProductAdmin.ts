@@ -106,6 +106,29 @@ export const useProductAdmin = () => {
     return data || [];
   };
 
+  // Delete image from storage
+  const deleteImageFromStorage = async (imageUrl: string) => {
+    try {
+      // Extract filename from the public URL
+      const urlParts = imageUrl.split('/');
+      const fileName = urlParts[urlParts.length - 1];
+      
+      console.log('Deleting image from storage:', fileName);
+      
+      const { error } = await supabase.storage
+        .from('product-images')
+        .remove([fileName]);
+      
+      if (error) {
+        console.error('Error deleting image from storage:', error);
+      } else {
+        console.log('Image deleted successfully from storage');
+      }
+    } catch (error) {
+      console.error('Error parsing image URL for deletion:', error);
+    }
+  };
+
   // Save product (create or update)
   const saveProduct = async (
     formData: {
@@ -123,12 +146,17 @@ export const useProductAdmin = () => {
     
     try {
       let imageUrl = editingProduct?.image_url || null;
+      const oldImageUrl = editingProduct?.image_url;
       
       console.log('Starting save product. Current image URL:', imageUrl);
       console.log('Image file selected:', typeof imageFile === 'string' ? imageFile : (imageFile ? imageFile.name : 'None'));
       
       // Check if we're explicitly removing the image
       if (imageFile === 'REMOVE_IMAGE') {
+        // Delete old image from storage if exists
+        if (oldImageUrl) {
+          await deleteImageFromStorage(oldImageUrl);
+        }
         imageUrl = null;
         console.log('Image explicitly removed - setting URL to null');
       }
@@ -138,6 +166,10 @@ export const useProductAdmin = () => {
         const uploadedUrl = await uploadImage(imageFile);
         console.log('Upload result:', uploadedUrl);
         if (uploadedUrl) {
+          // Delete old image from storage if exists and different from new one
+          if (oldImageUrl && oldImageUrl !== uploadedUrl) {
+            await deleteImageFromStorage(oldImageUrl);
+          }
           imageUrl = uploadedUrl;
           console.log('Image URL updated to:', imageUrl);
         } else {
@@ -255,6 +287,19 @@ export const useProductAdmin = () => {
     }
 
     console.log('Logically deleting product with ID:', id);
+    
+    // First get the product to check if it has an image
+    const { data: productData } = await supabase
+      .from('productos')
+      .select('image_url')
+      .eq('id', id)
+      .single();
+    
+    // Delete image from storage if exists
+    if (productData?.image_url) {
+      await deleteImageFromStorage(productData.image_url);
+    }
+    
     const { error } = await supabase
       .from('productos')
       .update({ vigencia: false })

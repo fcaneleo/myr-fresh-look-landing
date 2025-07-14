@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Product } from "../pages/Index";
 import { useProducts } from "../hooks/useProducts";
+import { formatPrice } from "@/lib/formatPrice";
 
 interface FilterState {
   category: string;
@@ -180,9 +181,9 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
                     {product.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-base sm:text-lg font-bold text-primary">
-                      ${product.price.toLocaleString()}
-                    </span>
+                     <span className="text-base sm:text-lg font-bold text-primary">
+                       {formatPrice(product.price)}
+                     </span>
                     <div className="text-xs text-muted-foreground capitalize bg-muted px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
                       {product.category}
                     </div>
