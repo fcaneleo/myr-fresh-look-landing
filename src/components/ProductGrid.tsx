@@ -19,38 +19,38 @@ const ProductGrid = () => {
 
   const categories = [
     { label: "Todos", value: "all" },
-    { label: "Aseo Hogar", value: "ASEO HOGAR" },
-    { label: "Aseo Personal", value: "ASEO PERSONAL" },
-    { label: "Belleza", value: "BELLEZA" },
-    { label: "Cuidado Capilar", value: "CUIDADO CAPILAR" },
-    { label: "Cuidado Personal", value: "CUIDADO PERSONAL" },
-    { label: "Desodorantes", value: "DESODORANTES" },
-    { label: "Maquillaje", value: "MAQUILLAJE" },
-    { label: "Maquillajes TikTok", value: "MAQUILLAJES-TIKTOK" },
-    { label: "Perfumería", value: "PERFUMERIA" },
-    { label: "Perfumes", value: "PERFUMES" },
-    { label: "Tinturas", value: "TINTURAS" }
+    { label: "Aseo Hogar", value: "Aseo Hogar" },
+    { label: "Aseo Personal", value: "Aseo Personal" },
+    { label: "Belleza", value: "Belleza" },
+    { label: "Cuidado Capilar", value: "Cuidado Capilar" },
+    { label: "Cuidado Personal", value: "Cuidado Personal" },
+    { label: "Desodorantes", value: "Desodorantes" },
+    { label: "Maquillaje", value: "Maquillaje" },
+    { label: "Maquillajes TikTok", value: "Maquillajes TikTok" },
+    { label: "Perfumería", value: "Perfumería" },
+    { label: "Perfumes", value: "Perfumes" },
+    { label: "Tinturas", value: "Tinturas" }
   ];
 
   const getProductColor = (category: string) => {
     switch (category) {
-      case "ASEO HOGAR":
-      case "ASEO PERSONAL":
+      case "Aseo Hogar":
+      case "Aseo Personal":
         return "from-blue-200 to-blue-300 text-blue-700";
-      case "BELLEZA":
-      case "MAQUILLAJE":
-      case "MAQUILLAJES-TIKTOK":
+      case "Belleza":
+      case "Maquillaje":
+      case "Maquillajes TikTok":
         return "from-pink-200 to-pink-300 text-pink-700";
-      case "CUIDADO CAPILAR":
+      case "Cuidado Capilar":
         return "from-green-200 to-green-300 text-green-700";
-      case "CUIDADO PERSONAL":
+      case "Cuidado Personal":
         return "from-purple-200 to-purple-300 text-purple-700";
-      case "DESODORANTES":
+      case "Desodorantes":
         return "from-cyan-200 to-cyan-300 text-cyan-700";
-      case "PERFUMERIA":
-      case "PERFUMES":
+      case "Perfumería":
+      case "Perfumes":
         return "from-amber-200 to-amber-300 text-amber-700";
-      case "TINTURAS":
+      case "Tinturas":
         return "from-indigo-200 to-indigo-300 text-indigo-700";
       default:
         return "from-muted to-muted text-muted-foreground";
