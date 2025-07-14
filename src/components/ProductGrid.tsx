@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Product } from "../pages/Index";
 import { useProducts } from "../hooks/useProducts";
+import { useCategories } from "../hooks/useCategories";
 import { formatPrice } from "@/lib/formatPrice";
 
 const ProductGrid = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const { categories, loading: categoriesLoading } = useCategories();
   
   // Fetch products with oferta=true and apply category filter
   const { products: ofertas, loading, error } = useProducts({
@@ -17,19 +19,10 @@ const ProductGrid = () => {
     oferta: true // Only show products with oferta=true
   });
 
-  const categories = [
+  // Build categories array dynamically from database + "Todos" option
+  const categoryOptions = [
     { label: "Todos", value: "all" },
-    { label: "Aseo Hogar", value: "Aseo Hogar" },
-    { label: "Aseo Personal", value: "Aseo Personal" },
-    { label: "Belleza", value: "Belleza" },
-    { label: "Cuidado Capilar", value: "Cuidado Capilar" },
-    { label: "Cuidado Personal", value: "Cuidado Personal" },
-    { label: "Desodorantes", value: "Desodorantes" },
-    { label: "Maquillaje", value: "Maquillaje" },
-    { label: "Maquillajes TikTok", value: "Maquillajes TikTok" },
-    { label: "Perfumería", value: "Perfumería" },
-    { label: "Perfumes", value: "Perfumes" },
-    { label: "Tinturas", value: "Tinturas" }
+    ...categories.map(cat => ({ label: cat.nombre, value: cat.nombre }))
   ];
 
   const getProductColor = (category: string) => {
@@ -70,19 +63,25 @@ const ProductGrid = () => {
 
         {/* Categories Filter */}
         <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 max-w-5xl mx-auto">
-          {categories.map((category) => (
-            <Button
-              key={category.value}
-              variant={selectedCategory === category.value ? "default" : "outline"}
-              size="sm"
-              className={`text-xs md:text-sm whitespace-nowrap ${
-                selectedCategory === category.value ? "bg-primary hover:bg-primary/80" : ""
-              }`}
-              onClick={() => setSelectedCategory(category.value)}
-            >
-              {category.label}
-            </Button>
-          ))}
+          {categoriesLoading ? (
+            <div className="text-center py-4">
+              <p className="text-muted-foreground">Cargando categorías...</p>
+            </div>
+          ) : (
+            categoryOptions.map((category) => (
+              <Button
+                key={category.value}
+                variant={selectedCategory === category.value ? "default" : "outline"}
+                size="sm"
+                className={`text-xs md:text-sm whitespace-nowrap ${
+                  selectedCategory === category.value ? "bg-primary hover:bg-primary/80" : ""
+                }`}
+                onClick={() => setSelectedCategory(category.value)}
+              >
+                {category.label}
+              </Button>
+            ))
+          )}
         </div>
 
         {/* Loading and Error States */}
