@@ -106,7 +106,10 @@ const Admin = () => {
     }
     
     if (filters.categoria && filters.categoria !== "all") {
+      console.log('Filtering by categoria:', filters.categoria);
+      console.log('Available products with familia_nombre:', products.map(p => ({ id: p.id, descripcion: p.descripcion, familia_nombre: p.familia_nombre })));
       filtered = filtered.filter(product => product.familia_nombre === filters.categoria);
+      console.log('Filtered products:', filtered.length);
     }
     
     if (filters.minPrice) {
