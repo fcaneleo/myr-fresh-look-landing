@@ -3,7 +3,7 @@ import { ChevronLeft } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCategories } from "@/hooks/useCategories";
 import Header from "../components/Header";
-import ProductCarousel from "../components/ProductCarousel";
+import ProductCarouselMayor from "../components/ProductCarouselMayor";
 import ProductFilters from "../components/ProductFilters";
 import PaginatedProductListMayor from "../components/PaginatedProductListMayor";
 import Footer from "../components/Footer";
@@ -62,8 +62,8 @@ const ProductosMayor = () => {
 
       {/* Featured Products Carousel */}
       <div className="container mx-auto px-4 mb-8 lg:mb-12">
-        <h2 className="text-2xl font-bold text-foreground mb-6">Productos Destacados</h2>
-        <ProductCarousel />
+        <h2 className="text-2xl font-bold text-foreground mb-6">Productos Destacados por Mayor</h2>
+        <ProductCarouselMayor />
       </div>
 
       {/* Mobile Filters - Show only on mobile, below featured products */}

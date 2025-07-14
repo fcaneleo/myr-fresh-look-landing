@@ -58,9 +58,28 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             
-            <Link to="/productos-mayor" className="text-foreground hover:text-primary transition-colors">
-              Productos por Mayor
-            </Link>
+            
+            {/* Products Mayor Dropdown Menu */}
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent focus:outline-none focus:ring-0 h-10 px-3 flex items-center justify-center min-w-fit">
+                  Productos por Mayor
+                  <ChevronDown className="ml-1 h-4 w-4 transition-transform data-[state=open]:rotate-180" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 z-[9999]" align="start" side="bottom" sideOffset={8} avoidCollisions={true} collisionPadding={16}>
+                <DropdownMenuItem asChild>
+                  <Link to="/productos-mayor" className="w-full cursor-pointer">
+                    Todos los Productos por Mayor
+                  </Link>
+                </DropdownMenuItem>
+                {categories.map(category => <DropdownMenuItem key={category.id} asChild>
+                    <Link to={`/productos-mayor?categoria=${category.id}`} className="w-full cursor-pointer">
+                      {category.nombre}
+                    </Link>
+                  </DropdownMenuItem>)}
+              </DropdownMenuContent>
+            </DropdownMenu>
             
             <Link to="/contacto" className="text-foreground hover:text-primary transition-colors">
               Contacto
@@ -108,9 +127,28 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              <Link to="/productos-mayor" className="block text-foreground hover:text-primary transition-colors py-2" onClick={closeMobileMenu}>
-                Productos por Mayor
-              </Link>
+              
+              {/* Mobile Products Mayor Dropdown */}
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="w-full justify-between text-foreground hover:text-primary transition-colors bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent focus:outline-none focus:ring-0 h-10 p-2">
+                    Productos por Mayor
+                    <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-[calc(100vw-2rem)] z-[9999]" align="start" side="bottom" sideOffset={8} avoidCollisions={true} collisionPadding={16}>
+                  <DropdownMenuItem asChild>
+                    <Link to="/productos-mayor" className="w-full cursor-pointer" onClick={closeMobileMenu}>
+                      Todos los Productos por Mayor
+                    </Link>
+                  </DropdownMenuItem>
+                  {categories.map(category => <DropdownMenuItem key={category.id} asChild>
+                      <Link to={`/productos-mayor?categoria=${category.id}`} className="w-full cursor-pointer" onClick={closeMobileMenu}>
+                        {category.nombre}
+                      </Link>
+                    </DropdownMenuItem>)}
+                </DropdownMenuContent>
+              </DropdownMenu>
               
               <Link to="/contacto" className="block text-foreground hover:text-primary transition-colors py-2" onClick={closeMobileMenu}>
                 Contacto
