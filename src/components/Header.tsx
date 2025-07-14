@@ -58,6 +58,10 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             
+            <Link to="/productos-mayor" className="text-foreground hover:text-primary transition-colors">
+              Productos por Mayor
+            </Link>
+            
             <Link to="/contacto" className="text-foreground hover:text-primary transition-colors">
               Contacto
             </Link>
@@ -103,6 +107,10 @@ const Header = () => {
                     </DropdownMenuItem>)}
                 </DropdownMenuContent>
               </DropdownMenu>
+              
+              <Link to="/productos-mayor" className="block text-foreground hover:text-primary transition-colors py-2" onClick={closeMobileMenu}>
+                Productos por Mayor
+              </Link>
               
               <Link to="/contacto" className="block text-foreground hover:text-primary transition-colors py-2" onClick={closeMobileMenu}>
                 Contacto
