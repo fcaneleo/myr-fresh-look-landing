@@ -33,7 +33,8 @@ export const useProductAdmin = () => {
         )
       `)
       .eq('vigencia', true)
-      .order('id', { ascending: false });
+      .order('id', { ascending: false })
+      .limit(2000);
     
     if (error) {
       console.error('Error fetching products:', error);
@@ -58,6 +59,11 @@ export const useProductAdmin = () => {
         oferta: item.oferta,
         vigencia: item.vigencia
       })) || [];
+      
+      // Debug: count products with precio_mayor > 0
+      const productsWithPrecioMayor = transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 0);
+      console.log(`Products with precio_mayor > 0: ${productsWithPrecioMayor.length}`);
+      
       setProducts(transformedProducts);
     }
   };
