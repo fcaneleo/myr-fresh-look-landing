@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +14,7 @@ interface ProductDetail {
   descripcion: string;
   descripcion_larga: string | null;
   precio: number;
+  precio_mayor: number | null;
   familia_nombre: string;
   image_url: string | null;
   featured: boolean | null;
@@ -23,8 +24,12 @@ const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [product, setProduct] = useState<ProductDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  
+  // Check if coming from wholesale view
+  const isMayorView = searchParams.get('view') === 'mayor';
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -60,6 +65,7 @@ const ProductDetail = () => {
           descripcion: data.descripcion,
           descripcion_larga: data.descripcion_larga,
           precio: parseFloat(data.precio.toString()),
+          precio_mayor: data.precio_mayor ? parseFloat(data.precio_mayor.toString()) : null,
           familia_nombre: data.familias?.nombre || '',
           image_url: data.image_url,
           featured: data.featured
@@ -96,7 +102,8 @@ const ProductDetail = () => {
   };
 
   const handleWhatsAppContact = () => {
-    const message = `Hola, me interesa el producto: ${product?.descripcion} - ${formatPrice(product?.precio || 0)}`;
+    const price = isMayorView && product?.precio_mayor ? product.precio_mayor : product?.precio || 0;
+    const message = `Hola, me interesa el producto: ${product?.descripcion} - ${formatPrice(price)}`;
     const whatsappUrl = `https://wa.me/56930837263?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -178,9 +185,30 @@ const ProductDetail = () => {
               <h1 className="text-3xl font-bold text-foreground mb-4">
                 {product.descripcion}
               </h1>
-              <div className="text-4xl font-bold text-primary mb-6">
-                {formatPrice(product.precio)}
-              </div>
+              
+              {/* Price display - different for wholesale view */}
+              {isMayorView && product.precio_mayor ? (
+                <div className="space-y-2 mb-6">
+                  <div className="text-4xl font-bold text-primary">
+                    {formatPrice(product.precio_mayor)}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg text-muted-foreground line-through">
+                      {formatPrice(product.precio)}
+                    </span>
+                    <Badge variant="secondary" className="text-xs">
+                      Precio por mayor
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-green-600 font-medium">
+                    *Válido desde 3 unidades
+                  </p>
+                </div>
+              ) : (
+                <div className="text-4xl font-bold text-primary mb-6">
+                  {formatPrice(product.precio)}
+                </div>
+              )}
             </div>
 
             {/* Description */}

@@ -35,7 +35,7 @@ const PaginatedProductListMayor = ({ filters }: PaginatedProductListMayorProps) 
   });
 
   const handleProductClick = (productId: number) => {
-    navigate(`/producto/${productId}`);
+    navigate(`/producto/${productId}?view=mayor`);
   };
 
   const getProductColor = (categoria: string) => {
