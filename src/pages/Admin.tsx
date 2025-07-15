@@ -22,6 +22,7 @@ const Admin = () => {
   const [filters, setFilters] = useState<AdminFilters>({
     oferta: false,
     featured: false,
+    porMayor: false,
     categoria: "all",
     minPrice: "",
     maxPrice: "",
@@ -103,6 +104,10 @@ const Admin = () => {
     
     if (filters.featured) {
       filtered = filtered.filter(product => product.featured === true);
+    }
+    
+    if (filters.porMayor) {
+      filtered = filtered.filter(product => product.precio_mayor && product.precio_mayor > 0);
     }
     
     if (filters.categoria && filters.categoria !== "all") {

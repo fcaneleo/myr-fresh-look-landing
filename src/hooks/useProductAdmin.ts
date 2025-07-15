@@ -7,6 +7,7 @@ export interface AdminProduct {
   descripcion: string;
   descripcion_larga: string | null;
   precio: number;
+  precio_mayor: number | null;
   familia_nombre: string;
   familia_id: number;
   image_url: string | null;
@@ -49,6 +50,7 @@ export const useProductAdmin = () => {
         descripcion: item.descripcion,
         descripcion_larga: item.descripcion_larga,
         precio: parseFloat(item.precio.toString()),
+        precio_mayor: item.precio_mayor ? parseFloat(item.precio_mayor.toString()) : null,
         familia_nombre: item.familias?.nombre || '',
         familia_id: item.familia_id,
         image_url: item.image_url,

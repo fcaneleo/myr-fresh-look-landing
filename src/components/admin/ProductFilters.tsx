@@ -11,6 +11,7 @@ import { useProductAdmin } from "@/hooks/useProductAdmin";
 export interface AdminFilters {
   oferta: boolean;
   featured: boolean;
+  porMayor: boolean;
   categoria: string;
   minPrice: string;
   maxPrice: string;
@@ -45,6 +46,7 @@ export const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps
     onFiltersChange({
       oferta: false,
       featured: false,
+      porMayor: false,
       categoria: "all",
       minPrice: "",
       maxPrice: "",
@@ -52,7 +54,7 @@ export const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps
     });
   };
 
-  const hasActiveFilters = filters.oferta || filters.featured || filters.categoria || filters.minPrice || filters.maxPrice || filters.sortBy;
+  const hasActiveFilters = filters.oferta || filters.featured || filters.porMayor || filters.categoria || filters.minPrice || filters.maxPrice || filters.sortBy;
 
   return (
     <Card className="mb-6">
@@ -67,7 +69,7 @@ export const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
           {/* Switch Oferta */}
           <div className="flex items-center space-x-2">
             <Switch
@@ -86,6 +88,16 @@ export const ProductFilters = ({ filters, onFiltersChange }: ProductFiltersProps
               onCheckedChange={(value) => handleFilterChange('featured', value)}
             />
             <Label htmlFor="filter-featured" className="text-sm">Destacado</Label>
+          </div>
+
+          {/* Switch Por Mayor */}
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="filter-por-mayor"
+              checked={filters.porMayor}
+              onCheckedChange={(value) => handleFilterChange('porMayor', value)}
+            />
+            <Label htmlFor="filter-por-mayor" className="text-sm">Por Mayor</Label>
           </div>
 
           {/* Categoría */}
