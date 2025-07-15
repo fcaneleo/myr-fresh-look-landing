@@ -128,7 +128,7 @@ const ProductDetail = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-muted-foreground">Producto no encontrado</p>
-            <Button onClick={() => navigate('/')} className="mt-4">
+            <Button onClick={() => isMayorView ? navigate('/productos-mayor') : navigate('/productos')} className="mt-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver al catálogo
             </Button>
@@ -146,7 +146,7 @@ const ProductDetail = () => {
         {/* Back button */}
         <Button 
           variant="ghost" 
-          onClick={() => navigate('/')}
+          onClick={() => isMayorView ? navigate('/productos-mayor') : navigate('/productos')}
           className="mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
