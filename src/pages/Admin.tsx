@@ -107,7 +107,7 @@ const Admin = () => {
     }
     
     if (filters.porMayor) {
-      filtered = filtered.filter(product => product.precio_mayor && product.precio_mayor > 0);
+      filtered = filtered.filter(product => product.precio_mayor && product.precio_mayor > 100);
     }
     
     if (filters.categoria && filters.categoria !== "all") {
