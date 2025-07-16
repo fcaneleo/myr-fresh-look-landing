@@ -33,7 +33,8 @@ export const useProductAdmin = () => {
         )
       `)
       .eq('vigencia', true)
-      .order('id', { ascending: false });
+      .order('id', { ascending: false })
+      .limit(5000);
     
     if (error) {
       console.error('Error fetching products:', error);
