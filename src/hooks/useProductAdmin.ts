@@ -56,7 +56,7 @@ export const useProductAdmin = () => {
         )
       `)
       .eq('vigencia', true)
-      .limit(20000)
+      .limit(2000)
       .order('id', { ascending: false });
     
     if (error) {
