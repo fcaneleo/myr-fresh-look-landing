@@ -24,11 +24,34 @@ export const useProductAdmin = () => {
   // Fetch products
   const fetchProducts = async () => {
     console.log('Fetching products...');
+    
+    // First, let's get a count of all products to verify what we expect
+    const { count: totalCount, error: countError } = await supabase
+      .from('productos')
+      .select('*', { count: 'exact', head: true })
+      .eq('vigencia', true);
+    
+    if (countError) {
+      console.error('Error counting products:', countError);
+    } else {
+      console.log(`Total products in DB with vigencia=true: ${totalCount}`);
+    }
+
+    // Use direct query with explicit join to get all products
     const { data, error } = await supabase
       .from('productos')
       .select(`
-        *,
-        familias (
+        id,
+        descripcion,
+        descripcion_larga,
+        precio,
+        precio_mayor,
+        familia_id,
+        image_url,
+        featured,
+        oferta,
+        vigencia,
+        familias!inner (
           nombre
         )
       `)
@@ -42,31 +65,41 @@ export const useProductAdmin = () => {
         description: "No se pudieron cargar los productos",
         variant: "destructive"
       });
-    } else {
-      console.log('Products fetched:', data?.length || 0, 'items');
-      // Transform data to match AdminProduct interface
-      const transformedProducts: AdminProduct[] = data?.map(item => ({
-        id: item.id,
-        descripcion: item.descripcion,
-        descripcion_larga: item.descripcion_larga,
-        precio: parseFloat(item.precio.toString()),
-        precio_mayor: item.precio_mayor ? parseFloat(item.precio_mayor.toString()) : null,
-        familia_nombre: item.familias?.nombre || '',
-        familia_id: item.familia_id,
-        image_url: item.image_url,
-        featured: item.featured,
-        oferta: item.oferta,
-        vigencia: item.vigencia
-      })) || [];
-      
-      // Debug: count products with precio_mayor > 0
-      const productsWithPrecioMayor = transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 0);
-      console.log(`Total products loaded: ${transformedProducts.length}`);
-      console.log(`Products with precio_mayor > 0: ${productsWithPrecioMayor.length}`);
-      console.log(`Products with precio_mayor > 100: ${transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 100).length}`);
-      
-      setProducts(transformedProducts);
+      return;
     }
+    
+    console.log('Products fetched:', data?.length || 0, 'items');
+    
+    // Transform data to match AdminProduct interface
+    const transformedProducts: AdminProduct[] = (data || []).map(item => ({
+      id: item.id,
+      descripcion: item.descripcion,
+      descripcion_larga: item.descripcion_larga,
+      precio: parseFloat(item.precio.toString()),
+      precio_mayor: item.precio_mayor ? parseFloat(item.precio_mayor.toString()) : null,
+      familia_nombre: (item.familias as any)?.nombre || '',
+      familia_id: item.familia_id,
+      image_url: item.image_url,
+      featured: item.featured,
+      oferta: item.oferta,
+      vigencia: item.vigencia
+    }));
+    
+    // Debug: count products with precio_mayor > 0
+    const productsWithPrecioMayor = transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 0);
+    console.log(`Total products loaded: ${transformedProducts.length}`);
+    console.log(`Expected count from DB: ${totalCount}`);
+    console.log(`Products with precio_mayor > 0: ${productsWithPrecioMayor.length}`);
+    console.log(`Products with precio_mayor > 100: ${transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 100).length}`);
+    
+    if (transformedProducts.length !== totalCount) {
+      console.warn(`MISMATCH: Expected ${totalCount} products but got ${transformedProducts.length}`);
+      console.warn('This could indicate an issue with the join or data consistency');
+    } else {
+      console.log('✅ SUCCESS: All products loaded correctly!');
+    }
+    
+    setProducts(transformedProducts);
   };
 
   // Upload image to Supabase Storage
