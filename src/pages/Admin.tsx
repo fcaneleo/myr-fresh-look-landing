@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useProductAdmin, AdminProduct } from "@/hooks/useProductAdmin";
 import { ProductForm } from "@/components/admin/ProductForm";
-import { ProductGrid } from "@/components/admin/ProductGrid";
+import { PaginatedProductGrid } from "@/components/admin/PaginatedProductGrid";
 import { ProductFilters, AdminFilters } from "@/components/admin/ProductFilters";
 import Header from "../components/Header";
 
@@ -267,7 +267,7 @@ const Admin = () => {
           onFiltersChange={setFilters}
         />
 
-        <ProductGrid
+        <PaginatedProductGrid
           products={filteredProducts}
           onEditProduct={openEditDialog}
           onDeleteProduct={deleteProduct}
