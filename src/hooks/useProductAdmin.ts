@@ -62,7 +62,9 @@ export const useProductAdmin = () => {
       
       // Debug: count products with precio_mayor > 0
       const productsWithPrecioMayor = transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 0);
+      console.log(`Total products loaded: ${transformedProducts.length}`);
       console.log(`Products with precio_mayor > 0: ${productsWithPrecioMayor.length}`);
+      console.log(`Products with precio_mayor > 100: ${transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 100).length}`);
       
       setProducts(transformedProducts);
     }
