@@ -51,7 +51,7 @@ export const useProductAdmin = () => {
         featured,
         oferta,
         vigencia,
-        familias!inner (
+        familias (
           nombre
         )
       `)
