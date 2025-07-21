@@ -6,6 +6,7 @@ interface UseProductsOptions {
   category?: string;
   featured?: boolean;
   oferta?: boolean;
+  porMayor?: boolean;
   limit?: number;
   offset?: number;
   priceRange?: [number, number];
@@ -61,6 +62,15 @@ export const useProducts = (options: UseProductsOptions = {}) => {
 
       if (options.oferta !== undefined) {
         query = query.eq('oferta', options.oferta);
+      }
+
+      // Filter by mayor status (precio_mayor > 100)
+      if (options.porMayor !== undefined) {
+        if (options.porMayor) {
+          query = query.gt('precio_mayor', 100);
+        } else {
+          query = query.or('precio_mayor.is.null,precio_mayor.lte.100');
+        }
       }
 
       if (options.priceRange) {
@@ -141,6 +151,7 @@ export const useProducts = (options: UseProductsOptions = {}) => {
     options.category,
     options.featured,
     options.oferta,
+    options.porMayor,
     options.limit,
     options.offset,
     options.priceRange?.[0],
