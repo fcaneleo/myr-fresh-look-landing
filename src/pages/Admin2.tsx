@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, LogOut, Plus, Search } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCategories } from "@/hooks/useCategories";
+import { useProductAdmin, AdminProduct } from "@/hooks/useProductAdmin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import Header from "../components/Header";
 import AdminFilters from "../components/admin/AdminFilters";
-import PaginatedProductList from "../components/PaginatedProductList";
+import AdminPaginatedProductList from "../components/admin/AdminPaginatedProductList";
+import { ProductForm } from "@/components/admin/ProductForm";
 import Footer from "../components/Footer";
 
 const Admin2 = () => {
@@ -15,13 +18,19 @@ const Admin2 = () => {
   const categoriaId = searchParams.get('categoria');
   const [searchTerm, setSearchTerm] = useState("");
   
+  // Admin functionality
+  const { products, isLoading, fetchProducts, saveProduct, deleteProduct } = useProductAdmin();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
+  
   const [selectedFilters, setSelectedFilters] = useState({
     category: categoriaId || "all",
     priceRange: [0, 55000],
     sortBy: "name",
     featured: false,
     oferta: false,
-    porMayor: false
+    porMayor: false,
+    searchTerm: ""
   });
 
   // Update filters when URL parameter changes
@@ -31,6 +40,19 @@ const Admin2 = () => {
       category: categoriaId || "all"
     }));
   }, [categoriaId]);
+
+  // Update search in filters when searchTerm changes
+  useEffect(() => {
+    setSelectedFilters(prev => ({
+      ...prev,
+      searchTerm: searchTerm
+    }));
+  }, [searchTerm]);
+
+  // Fetch products when admin functionality is needed
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   // Find the current category name for display
   const currentCategory = categoriaId 
@@ -44,7 +66,8 @@ const Admin2 = () => {
       sortBy: "name",
       featured: false,
       oferta: false,
-      porMayor: false
+      porMayor: false,
+      searchTerm: ""
     });
     setSearchTerm("");
   };
@@ -54,9 +77,42 @@ const Admin2 = () => {
     console.log("Cerrar sesión");
   };
 
-  const handleNewProduct = () => {
-    // Aquí iría la lógica para nuevo producto
-    console.log("Nuevo producto");
+  // Open edit dialog
+  const openEditDialog = (product: AdminProduct) => {
+    setEditingProduct(product);
+    setIsDialogOpen(true);
+  };
+
+  // Open create dialog
+  const openCreateDialog = () => {
+    setEditingProduct(null);
+    setIsDialogOpen(true);
+  };
+
+  // Handle save product
+  const handleSaveProduct = async (
+    formData: {
+      name: string;
+      description: string;
+      price: string;
+      category: string;
+      featured: boolean;
+      oferta: boolean;
+    },
+    imageFile: File | null | 'REMOVE_IMAGE'
+  ) => {
+    const success = await saveProduct(formData, imageFile, editingProduct);
+    if (success) {
+      setIsDialogOpen(false);
+      setEditingProduct(null);
+    }
+    return success;
+  };
+
+  // Handle close dialog
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setEditingProduct(null);
   };
 
   return (
@@ -91,10 +147,22 @@ const Admin2 = () => {
                 <LogOut className="h-4 w-4 mr-2" />
                 Cerrar Sesión
               </Button>
-              <Button onClick={handleNewProduct}>
-                <Plus className="h-4 w-4 mr-2" />
-                Nuevo Producto
-              </Button>
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button onClick={openCreateDialog}>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Nuevo Producto
+                  </Button>
+                </DialogTrigger>
+                
+                <ProductForm
+                  isOpen={isDialogOpen}
+                  onClose={handleCloseDialog}
+                  onSave={handleSaveProduct}
+                  editingProduct={editingProduct}
+                  isLoading={isLoading}
+                />
+              </Dialog>
             </div>
           </div>
 
@@ -128,8 +196,10 @@ const Admin2 = () => {
 
       {/* Product List */}
       <div className="container mx-auto px-4 pb-8">
-        <PaginatedProductList 
+        <AdminPaginatedProductList 
           filters={selectedFilters}
+          onEditProduct={openEditDialog}
+          onDeleteProduct={deleteProduct}
         />
       </div>
       
