@@ -309,7 +309,7 @@ const AdminPaginatedProductList = ({
                     </Button>
                     
                     <Button variant="destructive" size="sm" onClick={() => onDeleteProduct(product.id)} className="text-slate-50">
-                      <Trash2 className="h-4 w-4 mr-2 text-red-500" />
+                      <Trash2 className="h-4 w-4 mr-2 text-white-500" />
                       Eliminar
                     </Button>
                   </div>
