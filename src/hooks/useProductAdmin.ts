@@ -181,6 +181,7 @@ export const useProductAdmin = () => {
       category: string;
       featured: boolean;
       oferta: boolean;
+      precio_mayor?: string;
     },
     imageFile: File | null | 'REMOVE_IMAGE',
     editingProduct: AdminProduct | null
@@ -243,6 +244,7 @@ export const useProductAdmin = () => {
         descripcion: formData.name,
         descripcion_larga: formData.description || null,
         precio: parseFloat(formData.price),
+        precio_mayor: formData.precio_mayor ? parseFloat(formData.precio_mayor) : null,
         familia_id: familia?.id || editingProduct?.familia_id,
         image_url: imageUrl,
         featured: formData.featured,

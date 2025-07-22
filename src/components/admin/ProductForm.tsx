@@ -20,6 +20,7 @@ interface ProductFormProps {
       category: string;
       featured: boolean;
       oferta: boolean;
+      precio_mayor?: string;
     },
     imageFile: File | null | 'REMOVE_IMAGE'
   ) => Promise<boolean>;
@@ -41,7 +42,8 @@ export const ProductForm = ({
     price: "",
     category: "",
     featured: false,
-    oferta: false
+    oferta: false,
+    precio_mayor: ""
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -118,7 +120,8 @@ export const ProductForm = ({
       price: "",
       category: "",
       featured: false,
-      oferta: false
+      oferta: false,
+      precio_mayor: ""
     });
     setImageFile(null);
     setImagePreview(null);
@@ -146,7 +149,8 @@ export const ProductForm = ({
         price: editingProduct.precio.toString(),
         category: editingProduct.familia_nombre,
         featured: Boolean(editingProduct.featured),
-        oferta: Boolean(editingProduct.oferta)
+        oferta: Boolean(editingProduct.oferta),
+        precio_mayor: editingProduct.precio_mayor ? editingProduct.precio_mayor.toString() : "0"
       });
       setImagePreview(editingProduct.image_url);
       setImageFile(null);
@@ -158,7 +162,8 @@ export const ProductForm = ({
         price: "",
         category: "",
         featured: false,
-        oferta: false
+        oferta: false,
+        precio_mayor: ""
       });
       setImagePreview(null);
       setImageFile(null);
@@ -268,22 +273,34 @@ export const ProductForm = ({
               />
             </div>
 
-            {/* Category */}
+            {/* Precio Mayor */}
             <div>
-              <Label htmlFor="category">Categoría *</Label>
-              <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona categoría" />
-                </SelectTrigger>
-                <SelectContent>
-                  {familias.map((familia) => (
-                    <SelectItem key={familia.id} value={familia.nombre}>
-                      {familia.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label htmlFor="precio_mayor">Precio Por Mayor (CLP)</Label>
+              <Input
+                id="precio_mayor"
+                type="number"
+                value={formData.precio_mayor}
+                onChange={(e) => handleInputChange('precio_mayor', e.target.value)}
+                placeholder="0"
+              />
             </div>
+          </div>
+
+          {/* Category */}
+          <div>
+            <Label htmlFor="category">Categoría *</Label>
+            <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecciona categoría" />
+              </SelectTrigger>
+              <SelectContent>
+                {familias.map((familia) => (
+                  <SelectItem key={familia.id} value={familia.nombre}>
+                    {familia.nombre}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Featured */}

@@ -272,74 +272,87 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {products.map((product) => (
-              <Card key={product.id} className="hover:shadow-lg transition-shadow">
-                <CardContent className="p-3 sm:p-4">
-                  <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-2 sm:mb-3 flex items-center justify-center relative">
-                    <img 
-                      src={product.image_url || '/placeholder.svg'} 
+              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="relative">
+                  {product.image_url ? (
+                    <img
+                      src={product.image_url}
                       alt={product.descripcion}
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-64 object-cover"
                     />
-                    {/* Badges */}
+                  ) : (
+                    <div className="w-full h-64 bg-muted flex items-center justify-center">
+                      <span className="text-muted-foreground">Sin imagen</span>
+                    </div>
+                  )}
+                  
+                  {/* Badges */}
+                  <div className="absolute top-2 left-2 flex flex-col gap-1">
                     {product.featured && (
-                      <Badge className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-primary text-primary-foreground text-xs">
+                      <Badge variant="secondary" className="bg-yellow-500 text-yellow-50">
                         Destacado
                       </Badge>
                     )}
                     {product.oferta && (
-                      <Badge className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-accent text-accent-foreground text-xs">
+                      <Badge variant="destructive">
                         Oferta
                       </Badge>
                     )}
                     {product.precio_mayor && product.precio_mayor > 100 && (
-                      <Badge className="absolute bottom-1 left-1 sm:bottom-2 sm:left-2 bg-secondary text-secondary-foreground text-xs">
+                      <Badge variant="outline" className="bg-blue-500 text-blue-50">
                         Por Mayor
                       </Badge>
                     )}
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1 line-clamp-2 text-sm sm:text-base">
+                </div>
+                
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-lg mb-2 line-clamp-2">
                     {product.descripcion}
                   </h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-1 sm:mb-2 capitalize">
-                    {product.familia_nombre}
-                  </p>
-                  <p className="text-xs text-muted-foreground mb-2 sm:mb-3 line-clamp-2">
-                    {product.descripcion_larga}
-                  </p>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-base sm:text-lg font-bold text-primary">
+                  
+                  {product.descripcion_larga && (
+                    <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+                      {product.descripcion_larga}
+                    </p>
+                  )}
+                  
+                  <div className="space-y-2">
+                    <p className="text-xl font-bold text-primary">
                       {formatPrice(product.precio)}
-                    </span>
-                    <div className="text-xs text-muted-foreground capitalize bg-muted px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
-                      {product.familia_nombre}
-                    </div>
+                    </p>
+                    
+                    {product.precio_mayor && product.precio_mayor > 0 && (
+                      <p className="text-lg font-semibold text-blue-600">
+                        Por Mayor: {formatPrice(product.precio_mayor)}
+                      </p>
+                    )}
+                    
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Categoría:</strong> {product.familia_nombre}
+                    </p>
                   </div>
                   
-                  {/* Admin Actions */}
-                  <div className="flex items-center justify-between gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => navigate(`/producto/${product.id}`)}
-                      className="flex-1"
-                    >
-                      Ver
-                    </Button>
+                  <div className="flex justify-between items-center mt-4 pt-4 border-t">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => onEditProduct(product)}
                     >
-                      <Edit className="h-4 w-4" />
+                      <Edit className="h-4 w-4 mr-2" />
+                      Editar
                     </Button>
+                    
                     <Button
-                      variant="outline"
+                      variant="destructive"
                       size="sm"
                       onClick={() => onDeleteProduct(product.id)}
+                      className="text-destructive hover:text-destructive-foreground"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-4 w-4 mr-2 text-red-500" />
+                      Eliminar
                     </Button>
                   </div>
                 </CardContent>

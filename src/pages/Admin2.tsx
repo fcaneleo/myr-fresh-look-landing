@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, LogOut, Plus, Search } from "lucide-react";
+import { ChevronLeft, LogOut, Plus, Search, Lock } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCategories } from "@/hooks/useCategories";
 import { useProductAdmin, AdminProduct } from "@/hooks/useProductAdmin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "../components/Header";
 import AdminFilters from "../components/admin/AdminFilters";
 import AdminPaginatedProductList from "../components/admin/AdminPaginatedProductList";
@@ -17,6 +18,12 @@ const Admin2 = () => {
   const { categories } = useCategories();
   const categoriaId = searchParams.get('categoria');
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // Authentication
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
   
   // Admin functionality
   const { products, isLoading, fetchProducts, saveProduct, deleteProduct } = useProductAdmin();
@@ -49,10 +56,12 @@ const Admin2 = () => {
     }));
   }, [searchTerm]);
 
-  // Fetch products when admin functionality is needed
+  // Fetch products when authenticated
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (isAuthenticated) {
+      fetchProducts();
+    }
+  }, [isAuthenticated]);
 
   // Find the current category name for display
   const currentCategory = categoriaId 
@@ -72,9 +81,21 @@ const Admin2 = () => {
     setSearchTerm("");
   };
 
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (username === "admin" && password === "Vale8253") {
+      setIsAuthenticated(true);
+      setAuthError("");
+    } else {
+      setAuthError("Usuario o contraseña incorrectos");
+    }
+  };
+
   const handleLogout = () => {
-    // Aquí iría la lógica de logout
-    console.log("Cerrar sesión");
+    setIsAuthenticated(false);
+    setUsername("");
+    setPassword("");
+    setAuthError("");
   };
 
   // Open edit dialog
@@ -98,6 +119,7 @@ const Admin2 = () => {
       category: string;
       featured: boolean;
       oferta: boolean;
+      precio_mayor?: string;
     },
     imageFile: File | null | 'REMOVE_IMAGE'
   ) => {
@@ -105,6 +127,8 @@ const Admin2 = () => {
     if (success) {
       setIsDialogOpen(false);
       setEditingProduct(null);
+      // Refresh the products list
+      await fetchProducts();
     }
     return success;
   };
@@ -114,6 +138,54 @@ const Admin2 = () => {
     setIsDialogOpen(false);
     setEditingProduct(null);
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center">
+                <Lock className="h-8 w-8 text-primary" />
+              </div>
+            </div>
+            <CardTitle>Acceso Administrativo</CardTitle>
+            <CardDescription>
+              Ingresa tus credenciales para acceder al panel de administración
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <Input
+                  type="text"
+                  placeholder="Usuario"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <Input
+                  type="password"
+                  placeholder="Contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {authError && (
+                <p className="text-destructive text-sm text-center">{authError}</p>
+              )}
+              <Button type="submit" className="w-full">
+                Iniciar Sesión
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pt-20">
