@@ -80,11 +80,11 @@ const InfiniteProductList = ({ filters }: InfiniteProductListProps) => {
           >
             <CardContent className="p-4">
                <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative">
-                 <img 
-                   src={product.image} 
-                   alt={product.name}
-                   className="w-full h-full object-cover rounded-lg"
-                 />
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-contain bg-gray-50 rounded-lg"
+                  />
                  {/* Badges */}
                  {product.featured && (
                    <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">

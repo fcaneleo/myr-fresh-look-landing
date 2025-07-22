@@ -56,11 +56,11 @@ const AllProductsCarousel = () => {
             >
                <CardContent className="p-4">
                  <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
-                   <img 
-                     src={product.image} 
-                     alt={product.name}
-                     className="w-full h-full object-cover"
-                   />
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-contain bg-gray-50"
+                    />
                    {/* Badges */}
                    {product.featured && (
                      <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">

@@ -108,11 +108,11 @@ const ProductGrid = () => {
               {/* Product Image */}
               <div className="h-40 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
                 {product.image && product.image !== '/placeholder.svg' ? (
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-                  />
+                   <img 
+                     src={product.image} 
+                     alt={product.name}
+                     className="w-full h-full object-contain bg-gray-50 rounded-lg hover:scale-105 transition-transform duration-300"
+                   />
                 ) : (
                   <div className={`w-full h-full bg-gradient-to-br ${getProductColor(product.category)} rounded-lg flex items-center justify-center hover:scale-105 transition-transform duration-300`}>
                     <span className="font-bold text-center px-2 text-sm leading-tight">{product.name}</span>

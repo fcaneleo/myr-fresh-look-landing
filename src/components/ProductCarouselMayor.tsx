@@ -140,15 +140,15 @@ const ProductCarouselMayor = () => {
           >
             <CardContent className="p-0">
               <div className="relative overflow-hidden">
-                <img
-                  src={product.image_url || "/placeholder.svg"}
-                  alt={product.descripcion}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/placeholder.svg";
-                  }}
-                />
+                 <img
+                   src={product.image_url || "/placeholder.svg"}
+                   alt={product.descripcion}
+                   className="w-full h-48 object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-300"
+                   onError={(e) => {
+                     const target = e.target as HTMLImageElement;
+                     target.src = "/placeholder.svg";
+                   }}
+                 />
                 <Badge className="absolute top-2 left-2 bg-yellow-500 hover:bg-yellow-600 text-white">
                   Por Mayor
                 </Badge>
