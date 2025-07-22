@@ -20,11 +20,13 @@ interface AdminPaginatedProductListProps {
   filters: AdminFilterState;
   onEditProduct: (product: AdminProduct) => void;
   onDeleteProduct: (id: number) => void;
+  refreshTrigger?: number;
 }
 const AdminPaginatedProductList = ({
   filters,
   onEditProduct,
-  onDeleteProduct
+  onDeleteProduct,
+  refreshTrigger
 }: AdminPaginatedProductListProps) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -213,7 +215,7 @@ const AdminPaginatedProductList = ({
       }
     };
     fetchProducts();
-  }, [currentPage, filters]);
+  }, [currentPage, filters, refreshTrigger]);
   const totalPages = Math.ceil(totalCount / itemsPerPage);
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -260,8 +262,16 @@ const AdminPaginatedProductList = ({
         </div> : <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {products.map(product => <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
-                  {product.image_url ? <img src={product.image_url} alt={product.descripcion} className="w-full h-64 object-cover" /> : <div className="w-full h-64 bg-muted flex items-center justify-center">
+                 <div className="relative">
+                  {product.image_url ? <img 
+                    src={product.image_url} 
+                    alt={product.descripcion} 
+                    className="w-full h-64 object-contain bg-gray-50" 
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  /> : <div className="w-full h-64 bg-muted flex items-center justify-center">
                       <span className="text-muted-foreground">Sin imagen</span>
                     </div>}
                   
@@ -308,8 +318,8 @@ const AdminPaginatedProductList = ({
                       Editar
                     </Button>
                     
-                    <Button variant="destructive" size="sm" onClick={() => onDeleteProduct(product.id)} className="text-slate-50">
-                      <Trash2 className="h-4 w-4 mr-2 text-white-500" />
+                    <Button variant="destructive" size="sm" onClick={() => onDeleteProduct(product.id)} className="text-white">
+                      <Trash2 className="h-4 w-4 mr-2 text-red-600" />
                       Eliminar
                     </Button>
                   </div>

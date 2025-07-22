@@ -29,6 +29,7 @@ const Admin2 = () => {
   const { products, isLoading, fetchProducts, saveProduct, deleteProduct } = useProductAdmin();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   
   const [selectedFilters, setSelectedFilters] = useState({
     category: categoriaId || "all",
@@ -127,8 +128,8 @@ const Admin2 = () => {
     if (success) {
       setIsDialogOpen(false);
       setEditingProduct(null);
-      // Refresh the products list
-      await fetchProducts();
+      // Trigger refresh of the products list
+      setRefreshTrigger(prev => prev + 1);
     }
     return success;
   };
@@ -272,6 +273,7 @@ const Admin2 = () => {
           filters={selectedFilters}
           onEditProduct={openEditDialog}
           onDeleteProduct={deleteProduct}
+          refreshTrigger={refreshTrigger}
         />
       </div>
       
