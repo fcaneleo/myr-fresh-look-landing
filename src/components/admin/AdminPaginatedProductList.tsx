@@ -7,7 +7,6 @@ import { ChevronLeft, ChevronRight, Edit, Trash2 } from "lucide-react";
 import { supabase } from '@/integrations/supabase/client';
 import { formatPrice } from "@/lib/formatPrice";
 import { AdminProduct } from "@/hooks/useProductAdmin";
-
 interface AdminFilterState {
   category: string;
   priceRange: number[];
@@ -17,14 +16,16 @@ interface AdminFilterState {
   porMayor: boolean;
   searchTerm?: string;
 }
-
 interface AdminPaginatedProductListProps {
   filters: AdminFilterState;
   onEditProduct: (product: AdminProduct) => void;
   onDeleteProduct: (id: number) => void;
 }
-
-const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: AdminPaginatedProductListProps) => {
+const AdminPaginatedProductList = ({
+  filters,
+  onEditProduct,
+  onDeleteProduct
+}: AdminPaginatedProductListProps) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
@@ -44,14 +45,10 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
       try {
         setLoading(true);
         setError(null);
-
-        let query = supabase
-          .from('productos')
-          .select(`
+        let query = supabase.from('productos').select(`
             *,
             familias!inner(nombre, descripcion)
-          `)
-          .eq('vigencia', true);
+          `).eq('vigencia', true);
 
         // Apply search filter
         if (filters.searchTerm && filters.searchTerm.trim()) {
@@ -73,11 +70,9 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
         if (filters.featured) {
           query = query.eq('featured', true);
         }
-
         if (filters.oferta) {
           query = query.eq('oferta', true);
         }
-
         if (filters.porMayor) {
           query = query.gt('precio_mayor', 100);
         }
@@ -95,29 +90,41 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
         // Apply sorting
         switch (filters.sortBy) {
           case 'name':
-            query = query.order('descripcion', { ascending: true });
+            query = query.order('descripcion', {
+              ascending: true
+            });
             break;
           case 'price_asc':
-            query = query.order('precio', { ascending: true });
+            query = query.order('precio', {
+              ascending: true
+            });
             break;
           case 'price_desc':
-            query = query.order('precio', { ascending: false });
+            query = query.order('precio', {
+              ascending: false
+            });
             break;
           case 'newest':
-            query = query.order('created_at', { ascending: false });
+            query = query.order('created_at', {
+              ascending: false
+            });
             break;
           case 'oldest':
-            query = query.order('created_at', { ascending: true });
+            query = query.order('created_at', {
+              ascending: true
+            });
             break;
           default:
-            query = query.order('descripcion', { ascending: true });
+            query = query.order('descripcion', {
+              ascending: true
+            });
         }
 
         // Get total count for pagination
-        const countQuery = supabase
-          .from('productos')
-          .select('id', { count: 'exact', head: true })
-          .eq('vigencia', true);
+        const countQuery = supabase.from('productos').select('id', {
+          count: 'exact',
+          head: true
+        }).eq('vigencia', true);
 
         // Apply same filters for count
         let finalCountQuery = countQuery;
@@ -148,16 +155,18 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
             finalCountQuery = finalCountQuery.lte('precio', filters.priceRange[1]);
           }
         }
-
-        const { count } = await finalCountQuery;
+        const {
+          count
+        } = await finalCountQuery;
         setTotalCount(count || 0);
 
         // Apply pagination
         const offset = (currentPage - 1) * itemsPerPage;
         query = query.range(offset, offset + itemsPerPage - 1);
-
-        const { data, error: fetchError } = await query;
-
+        const {
+          data,
+          error: fetchError
+        } = await query;
         if (fetchError) {
           throw fetchError;
         }
@@ -195,9 +204,7 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
           created_at: item.created_at,
           updated_at: item.updated_at
         })) || [];
-
         setProducts(transformedProducts);
-
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error al cargar productos');
         console.error('Error fetching products:', err);
@@ -205,57 +212,39 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
         setLoading(false);
       }
     };
-
     fetchProducts();
   }, [currentPage, filters]);
-
   const totalPages = Math.ceil(totalCount / itemsPerPage);
-
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
   };
-
   const renderPaginationButtons = () => {
     const buttons = [];
     const maxVisiblePages = 5;
-    
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-    
     if (endPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
-
     for (let page = startPage; page <= endPage; page++) {
-      buttons.push(
-        <Button
-          key={page}
-          variant={page === currentPage ? "default" : "outline"}
-          size="sm"
-          onClick={() => handlePageChange(page)}
-          className="min-w-[40px]"
-        >
+      buttons.push(<Button key={page} variant={page === currentPage ? "default" : "outline"} size="sm" onClick={() => handlePageChange(page)} className="min-w-[40px]">
           {page}
-        </Button>
-      );
+        </Button>);
     }
-
     return buttons;
   };
-
   if (error) {
-    return (
-      <div className="text-center py-12">
+    return <div className="text-center py-12">
         <p className="text-destructive">Error al cargar productos: {error}</p>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="w-full">
+  return <div className="w-full">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-2 sm:gap-0">
         <h2 className="text-lg sm:text-xl font-semibold text-foreground">
           Todos los Productos ({totalCount} productos)
@@ -265,46 +254,28 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
         </div>
       </div>
 
-      {loading ? (
-        <div className="text-center py-12">
+      {loading ? <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
           <p className="text-muted-foreground mt-4">Cargando productos...</p>
-        </div>
-      ) : (
-        <>
+        </div> : <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {products.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            {products.map(product => <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative">
-                  {product.image_url ? (
-                    <img
-                      src={product.image_url}
-                      alt={product.descripcion}
-                      className="w-full h-64 object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-64 bg-muted flex items-center justify-center">
+                  {product.image_url ? <img src={product.image_url} alt={product.descripcion} className="w-full h-64 object-cover" /> : <div className="w-full h-64 bg-muted flex items-center justify-center">
                       <span className="text-muted-foreground">Sin imagen</span>
-                    </div>
-                  )}
+                    </div>}
                   
                   {/* Badges */}
                   <div className="absolute top-2 left-2 flex flex-col gap-1">
-                    {product.featured && (
-                      <Badge variant="secondary" className="bg-yellow-500 text-yellow-50">
+                    {product.featured && <Badge variant="secondary" className="bg-yellow-500 text-yellow-50">
                         Destacado
-                      </Badge>
-                    )}
-                    {product.oferta && (
-                      <Badge variant="destructive">
+                      </Badge>}
+                    {product.oferta && <Badge variant="destructive">
                         Oferta
-                      </Badge>
-                    )}
-                    {product.precio_mayor && product.precio_mayor > 100 && (
-                      <Badge variant="outline" className="bg-blue-500 text-blue-50">
+                      </Badge>}
+                    {product.precio_mayor && product.precio_mayor > 100 && <Badge variant="outline" className="bg-blue-500 text-blue-50">
                         Por Mayor
-                      </Badge>
-                    )}
+                      </Badge>}
                   </div>
                 </div>
                 
@@ -313,22 +284,18 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
                     {product.descripcion}
                   </h3>
                   
-                  {product.descripcion_larga && (
-                    <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+                  {product.descripcion_larga && <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
                       {product.descripcion_larga}
-                    </p>
-                  )}
+                    </p>}
                   
                   <div className="space-y-2">
                     <p className="text-xl font-bold text-primary">
                       {formatPrice(product.precio)}
                     </p>
                     
-                    {product.precio_mayor && product.precio_mayor > 0 && (
-                      <p className="text-lg font-semibold text-blue-600">
+                    {product.precio_mayor && product.precio_mayor > 0 && <p className="text-lg font-semibold text-blue-600">
                         Por Mayor: {formatPrice(product.precio_mayor)}
-                      </p>
-                    )}
+                      </p>}
                     
                     <p className="text-sm text-muted-foreground">
                       <strong>Categoría:</strong> {product.familia_nombre}
@@ -336,46 +303,27 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
                   </div>
                   
                   <div className="flex justify-between items-center mt-4 pt-4 border-t">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onEditProduct(product)}
-                    >
+                    <Button variant="outline" size="sm" onClick={() => onEditProduct(product)}>
                       <Edit className="h-4 w-4 mr-2" />
                       Editar
                     </Button>
                     
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => onDeleteProduct(product.id)}
-                      className="text-destructive hover:text-destructive-foreground"
-                    >
+                    <Button variant="destructive" size="sm" onClick={() => onDeleteProduct(product.id)} className="text-slate-50">
                       <Trash2 className="h-4 w-4 mr-2 text-red-500" />
                       Eliminar
                     </Button>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
 
-          {products.length === 0 && !loading && (
-            <div className="text-center py-12">
+          {products.length === 0 && !loading && <div className="text-center py-12">
               <p className="text-muted-foreground">No se encontraron productos con los filtros seleccionados</p>
-            </div>
-          )}
+            </div>}
 
           {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-2 mt-6 sm:mt-8">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="w-full sm:w-auto"
-              >
+          {totalPages > 1 && <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-2 mt-6 sm:mt-8">
+              <Button variant="outline" size="sm" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} className="w-full sm:w-auto">
                 <ChevronLeft className="h-4 w-4" />
                 Anterior
               </Button>
@@ -384,22 +332,12 @@ const AdminPaginatedProductList = ({ filters, onEditProduct, onDeleteProduct }: 
                 {renderPaginationButtons()}
               </div>
               
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="w-full sm:w-auto"
-              >
+              <Button variant="outline" size="sm" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} className="w-full sm:w-auto">
                 Siguiente
                 <ChevronRight className="h-4 w-4" />
               </Button>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
+            </div>}
+        </>}
+    </div>;
 };
-
 export default AdminPaginatedProductList;
