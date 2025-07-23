@@ -12,25 +12,31 @@ import AdminFilters from "../components/admin/AdminFilters";
 import AdminPaginatedProductList from "../components/admin/AdminPaginatedProductList";
 import { ProductForm } from "@/components/admin/ProductForm";
 import Footer from "../components/Footer";
-
 const Admin2 = () => {
   const [searchParams] = useSearchParams();
-  const { categories } = useCategories();
+  const {
+    categories
+  } = useCategories();
   const categoriaId = searchParams.get('categoria');
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   // Authentication
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
-  
+
   // Admin functionality
-  const { products, isLoading, fetchProducts, saveProduct, deleteProduct } = useProductAdmin();
+  const {
+    products,
+    isLoading,
+    fetchProducts,
+    saveProduct,
+    deleteProduct
+  } = useProductAdmin();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  
   const [selectedFilters, setSelectedFilters] = useState({
     category: categoriaId || "all",
     priceRange: [0, 55000],
@@ -65,10 +71,7 @@ const Admin2 = () => {
   }, [isAuthenticated]);
 
   // Find the current category name for display
-  const currentCategory = categoriaId 
-    ? categories.find(cat => cat.id.toString() === categoriaId)
-    : null;
-
+  const currentCategory = categoriaId ? categories.find(cat => cat.id.toString() === categoriaId) : null;
   const handleClearFilters = () => {
     setSelectedFilters({
       category: "all",
@@ -81,7 +84,6 @@ const Admin2 = () => {
     });
     setSearchTerm("");
   };
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (username === "admin" && password === "Vale8253") {
@@ -91,7 +93,6 @@ const Admin2 = () => {
       setAuthError("Usuario o contraseña incorrectos");
     }
   };
-
   const handleLogout = () => {
     setIsAuthenticated(false);
     setUsername("");
@@ -112,18 +113,15 @@ const Admin2 = () => {
   };
 
   // Handle save product
-  const handleSaveProduct = async (
-    formData: {
-      name: string;
-      description: string;
-      price: string;
-      category: string;
-      featured: boolean;
-      oferta: boolean;
-      Precio_Mayor?: string;
-    },
-    imageFile: File | null | 'REMOVE_IMAGE'
-  ) => {
+  const handleSaveProduct = async (formData: {
+    name: string;
+    description: string;
+    price: string;
+    category: string;
+    featured: boolean;
+    oferta: boolean;
+    Precio_Mayor?: string;
+  }, imageFile: File | null | 'REMOVE_IMAGE') => {
     const success = await saveProduct(formData, imageFile, editingProduct);
     if (success) {
       setIsDialogOpen(false);
@@ -139,10 +137,8 @@ const Admin2 = () => {
     setIsDialogOpen(false);
     setEditingProduct(null);
   };
-
   if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+    return <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
@@ -158,38 +154,21 @@ const Admin2 = () => {
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <Input
-                  type="text"
-                  placeholder="Usuario"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
+                <Input type="text" placeholder="Usuario" value={username} onChange={e => setUsername(e.target.value)} required />
               </div>
               <div>
-                <Input
-                  type="password"
-                  placeholder="Contraseña"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <Input type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} required />
               </div>
-              {authError && (
-                <p className="text-destructive text-sm text-center">{authError}</p>
-              )}
+              {authError && <p className="text-destructive text-sm text-center">{authError}</p>}
               <Button type="submit" className="w-full">
                 Iniciar Sesión
               </Button>
             </form>
           </CardContent>
         </Card>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="min-h-screen bg-background pt-20">
+  return <div className="min-h-screen bg-background pt-20">
       <Header />
       
       {/* Admin Header */}
@@ -201,7 +180,7 @@ const Admin2 = () => {
               Inicio
             </Link>
             <ChevronLeft className="h-4 w-4 rotate-180" />
-            <span className="font-medium text-foreground">Admin 2</span>
+            <span className="font-medium text-foreground">Admin</span>
           </div>
 
           {/* Header con botones */}
@@ -228,13 +207,7 @@ const Admin2 = () => {
                   </Button>
                 </DialogTrigger>
                 
-                <ProductForm
-                  isOpen={isDialogOpen}
-                  onClose={handleCloseDialog}
-                  onSave={handleSaveProduct}
-                  editingProduct={editingProduct}
-                  isLoading={isLoading}
-                />
+                <ProductForm isOpen={isDialogOpen} onClose={handleCloseDialog} onSave={handleSaveProduct} editingProduct={editingProduct} isLoading={isLoading} />
               </Dialog>
             </div>
           </div>
@@ -242,13 +215,7 @@ const Admin2 = () => {
           {/* Buscador */}
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              type="text"
-              placeholder="Buscar productos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+            <Input type="text" placeholder="Buscar productos..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
           </div>
 
           {/* Mostrar total de productos */}
@@ -260,26 +227,15 @@ const Admin2 = () => {
 
       {/* Filtros */}
       <div className="container mx-auto px-4 mb-8">
-        <AdminFilters 
-          filters={selectedFilters}
-          onFiltersChange={setSelectedFilters}
-          onClearFilters={handleClearFilters}
-        />
+        <AdminFilters filters={selectedFilters} onFiltersChange={setSelectedFilters} onClearFilters={handleClearFilters} />
       </div>
 
       {/* Product List */}
       <div className="container mx-auto px-4 pb-8">
-        <AdminPaginatedProductList 
-          filters={selectedFilters}
-          onEditProduct={openEditDialog}
-          onDeleteProduct={deleteProduct}
-          refreshTrigger={refreshTrigger}
-        />
+        <AdminPaginatedProductList filters={selectedFilters} onEditProduct={openEditDialog} onDeleteProduct={deleteProduct} refreshTrigger={refreshTrigger} />
       </div>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Admin2;
