@@ -119,7 +119,7 @@ const PaginatedProductListMayor = ({ filters }: PaginatedProductListMayorProps) 
                   <img
                     src={product.image_url || "/placeholder.svg"}
                     alt={product.descripcion}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-48 object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = "/placeholder.svg";
@@ -150,6 +150,10 @@ const PaginatedProductListMayor = ({ filters }: PaginatedProductListMayorProps) 
                       {product.categoria_nombre}
                     </Badge>
                   </div>
+                  
+                  <p className="text-xs text-muted-foreground line-clamp-2">
+                    {product.descripcion}
+                  </p>
                   
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">

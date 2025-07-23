@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Product } from "../pages/Index";
 import { useProducts } from "../hooks/useProducts";
 import { useCategories } from "../hooks/useCategories";
@@ -100,52 +101,50 @@ const ProductGrid = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {ofertas.map((product) => (
-          <div 
+          <Card 
             key={product.id} 
-            className="bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 cursor-pointer"
+            className="h-full hover:shadow-lg transition-shadow cursor-pointer"
             onClick={() => navigate(`/producto/${product.id}`)}
           >
-              {/* Product Image */}
-              <div className="h-40 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+            <CardContent className="p-4">
+              <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
                 {product.image && product.image !== '/placeholder.svg' ? (
                    <img 
                      src={product.image} 
                      alt={product.name}
-                     className="w-full h-full object-contain bg-gray-50 rounded-lg hover:scale-105 transition-transform duration-300"
+                     className="w-full h-full object-contain bg-gray-50"
                    />
                 ) : (
-                  <div className={`w-full h-full bg-gradient-to-br ${getProductColor(product.category)} rounded-lg flex items-center justify-center hover:scale-105 transition-transform duration-300`}>
+                  <div className={`w-full h-full bg-gradient-to-br ${getProductColor(product.category)} rounded-lg flex items-center justify-center`}>
                     <span className="font-bold text-center px-2 text-sm leading-tight">{product.name}</span>
                   </div>
                 )}
                 {/* Badges */}
                 {product.featured && (
-                  <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground z-10">
+                  <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
                     Destacado
                   </Badge>
                 )}
                 {product.oferta && (
-                  <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground z-10">
+                  <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground">
                     Oferta
                   </Badge>
                 )}
               </div>
-              
-              {/* Product Info */}
-              <div className="space-y-2">
-                <span className="inline-block bg-muted text-muted-foreground text-xs px-2 py-1 rounded-full">
+              <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
+                {product.name}
+              </h3>
+              <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
+                {product.description}
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-lg font-bold text-primary">{formatPrice(product.price)}</span>
+                <div className="text-xs text-muted-foreground capitalize bg-muted px-2 py-1 rounded-full">
                   {product.category}
-                </span>
-                <h3 className="font-semibold text-foreground">{product.name}</h3>
-                <p className="text-muted-foreground text-sm">{product.description}</p>
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-xl font-bold text-primary">{formatPrice(product.price)}</span>
-                  <div className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                    Ver más
-                  </div>
                 </div>
               </div>
-            </div>
+            </CardContent>
+          </Card>
           ))}
         </div>
       </div>

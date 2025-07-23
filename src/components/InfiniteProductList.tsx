@@ -71,47 +71,58 @@ const InfiniteProductList = ({ filters }: InfiniteProductListProps) => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {allProducts.map((product) => (
           <Card 
             key={product.id} 
-            className="hover:shadow-lg transition-shadow cursor-pointer"
+            className="group overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer border hover:border-primary/20"
             onClick={() => navigate(`/producto/${product.id}`)}
           >
-            <CardContent className="p-4">
-               <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-3 flex items-center justify-center relative">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-contain bg-gray-50 rounded-lg"
-                  />
-                 {/* Badges */}
-                 {product.featured && (
-                   <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
-                     Destacado
-                   </Badge>
-                 )}
-                 {product.oferta && (
-                   <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground">
-                     Oferta
-                   </Badge>
-                 )}
-               </div>
-              <h3 className="font-semibold text-foreground mb-1">
-                {product.name}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-2 capitalize">
-                {product.category}
-              </p>
-              <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
-                {product.description}
-              </p>
-              <div className="flex items-center justify-between">
-                 <span className="text-lg font-bold text-primary">
-                   {formatPrice(product.price)}
-                 </span>
-                <div className="text-xs text-muted-foreground capitalize bg-muted px-2 py-1 rounded-full">
-                  {product.category}
+            <CardContent className="p-0">
+              <div className="relative overflow-hidden">
+                <img
+                  src={product.image || "/placeholder.svg"}
+                  alt={product.name}
+                  className="w-full h-48 object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/placeholder.svg";
+                  }}
+                />
+                {product.featured && (
+                  <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
+                    Destacado
+                  </Badge>
+                )}
+                {product.oferta && (
+                  <Badge className="absolute top-2 right-2 bg-accent text-accent-foreground">
+                    Oferta
+                  </Badge>
+                )}
+              </div>
+              
+              <div className="p-4 space-y-3">
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                    {product.name}
+                  </h3>
+                  
+                  <Badge 
+                    variant="outline" 
+                    className="text-xs"
+                  >
+                    {product.category}
+                  </Badge>
+                </div>
+                
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  {product.description}
+                </p>
+                
+                <div className="flex items-center justify-between">
+                  <div className="text-xl font-bold text-primary">
+                    {formatPrice(product.price)}
+                  </div>
                 </div>
               </div>
             </CardContent>
