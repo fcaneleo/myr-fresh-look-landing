@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Search } from "lucide-react"; // 👈 Agregar Search
 import { Link, useSearchParams } from "react-router-dom";
+import { Input } from "@/components/ui/input"; // 👈 Agregar Input
 import { useCategories } from "@/hooks/useCategories";
 import Header from "../components/Header";
 import ProductCarousel from "../components/ProductCarousel";
 import ProductFilters from "../components/ProductFilters";
 import PaginatedProductList from "../components/PaginatedProductList";
-import SearchInput from "../components/SearchInput";
+// import SearchInput from "../components/SearchInput"; // 👈 Comentar o eliminar esta línea
 import Footer from "../components/Footer";
 
 const Productos = () => {
@@ -19,8 +20,9 @@ const Productos = () => {
     priceRange: [0, 55000],
     sortBy: "name"
   });
-
-  const [searchQuery, setSearchQuery] = useState("");
+  
+  // 👇 CAMBIAR searchQuery por searchTerm (igual que en admin)
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Update filters when URL parameter changes
   useEffect(() => {
@@ -69,11 +71,26 @@ const Productos = () => {
         <ProductCarousel />
       </div>
 
-      {/* Search Bar */}
+      {/* 👇 SEARCH BAR DEL ADMIN (reemplazar SearchInput) */}
       <div className="container mx-auto px-4 mb-6">
         <div className="flex justify-center">
-          <SearchInput />
+          <div className="relative max-w-md w-full">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Buscar productos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 border-primary focus:border-primary ring-primary"
+            />
+          </div>
         </div>
+        {/* 👇 CONTADOR DE RESULTADOS (igual que en admin) */}
+        {searchTerm && (
+          <p className="text-sm text-muted-foreground mt-2 text-center">
+            Buscando: "{searchTerm}"
+          </p>
+        )}
       </div>
 
       {/* Mobile Filters - Show only on mobile, below featured products */}
@@ -98,7 +115,10 @@ const Productos = () => {
           {/* Product List */}
           <div className="lg:col-span-3">
             <PaginatedProductList 
-              filters={selectedFilters}
+              filters={{
+                ...selectedFilters,
+                searchTerm: searchTerm // 👈 PASAR searchTerm al componente
+              }}
             />
           </div>
         </div>
