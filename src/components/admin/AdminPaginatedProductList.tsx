@@ -176,8 +176,8 @@ const AdminPaginatedProductList = ({
         // Transform data to AdminProduct format
         const transformedProducts: AdminProduct[] = data?.map(item => ({
           id: item.id,
-          codigo: item.codigo,
-          codigo_texto: item.codigo_texto,
+          Codigo: item.Codigo,
+          Codigo_Texto: item.Codigo_Texto,
           descripcion: item.descripcion,
           descripcion_larga: item.descripcion_larga || '',
           precio: parseFloat(item.precio.toString()),
@@ -189,9 +189,9 @@ const AdminPaginatedProductList = ({
           unidad_medida: item.unidad_medida,
           Categoria: item.Categoria,
           familia_nombre: item.familias?.nombre || '',
-          codigo_proveedor: item.codigo_proveedor || null,
-          codigo_proveedor2: item.codigo_proveedor2 || null,
-          codigo_proveedor3: item.codigo_proveedor3 || null,
+          Codigo_proveedor: item.Codigo_proveedor || null,
+          Codigo_proveedor2: item.Codigo_proveedor2 || null,
+          Codigo_proveedor3: item.Codigo_proveedor3 || null,
           cantidad_mayor: item.cantidad_mayor || null,
           ajuste: item.ajuste || 0,
           promocion: Boolean(item.promocion),

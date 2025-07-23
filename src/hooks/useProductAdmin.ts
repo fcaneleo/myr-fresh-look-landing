@@ -284,8 +284,8 @@ export const useProductAdmin = () => {
         // Create new product - need to add required fields
         const completeProductData = {
           ...productData,
-          codigo: Date.now(), // temporary solution for required campo
-          codigo_texto: `PROD_${Date.now()}`,
+          Codigo: Date.now(), // temporary solution for required campo
+          Codigo_Texto: `PROD_${Date.now()}`,
           costo: 0,
           stock: 0,
           unidad_medida: 1,

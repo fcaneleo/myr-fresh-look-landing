@@ -5,8 +5,8 @@ DROP VIEW IF EXISTS vista_productos_completa;
 CREATE VIEW vista_productos_completa AS
 SELECT 
     p.id,
-    p.codigo,
-    p.codigo_texto,
+    p.Codigo,
+    p.Codigo_Texto,
     p.descripcion,
     p.descripcion_larga,
     p.precio,
@@ -17,9 +17,9 @@ SELECT
     p.stock_minimo,
     p.unidad_medida,
     p.Categoria,
-    p.codigo_proveedor,
-    p.codigo_proveedor2,
-    p.codigo_proveedor3,
+    p.Codigo_proveedor,
+    p.Codigo_proveedor2,
+    p.Codigo_proveedor3,
     p.cantidad_mayor,
     p.ajuste,
     p.promocion,

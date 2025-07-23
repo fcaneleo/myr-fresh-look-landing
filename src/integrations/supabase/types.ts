@@ -16,7 +16,7 @@ export type Database = {
     Tables: {
       familias: {
         Row: {
-          codigo: number
+          Codigo: number
           created_at: string | null
           descripcion: string
           id: number
@@ -24,7 +24,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
-          codigo: number
+          Codigo: number
           created_at?: string | null
           descripcion: string
           id?: number
@@ -32,7 +32,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
-          codigo?: number
+          Codigo?: number
           created_at?: string | null
           descripcion?: string
           id?: number
@@ -45,11 +45,11 @@ export type Database = {
         Row: {
           ajuste: number | null
           cantidad_mayor: number | null
-          codigo: number
-          codigo_proveedor: number | null
-          codigo_proveedor2: string | null
-          codigo_proveedor3: string | null
-          codigo_texto: string
+          Codigo: number
+          Codigo_proveedor: number | null
+          Codigo_proveedor2: string | null
+          Codigo_proveedor3: string | null
+          Codigo_Texto: string
           con_impuesto: boolean | null
           costo: number
           costo_neto: number | null
@@ -76,11 +76,11 @@ export type Database = {
         Insert: {
           ajuste?: number | null
           cantidad_mayor?: number | null
-          codigo: number
-          codigo_proveedor?: number | null
-          codigo_proveedor2?: string | null
-          codigo_proveedor3?: string | null
-          codigo_texto: string
+          Codigo: number
+          Codigo_proveedor?: number | null
+          Codigo_proveedor2?: string | null
+          Codigo_proveedor3?: string | null
+          Codigo_Texto: string
           con_impuesto?: boolean | null
           costo: number
           costo_neto?: number | null
@@ -107,11 +107,11 @@ export type Database = {
         Update: {
           ajuste?: number | null
           cantidad_mayor?: number | null
-          codigo?: number
-          codigo_proveedor?: number | null
-          codigo_proveedor2?: string | null
-          codigo_proveedor3?: string | null
-          codigo_texto?: string
+          Codigo?: number
+          Codigo_proveedor?: number | null
+          Codigo_proveedor2?: string | null
+          Codigo_proveedor3?: string | null
+          Codigo_Texto?: string
           con_impuesto?: boolean | null
           costo?: number
           costo_neto?: number | null
@@ -194,11 +194,11 @@ export type Database = {
           ajuste: number | null
           cantidad_mayor: number | null
           categoria_nombre: string | null
-          codigo: number | null
-          codigo_proveedor: number | null
-          codigo_proveedor2: string | null
-          codigo_proveedor3: string | null
-          codigo_texto: string | null
+          Codigo: number | null
+          Codigo_proveedor: number | null
+          Codigo_proveedor2: string | null
+          Codigo_proveedor3: string | null
+          Codigo_Texto: string | null
           con_impuesto: boolean | null
           costo: number | null
           costo_neto: number | null
