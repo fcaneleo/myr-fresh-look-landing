@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface ProductMayor {
   id: number;
   descripcion: string;
+  descripcion_larga?: string | null;
   precio_mayor: number;
   categoria_nombre: string;
   image_url?: string;
@@ -100,6 +101,7 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
       const transformedProducts: ProductMayor[] = (data || []).map((item: any) => ({
         id: item.id,
         descripcion: item.descripcion || 'Sin descripción',
+        descripcion_larga: item.descripcion_larga, 
         precio_mayor: item.precio_mayor || 0,
         categoria_nombre: item.categoria_nombre || 'Sin categoría',
         image_url: item.image_url,
