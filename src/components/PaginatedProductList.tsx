@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +12,6 @@ interface FilterState {
   category: string;
   priceRange: number[];
   sortBy: string;
-  searchTerm?: string; // 👈 AGREGAR searchTerm
 }
 
 interface PaginatedProductListProps {
@@ -25,89 +24,63 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
   const [totalCount, setTotalCount] = useState(0);
   const itemsPerPage = 25;
 
-  // 👇 OBTENER TODOS LOS PRODUCTOS PARA FILTRAR LOCALMENTE
-  const { products: allProducts, loading, error } = useProducts({
-    category: "all", // Obtener todos para filtrar localmente
-    limit: 2000 // Límite alto para obtener todos
+  const { products, loading, error } = useProducts({
+    category: filters.category,
+    priceRange: filters.priceRange as [number, number],
+    sortBy: filters.sortBy,
+    limit: itemsPerPage,
+    offset: (currentPage - 1) * itemsPerPage
   });
-
-  // 👇 FILTRADO LOCAL CON BÚSQUEDA
-  const filteredProducts = useMemo(() => {
-    let filtered = [...allProducts];
-    
-    // Filtrar por búsqueda (igual que en admin)
-    if (filters.searchTerm && filters.searchTerm.trim()) {
-      const term = filters.searchTerm.toLowerCase();
-      filtered = filtered.filter(product => 
-        product.name.toLowerCase().includes(term) ||
-        product.description?.toLowerCase().includes(term) ||
-        product.category.toLowerCase().includes(term)
-      );
-    }
-    
-    // Filtrar por categoría
-    if (filters.category && filters.category !== "all") {
-      const isNumericId = !isNaN(Number(filters.category));
-      if (isNumericId) {
-        // Aquí necesitarías mapear el ID a nombre de categoría
-        // Por ahora asumo que tienes acceso a las categorías
-        filtered = filtered.filter(product => {
-          // Esta lógica puede necesitar ajuste según tu estructura de datos
-          return true; // Placeholder
-        });
-      } else {
-        filtered = filtered.filter(product => product.category === filters.category);
-      }
-    }
-    
-    // Filtrar por rango de precios
-    if (filters.priceRange) {
-      filtered = filtered.filter(product => 
-        product.price >= filters.priceRange[0] && 
-        product.price <= filters.priceRange[1]
-      );
-    }
-    
-    // Ordenar
-    switch (filters.sortBy) {
-      case 'name':
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'name-desc':
-        filtered.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-      case 'price-asc':
-        filtered.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-desc':
-        filtered.sort((a, b) => b.price - a.price);
-        break;
-      case 'newest':
-        filtered.sort((a, b) => b.id - a.id);
-        break;
-      default:
-        break;
-    }
-    
-    return filtered;
-  }, [allProducts, filters]);
-
-  // 👇 PAGINACIÓN DE PRODUCTOS FILTRADOS
-  const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return filteredProducts.slice(startIndex, endIndex);
-  }, [filteredProducts, currentPage]);
-
-  // Actualizar totalCount basado en productos filtrados
-  useEffect(() => {
-    setTotalCount(filteredProducts.length);
-  }, [filteredProducts]);
 
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters.category, filters.priceRange, filters.sortBy, filters.searchTerm]);
+  }, [filters.category, filters.priceRange, filters.sortBy]);
+
+  // Get total count for pagination
+  useEffect(() => {
+    const fetchTotalCount = async () => {
+      const { supabase } = await import('@/integrations/supabase/client');
+      
+      let countQuery = supabase
+        .from('productos')
+        .select('*', { count: 'exact', head: true })
+        .eq('vigencia', true);
+
+      // Apply the same filters as the main query
+      if (filters.category && filters.category !== 'all') {
+        // Check if category is an ID (numeric) or name (string)
+        const isNumericId = !isNaN(Number(filters.category));
+        
+        if (isNumericId) {
+          // Filter directly by familia_id
+          countQuery = countQuery.eq('familia_id', parseInt(filters.category));
+        } else {
+          // Get familia_id by name first, then filter by it
+          const { data: familiaData } = await supabase
+            .from('familias')
+            .select('id')
+            .eq('nombre', filters.category)
+            .single();
+          
+          if (familiaData) {
+            countQuery = countQuery.eq('familia_id', familiaData.id);
+          }
+        }
+      }
+
+      if (filters.priceRange) {
+        countQuery = countQuery
+          .gte('precio', filters.priceRange[0])
+          .lte('precio', filters.priceRange[1]);
+      }
+
+      const { count } = await countQuery;
+      setTotalCount(count || 0);
+    };
+
+    fetchTotalCount();
+  }, [filters.category, filters.priceRange]);
 
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
@@ -158,18 +131,11 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
     <div className="w-full">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-2 sm:gap-0">
         <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-          {/* 👇 MOSTRAR RESULTADOS FILTRADOS */}
-          {filters.searchTerm ? (
-            <>Resultados de búsqueda ({totalCount} productos)</>
-          ) : (
-            <>Todos los Productos ({totalCount} productos)</>
-          )}
+          Todos los Productos ({totalCount} productos)
         </h2>
-        {totalPages > 1 && (
-          <div className="text-sm text-muted-foreground">
-            Página {currentPage} de {totalPages}
-          </div>
-        )}
+        <div className="text-sm text-muted-foreground">
+          Página {currentPage} de {totalPages}
+        </div>
       </div>
 
       {loading ? (
@@ -180,8 +146,7 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-            {/* 👇 USAR PRODUCTOS PAGINADOS EN LUGAR DE products */}
-            {paginatedProducts.map((product) => (
+            {products.map((product) => (
               <Card 
                 key={product.id} 
                 className="group overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer border hover:border-primary/20"
@@ -239,15 +204,9 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
             ))}
           </div>
 
-          {/* 👇 MOSTRAR MENSAJE CUANDO NO HAY RESULTADOS */}
-          {paginatedProducts.length === 0 && !loading && (
+          {products.length === 0 && !loading && (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">
-                {filters.searchTerm 
-                  ? `No se encontraron productos que coincidan con "${filters.searchTerm}"`
-                  : "No se encontraron productos con los filtros seleccionados"
-                }
-              </p>
+              <p className="text-muted-foreground">No se encontraron productos con los filtros seleccionados</p>
             </div>
           )}
 

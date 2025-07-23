@@ -97,11 +97,9 @@ export const useProducts = (options: UseProductsOptions = {}) => {
           query = query.order('descripcion', { ascending: true });
       }
 
-      // 👇 SOLUCIÓN DIRECTA: LÍMITE FIJO ALTO
+      // Apply pagination
       if (options.limit) {
-        query = query.limit(Math.max(options.limit, 2000)); // Usar el mayor entre el solicitado y 2000
-      } else {
-        query = query.limit(2000); // Por defecto, límite alto
+        query = query.limit(options.limit);
       }
 
       if (options.offset) {
