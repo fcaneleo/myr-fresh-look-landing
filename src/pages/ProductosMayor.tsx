@@ -16,7 +16,7 @@ const ProductosMayor = () => {
   
   const [selectedFilters, setSelectedFilters] = useState({
     category: categoriaId || "all",
-    priceRange: [100, 100000], // Rango para precios por mayor
+    priceRange: [100, 100000], // Rango para Precios por mayor
     sortBy: "name"
   });
 
@@ -55,8 +55,8 @@ const ProductosMayor = () => {
         </h1>
         <p className="text-muted-foreground">
           {currentCategory 
-            ? `Productos de ${currentCategory.nombre} con precios especiales para compras por mayor`
-            : "Productos con precios especiales para compras por mayor (mínimo 3 unidades por producto)"
+            ? `Productos de ${currentCategory.nombre} con Precios especiales para compras por mayor`
+            : "Productos con Precios especiales para compras por mayor (mínimo 3 unidades por producto)"
           }
         </p>
       </div>

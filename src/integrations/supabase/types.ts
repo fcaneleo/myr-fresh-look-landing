@@ -18,7 +18,7 @@ export type Database = {
         Row: {
           Codigo: number
           created_at: string | null
-          descripcion: string
+          Descripcion: string
           id: number
           nombre: string | null
           updated_at: string | null
@@ -26,7 +26,7 @@ export type Database = {
         Insert: {
           Codigo: number
           created_at?: string | null
-          descripcion: string
+          Descripcion: string
           id?: number
           nombre?: string | null
           updated_at?: string | null
@@ -34,7 +34,7 @@ export type Database = {
         Update: {
           Codigo?: number
           created_at?: string | null
-          descripcion?: string
+          Descripcion?: string
           id?: number
           nombre?: string | null
           updated_at?: string | null
@@ -43,96 +43,96 @@ export type Database = {
       }
       productos: {
         Row: {
-          ajuste: number | null
-          cantidad_mayor: number | null
+          Ajuste: number | null
+          Cantidad_Mayor: number | null
           Codigo: number
-          Codigo_proveedor: number | null
-          Codigo_proveedor2: string | null
-          Codigo_proveedor3: string | null
+          Codigo_Proveedor: number | null
+          Codigo_Proveedor2: string | null
+          Codigo_Proveedor3: string | null
           Codigo_Texto: string
-          con_impuesto: boolean | null
-          costo: number
-          costo_neto: number | null
+          Con_Impuesto: boolean | null
+          Costo: number
+          Costo_Neto: number | null
           created_at: string | null
-          descripcion: string
+          Descripcion: string
           descripcion_larga: string | null
           Categoria: number
           featured: boolean | null
           id: number
           image_url: string | null
           oferta: boolean | null
-          precio: number
-          precio_mayor: number | null
-          promocion: boolean | null
-          servicio: boolean | null
-          stock: number
-          stock_minimo: number | null
-          tipo_impuesto: number | null
-          unidad_medida: number
+          Precio: number
+          Precio_Mayor: number | null
+          Promocion: boolean | null
+          Servicio: boolean | null
+          Stock: number
+          Stock_Minimo: number | null
+          Tipo_Impuesto: number | null
+          Unidad_Medida: number
           updated_at: string | null
-          valor_impuesto: number | null
+          Valor_Impuesto: number | null
           vigencia: boolean | null
         }
         Insert: {
-          ajuste?: number | null
-          cantidad_mayor?: number | null
+          Ajuste?: number | null
+          Cantidad_Mayor?: number | null
           Codigo: number
-          Codigo_proveedor?: number | null
-          Codigo_proveedor2?: string | null
-          Codigo_proveedor3?: string | null
+          Codigo_Proveedor?: number | null
+          Codigo_Proveedor2?: string | null
+          Codigo_Proveedor3?: string | null
           Codigo_Texto: string
-          con_impuesto?: boolean | null
-          costo: number
-          costo_neto?: number | null
+          Con_Impuesto?: boolean | null
+          Costo: number
+          Costo_Neto?: number | null
           created_at?: string | null
-          descripcion: string
+          Descripcion: string
           descripcion_larga?: string | null
           Categoria: number
           featured?: boolean | null
           id?: number
           image_url?: string | null
           oferta?: boolean | null
-          precio: number
-          precio_mayor?: number | null
-          promocion?: boolean | null
-          servicio?: boolean | null
-          stock: number
-          stock_minimo?: number | null
-          tipo_impuesto?: number | null
-          unidad_medida: number
+          Precio: number
+          Precio_Mayor?: number | null
+          Promocion?: boolean | null
+          Servicio?: boolean | null
+          Stock: number
+          Stock_Minimo?: number | null
+          Tipo_Impuesto?: number | null
+          Unidad_Medida: number
           updated_at?: string | null
-          valor_impuesto?: number | null
+          Valor_Impuesto?: number | null
           vigencia?: boolean | null
         }
         Update: {
-          ajuste?: number | null
-          cantidad_mayor?: number | null
+          Ajuste?: number | null
+          Cantidad_Mayor?: number | null
           Codigo?: number
-          Codigo_proveedor?: number | null
-          Codigo_proveedor2?: string | null
-          Codigo_proveedor3?: string | null
+          Codigo_Proveedor?: number | null
+          Codigo_Proveedor2?: string | null
+          Codigo_Proveedor3?: string | null
           Codigo_Texto?: string
-          con_impuesto?: boolean | null
-          costo?: number
-          costo_neto?: number | null
+          Con_Impuesto?: boolean | null
+          Costo?: number
+          Costo_Neto?: number | null
           created_at?: string | null
-          descripcion?: string
+          Descripcion?: string
           descripcion_larga?: string | null
           Categoria?: number
           featured?: boolean | null
           id?: number
           image_url?: string | null
           oferta?: boolean | null
-          precio?: number
-          precio_mayor?: number | null
-          promocion?: boolean | null
-          servicio?: boolean | null
-          stock?: number
-          stock_minimo?: number | null
-          tipo_impuesto?: number | null
-          unidad_medida?: number
+          Precio?: number
+          Precio_Mayor?: number | null
+          Promocion?: boolean | null
+          Servicio?: boolean | null
+          Stock?: number
+          Stock_Minimo?: number | null
+          Tipo_Impuesto?: number | null
+          Unidad_Medida?: number
           updated_at?: string | null
-          valor_impuesto?: number | null
+          Valor_Impuesto?: number | null
           vigencia?: boolean | null
         }
         Relationships: [
@@ -191,35 +191,35 @@ export type Database = {
     Views: {
       vista_productos_completa: {
         Row: {
-          ajuste: number | null
-          cantidad_mayor: number | null
+          Ajuste: number | null
+          Cantidad_Mayor: number | null
           categoria_nombre: string | null
           Codigo: number | null
           Codigo_proveedor: number | null
-          Codigo_proveedor2: string | null
-          Codigo_proveedor3: string | null
+          Codigo_Proveedor2: string | null
+          Codigo_Proveedor3: string | null
           Codigo_Texto: string | null
-          con_impuesto: boolean | null
-          costo: number | null
-          costo_neto: number | null
+          Con_Impuesto: boolean | null
+          Costo: number | null
+          Costo_Neto: number | null
           created_at: string | null
-          descripcion: string | null
+          Descripcion: string | null
           descripcion_larga: string | null
           Categoria: number | null
           featured: boolean | null
           id: number | null
           image_url: string | null
           oferta: boolean | null
-          precio: number | null
-          precio_mayor: number | null
-          promocion: boolean | null
-          servicio: boolean | null
-          stock: number | null
-          stock_minimo: number | null
-          tipo_impuesto: number | null
-          unidad_medida: number | null
+          Precio: number | null
+          Precio_Mayor: number | null
+          Promocion: boolean | null
+          Servicio: boolean | null
+          Stock: number | null
+          Stock_Minimo: number | null
+          Tipo_Impuesto: number | null
+          Unidad_Medida: number | null
           updated_at: string | null
-          valor_impuesto: number | null
+          Valor_Impuesto: number | null
           vigencia: boolean | null
         }
         Relationships: [

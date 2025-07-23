@@ -18,7 +18,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
         {product.image_url ? (
           <img 
             src={product.image_url} 
-            alt={product.descripcion}
+            alt={product.Descripcion}
             className="w-full h-full object-cover"
           />
         ) : (
@@ -39,10 +39,10 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
       </div>
       
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">{product.descripcion}</CardTitle>
+        <CardTitle className="text-lg">{product.Descripcion}</CardTitle>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-primary">
-            {formatPrice(product.precio)}
+            {formatPrice(product.Precio)}
           </span>
           <Badge variant="secondary">{product.familia_nombre}</Badge>
         </div>

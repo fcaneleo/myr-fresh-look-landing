@@ -91,7 +91,7 @@ const Admin = () => {
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(product => 
-        product.descripcion.toLowerCase().includes(term) ||
+        product.Descripcion.toLowerCase().includes(term) ||
         product.descripcion_larga?.toLowerCase().includes(term) ||
         product.familia_nombre.toLowerCase().includes(term)
       );
@@ -107,39 +107,39 @@ const Admin = () => {
     }
     
     if (filters.porMayor) {
-      filtered = filtered.filter(product => product.precio_mayor && product.precio_mayor > 100);
+      filtered = filtered.filter(product => product.Precio_Mayor && product.Precio_Mayor > 100);
     }
     
     if (filters.categoria && filters.categoria !== "all") {
       console.log('Filtering by categoria:', filters.categoria);
-      console.log('Available products with familia_nombre:', products.map(p => ({ id: p.id, descripcion: p.descripcion, familia_nombre: p.familia_nombre })));
+      console.log('Available products with familia_nombre:', products.map(p => ({ id: p.id, Descripcion: p.Descripcion, familia_nombre: p.familia_nombre })));
       filtered = filtered.filter(product => product.familia_nombre === filters.categoria);
       console.log('Filtered products:', filtered.length);
     }
     
     if (filters.minPrice) {
       const minPrice = parseFloat(filters.minPrice);
-      filtered = filtered.filter(product => product.precio >= minPrice);
+      filtered = filtered.filter(product => product.Precio >= minPrice);
     }
     
     if (filters.maxPrice) {
       const maxPrice = parseFloat(filters.maxPrice);
-      filtered = filtered.filter(product => product.precio <= maxPrice);
+      filtered = filtered.filter(product => product.Precio <= maxPrice);
     }
     
     // Apply sorting
     switch (filters.sortBy) {
       case 'name_asc':
-        filtered.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+        filtered.sort((a, b) => a.Descripcion.localeCompare(b.Descripcion));
         break;
       case 'name_desc':
-        filtered.sort((a, b) => b.descripcion.localeCompare(a.descripcion));
+        filtered.sort((a, b) => b.Descripcion.localeCompare(a.Descripcion));
         break;
       case 'price_asc':
-        filtered.sort((a, b) => a.precio - b.precio);
+        filtered.sort((a, b) => a.Precio - b.Precio);
         break;
       case 'price_desc':
-        filtered.sort((a, b) => b.precio - a.precio);
+        filtered.sort((a, b) => b.Precio - a.Precio);
         break;
       case 'newest':
         filtered.sort((a, b) => b.id - a.id);

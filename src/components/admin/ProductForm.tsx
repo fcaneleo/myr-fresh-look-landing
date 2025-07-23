@@ -20,7 +20,7 @@ interface ProductFormProps {
       category: string;
       featured: boolean;
       oferta: boolean;
-      precio_mayor?: string;
+      Precio_Mayor?: string;
     },
     imageFile: File | null | 'REMOVE_IMAGE'
   ) => Promise<boolean>;
@@ -43,7 +43,7 @@ export const ProductForm = ({
     category: "",
     featured: false,
     oferta: false,
-    precio_mayor: ""
+    Precio_Mayor: ""
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -121,7 +121,7 @@ export const ProductForm = ({
       category: "",
       featured: false,
       oferta: false,
-      precio_mayor: ""
+      Precio_Mayor: ""
     });
     setImageFile(null);
     setImagePreview(null);
@@ -144,13 +144,13 @@ export const ProductForm = ({
   useEffect(() => {
     if (editingProduct) {
       setFormData({
-        name: editingProduct.descripcion,
+        name: editingProduct.Descripcion,
         description: editingProduct.descripcion_larga || "",
-        price: editingProduct.precio.toString(),
+        price: editingProduct.Precio.toString(),
         category: editingProduct.familia_nombre,
         featured: Boolean(editingProduct.featured),
         oferta: Boolean(editingProduct.oferta),
-        precio_mayor: editingProduct.precio_mayor ? editingProduct.precio_mayor.toString() : "0"
+        Precio_Mayor: editingProduct.Precio_Mayor ? editingProduct.Precio_Mayor.toString() : "0"
       });
       setImagePreview(editingProduct.image_url);
       setImageFile(null);
@@ -163,7 +163,7 @@ export const ProductForm = ({
         category: "",
         featured: false,
         oferta: false,
-        precio_mayor: ""
+        Precio_Mayor: ""
       });
       setImagePreview(null);
       setImageFile(null);
@@ -275,12 +275,12 @@ export const ProductForm = ({
 
             {/* Precio Mayor */}
             <div>
-              <Label htmlFor="precio_mayor">Precio Por Mayor (CLP)</Label>
+              <Label htmlFor="Precio_Mayor">Precio Por Mayor (CLP)</Label>
               <Input
-                id="precio_mayor"
+                id="Precio_Mayor"
                 type="number"
-                value={formData.precio_mayor}
-                onChange={(e) => handleInputChange('precio_mayor', e.target.value)}
+                value={formData.Precio_Mayor}
+                onChange={(e) => handleInputChange('Precio_Mayor', e.target.value)}
                 placeholder="0"
               />
             </div>

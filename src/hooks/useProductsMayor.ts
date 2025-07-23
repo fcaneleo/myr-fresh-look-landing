@@ -3,9 +3,9 @@ import { supabase } from '@/integrations/supabase/client';
 
 interface ProductMayor {
   id: number;
-  descripcion: string;
+  Descripcion: string;
   descripcion_larga?: string | null;
-  precio_mayor: number;
+  Precio_Mayor: number;
   categoria_nombre: string;
   image_url?: string;
   featured?: boolean;
@@ -37,7 +37,7 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
     limit = 20,
     offset = 0,
     priceRange = [100, 100000],
-    sortBy = "descripcion"
+    sortBy = "Descripcion"
   } = options;
 
   const fetchProducts = async () => {
@@ -50,9 +50,9 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
         .from('vista_productos_completa')
         .select('*', { count: 'exact' });
 
-      // Filter by precio_mayor > 100
-      queryBuilder = queryBuilder.gt('precio_mayor', 100);
-      queryBuilder = queryBuilder.not('precio_mayor', 'is', null);
+      // Filter by Precio_Mayor > 100
+      queryBuilder = queryBuilder.gt('Precio_Mayor', 100);
+      queryBuilder = queryBuilder.not('Precio_Mayor', 'is', null);
 
       // Apply category filter
       if (category && category !== "all") {
@@ -75,17 +75,17 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
 
       // Apply price range filter
       if (priceRange && priceRange.length === 2) {
-        queryBuilder = queryBuilder.gte('precio_mayor', priceRange[0]);
-        queryBuilder = queryBuilder.lte('precio_mayor', priceRange[1]);
+        queryBuilder = queryBuilder.gte('Precio_Mayor', priceRange[0]);
+        queryBuilder = queryBuilder.lte('Precio_Mayor', priceRange[1]);
       }
 
       // Apply sorting
       if (sortBy === "price_asc") {
-        queryBuilder = queryBuilder.order('precio_mayor', { ascending: true });
+        queryBuilder = queryBuilder.order('Precio_Mayor', { ascending: true });
       } else if (sortBy === "price_desc") {
-        queryBuilder = queryBuilder.order('precio_mayor', { ascending: false });
+        queryBuilder = queryBuilder.order('Precio_Mayor', { ascending: false });
       } else {
-        queryBuilder = queryBuilder.order('descripcion', { ascending: true });
+        queryBuilder = queryBuilder.order('Descripcion', { ascending: true });
       }
 
       // Apply pagination
@@ -100,9 +100,9 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
       // Transform data
       const transformedProducts: ProductMayor[] = (data || []).map((item: any) => ({
         id: item.id,
-        descripcion: item.descripcion || 'Sin descripción',
+        Descripcion: item.Descripcion || 'Sin descripción',
         descripcion_larga: item.descripcion_larga, 
-        precio_mayor: item.precio_mayor || 0,
+        Precio_Mayor: item.Precio_Mayor || 0,
         categoria_nombre: item.categoria_nombre || 'Sin categoría',
         image_url: item.image_url,
         featured: Boolean(item.featured),

@@ -38,19 +38,19 @@ const SearchInput = () => {
           )
         `)
         .eq('vigencia', true)
-        .or(`descripcion.ilike.%${searchQuery}%,descripcion_larga.ilike.%${searchQuery}%`)
+        .or(`Descripcion.ilike.%${searchQuery}%,descripcion_larga.ilike.%${searchQuery}%`)
         .limit(8);
 
       if (error) throw error;
 
       const transformedResults: SearchResult[] = data?.map(item => ({
         id: item.id,
-        name: item.descripcion,
-        price: parseFloat(item.precio.toString()),
+        name: item.Descripcion,
+        price: parseFloat(item.Precio.toString()),
         image: item.image_url || '/placeholder.svg',
         category: item.familias?.nombre || '',
         description: item.descripcion_larga || '',
-        highlight: highlightMatch(item.descripcion, searchQuery)
+        highlight: highlightMatch(item.Descripcion, searchQuery)
       })) || [];
 
       setResults(transformedResults);

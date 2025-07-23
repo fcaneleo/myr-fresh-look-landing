@@ -11,10 +11,10 @@ import Footer from "@/components/Footer";
 
 interface ProductDetail {
   id: number;
-  descripcion: string;
+  Descripcion: string;
   descripcion_larga: string | null;
-  precio: number;
-  precio_mayor: number | null;
+  Precio: number;
+  Precio_Mayor: number | null;
   familia_nombre: string;
   image_url: string | null;
   featured: boolean | null;
@@ -62,10 +62,10 @@ const ProductDetail = () => {
         // Transform data to match ProductDetail interface
         const transformedProduct: ProductDetail = {
           id: data.id,
-          descripcion: data.descripcion,
+          Descripcion: data.Descripcion,
           descripcion_larga: data.descripcion_larga,
-          precio: parseFloat(data.precio.toString()),
-          precio_mayor: data.precio_mayor ? parseFloat(data.precio_mayor.toString()) : null,
+          Precio: parseFloat(data.Precio.toString()),
+          Precio_Mayor: data.Precio_Mayor ? parseFloat(data.Precio_Mayor.toString()) : null,
           familia_nombre: data.familias?.nombre || '',
           image_url: data.image_url,
           featured: data.featured
@@ -102,8 +102,8 @@ const ProductDetail = () => {
   };
 
   const handleWhatsAppContact = () => {
-    const price = isMayorView && product?.precio_mayor ? product.precio_mayor : product?.precio || 0;
-    const message = `Hola, me interesa el producto: ${product?.descripcion} - ${formatPrice(price)}`;
+    const price = isMayorView && product?.Precio_Mayor ? product.Precio_Mayor : product?.Precio || 0;
+    const message = `Hola, me interesa el producto: ${product?.Descripcion} - ${formatPrice(price)}`;
     const whatsappUrl = `https://wa.me/56930837263?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -159,13 +159,13 @@ const ProductDetail = () => {
             {product.image_url ? (
               <img 
                 src={product.image_url} 
-                alt={product.descripcion}
+                alt={product.Descripcion}
                 className="w-full h-full object-contain bg-gray-50 rounded-lg shadow-lg"
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/30 rounded-lg shadow-lg flex items-center justify-center">
                 <span className="text-primary font-bold text-xl text-center px-4">
-                  {product.descripcion}
+                  {product.Descripcion}
                 </span>
               </div>
             )}
@@ -183,18 +183,18 @@ const ProductDetail = () => {
                 {getCategoryDisplayName(product.familia_nombre)}
               </Badge>
               <h1 className="text-3xl font-bold text-foreground mb-4">
-                {product.descripcion}
+                {product.Descripcion}
               </h1>
               
               {/* Price display - different for wholesale view */}
-              {isMayorView && product.precio_mayor ? (
+              {isMayorView && product.Precio_Mayor ? (
                 <div className="space-y-2 mb-6">
                   <div className="text-4xl font-bold text-primary">
-                    {formatPrice(product.precio_mayor)}
+                    {formatPrice(product.Precio_Mayor)}
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-lg text-muted-foreground line-through">
-                      {formatPrice(product.precio)}
+                      {formatPrice(product.Precio)}
                     </span>
                     <Badge variant="secondary" className="text-xs">
                       Precio por mayor
@@ -206,7 +206,7 @@ const ProductDetail = () => {
                 </div>
               ) : (
                 <div className="text-4xl font-bold text-primary mb-6">
-                  {formatPrice(product.precio)}
+                  {formatPrice(product.Precio)}
                 </div>
               )}
             </div>
@@ -247,7 +247,7 @@ const ProductDetail = () => {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Disponibilidad:</span>
-                <span className="text-green-600 font-medium">En stock</span>
+                <span className="text-green-600 font-medium">En Stock</span>
               </div>
             </div>
           </div>

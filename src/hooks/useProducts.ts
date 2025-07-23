@@ -64,37 +64,37 @@ export const useProducts = (options: UseProductsOptions = {}) => {
         query = query.eq('oferta', options.oferta);
       }
 
-      // Filter by mayor status (precio_mayor > 100)
+      // Filter by mayor status (Precio_Mayor > 100)
       if (options.porMayor !== undefined) {
         if (options.porMayor) {
-          query = query.gt('precio_mayor', 100);
+          query = query.gt('Precio_Mayor', 100);
         } else {
-          query = query.or('precio_mayor.is.null,precio_mayor.lte.100');
+          query = query.or('Precio_Mayor.is.null,Precio_Mayor.lte.100');
         }
       }
 
       if (options.priceRange) {
         query = query
-          .gte('precio', options.priceRange[0])
-          .lte('precio', options.priceRange[1]);
+          .gte('Precio', options.priceRange[0])
+          .lte('Precio', options.priceRange[1]);
       }
 
       // Apply sorting
       switch (options.sortBy) {
         case 'name-desc':
-          query = query.order('descripcion', { ascending: false });
+          query = query.order('Descripcion', { ascending: false });
           break;
         case 'price-asc':
-          query = query.order('precio', { ascending: true });
+          query = query.order('Precio', { ascending: true });
           break;
         case 'price-desc':
-          query = query.order('precio', { ascending: false });
+          query = query.order('Precio', { ascending: false });
           break;
         case 'newest':
           query = query.order('created_at', { ascending: false });
           break;
         default:
-          query = query.order('descripcion', { ascending: true });
+          query = query.order('Descripcion', { ascending: true });
       }
 
       // Apply pagination
@@ -115,8 +115,8 @@ export const useProducts = (options: UseProductsOptions = {}) => {
       // Transform data to match Product interface
       const transformedProducts: Product[] = data?.map(item => ({
         id: item.id,
-        name: item.descripcion,
-        price: parseFloat(item.precio.toString()),
+        name: item.Descripcion,
+        price: parseFloat(item.Precio.toString()),
         image: item.image_url || '/placeholder.svg',
         category: item.familias?.nombre || '',
         description: item.descripcion_larga || '',

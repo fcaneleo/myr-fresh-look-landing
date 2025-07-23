@@ -4,10 +4,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 export interface AdminProduct {
   id: number;
-  descripcion: string;
+  Descripcion: string;
   descripcion_larga: string | null;
-  precio: number;
-  precio_mayor: number | null;
+  Precio: number;
+  Precio_Mayor: number | null;
   familia_nombre: string;
   Categoria: number;
   image_url: string | null;
@@ -42,10 +42,10 @@ export const useProductAdmin = () => {
       .from('productos')
       .select(`
         id,
-        descripcion,
+        Descripcion,
         descripcion_larga,
-        precio,
-        precio_mayor,
+        Precio,
+        Precio_Mayor,
         Categoria,
         image_url,
         featured,
@@ -74,10 +74,10 @@ export const useProductAdmin = () => {
     // Transform data to match AdminProduct interface
     const transformedProducts: AdminProduct[] = (data || []).map(item => ({
       id: item.id,
-      descripcion: item.descripcion,
+      Descripcion: item.Descripcion,
       descripcion_larga: item.descripcion_larga,
-      precio: parseFloat(item.precio.toString()),
-      precio_mayor: item.precio_mayor ? parseFloat(item.precio_mayor.toString()) : null,
+      Precio: parseFloat(item.Precio.toString()),
+      Precio_Mayor: item.Precio_Mayor ? parseFloat(item.Precio_Mayor.toString()) : null,
       familia_nombre: (item.familias as any)?.nombre || '',
       Categoria: item.Categoria,
       image_url: item.image_url,
@@ -86,12 +86,12 @@ export const useProductAdmin = () => {
       vigencia: item.vigencia
     }));
     
-    // Debug: count products with precio_mayor > 0
-    const productsWithPrecioMayor = transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 0);
+    // Debug: count products with Precio_Mayor > 0
+    const productsWithPrecioMayor = transformedProducts.filter(p => p.Precio_Mayor && p.Precio_Mayor > 0);
     console.log(`Total products loaded: ${transformedProducts.length}`);
     console.log(`Expected count from DB: ${totalCount}`);
-    console.log(`Products with precio_mayor > 0: ${productsWithPrecioMayor.length}`);
-    console.log(`Products with precio_mayor > 100: ${transformedProducts.filter(p => p.precio_mayor && p.precio_mayor > 100).length}`);
+    console.log(`Products with Precio_Mayor > 0: ${productsWithPrecioMayor.length}`);
+    console.log(`Products with Precio_Mayor > 100: ${transformedProducts.filter(p => p.Precio_Mayor && p.Precio_Mayor > 100).length}`);
     
     if (transformedProducts.length !== totalCount) {
       console.warn(`MISMATCH: Expected ${totalCount} products but got ${transformedProducts.length}`);
@@ -181,7 +181,7 @@ export const useProductAdmin = () => {
       category: string;
       featured: boolean;
       oferta: boolean;
-      precio_mayor?: string;
+      Precio_Mayor?: string;
     },
     imageFile: File | null | 'REMOVE_IMAGE',
     editingProduct: AdminProduct | null
@@ -241,10 +241,10 @@ export const useProductAdmin = () => {
       }
 
       const productData = {
-        descripcion: formData.name,
+        Descripcion: formData.name,
         descripcion_larga: formData.description || null,
-        precio: parseFloat(formData.price),
-        precio_mayor: formData.precio_mayor ? parseFloat(formData.precio_mayor) : null,
+        Precio: parseFloat(formData.price),
+        Precio_Mayor: formData.Precio_Mayor ? parseFloat(formData.Precio_Mayor) : null,
         Categoria: familia?.id || editingProduct?.Categoria,
         image_url: imageUrl,
         featured: formData.featured,
@@ -286,9 +286,9 @@ export const useProductAdmin = () => {
           ...productData,
           Codigo: Date.now(), // temporary solution for required campo
           Codigo_Texto: `PROD_${Date.now()}`,
-          costo: 0,
-          stock: 0,
-          unidad_medida: 1,
+          Costo: 0,
+          Stock: 0,
+          Unidad_Medida: 1,
           vigencia: true
         };
         

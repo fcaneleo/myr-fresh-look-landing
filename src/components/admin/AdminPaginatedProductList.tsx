@@ -49,13 +49,13 @@ const AdminPaginatedProductList = ({
         setError(null);
         let query = supabase.from('productos').select(`
             *,
-            familias!inner(nombre, descripcion)
+            familias!inner(nombre, Descripcion)
           `).eq('vigencia', true);
 
         // Apply search filter
         if (filters.searchTerm && filters.searchTerm.trim()) {
           const searchTerm = filters.searchTerm.toLowerCase();
-          query = query.or(`descripcion.ilike.%${searchTerm}%,descripcion_larga.ilike.%${searchTerm}%`);
+          query = query.or(`Descripcion.ilike.%${searchTerm}%,descripcion_larga.ilike.%${searchTerm}%`);
         }
 
         // Apply category filter
@@ -76,33 +76,33 @@ const AdminPaginatedProductList = ({
           query = query.eq('oferta', true);
         }
         if (filters.porMayor) {
-          query = query.gt('precio_mayor', 100);
+          query = query.gt('Precio_Mayor', 100);
         }
 
         // Apply price range filter
         if (filters.priceRange && filters.priceRange.length === 2) {
           if (filters.priceRange[0] > 0) {
-            query = query.gte('precio', filters.priceRange[0]);
+            query = query.gte('Precio', filters.priceRange[0]);
           }
           if (filters.priceRange[1] < 55000) {
-            query = query.lte('precio', filters.priceRange[1]);
+            query = query.lte('Precio', filters.priceRange[1]);
           }
         }
 
         // Apply sorting
         switch (filters.sortBy) {
           case 'name':
-            query = query.order('descripcion', {
+            query = query.order('Descripcion', {
               ascending: true
             });
             break;
           case 'price_asc':
-            query = query.order('precio', {
+            query = query.order('Precio', {
               ascending: true
             });
             break;
           case 'price_desc':
-            query = query.order('precio', {
+            query = query.order('Precio', {
               ascending: false
             });
             break;
@@ -117,7 +117,7 @@ const AdminPaginatedProductList = ({
             });
             break;
           default:
-            query = query.order('descripcion', {
+            query = query.order('Descripcion', {
               ascending: true
             });
         }
@@ -132,7 +132,7 @@ const AdminPaginatedProductList = ({
         let finalCountQuery = countQuery;
         if (filters.searchTerm && filters.searchTerm.trim()) {
           const searchTerm = filters.searchTerm.toLowerCase();
-          finalCountQuery = finalCountQuery.or(`descripcion.ilike.%${searchTerm}%,descripcion_larga.ilike.%${searchTerm}%`);
+          finalCountQuery = finalCountQuery.or(`Descripcion.ilike.%${searchTerm}%,descripcion_larga.ilike.%${searchTerm}%`);
         }
         if (filters.category && filters.category !== 'all') {
           const isNumericId = !isNaN(Number(filters.category));
@@ -147,14 +147,14 @@ const AdminPaginatedProductList = ({
           finalCountQuery = finalCountQuery.eq('oferta', true);
         }
         if (filters.porMayor) {
-          finalCountQuery = finalCountQuery.gt('precio_mayor', 100);
+          finalCountQuery = finalCountQuery.gt('Precio_Mayor', 100);
         }
         if (filters.priceRange && filters.priceRange.length === 2) {
           if (filters.priceRange[0] > 0) {
-            finalCountQuery = finalCountQuery.gte('precio', filters.priceRange[0]);
+            finalCountQuery = finalCountQuery.gte('Precio', filters.priceRange[0]);
           }
           if (filters.priceRange[1] < 55000) {
-            finalCountQuery = finalCountQuery.lte('precio', filters.priceRange[1]);
+            finalCountQuery = finalCountQuery.lte('Precio', filters.priceRange[1]);
           }
         }
         const {
@@ -178,27 +178,27 @@ const AdminPaginatedProductList = ({
           id: item.id,
           Codigo: item.Codigo,
           Codigo_Texto: item.Codigo_Texto,
-          descripcion: item.descripcion,
+          Descripcion: item.Descripcion,
           descripcion_larga: item.descripcion_larga || '',
-          precio: parseFloat(item.precio.toString()),
-          precio_mayor: item.precio_mayor ? parseFloat(item.precio_mayor.toString()) : null,
-          costo: parseFloat(item.costo.toString()),
-          costo_neto: item.costo_neto ? parseFloat(item.costo_neto.toString()) : null,
-          stock: item.stock,
-          stock_minimo: item.stock_minimo || 0,
-          unidad_medida: item.unidad_medida,
+          Precio: parseFloat(item.Precio.toString()),
+          Precio_Mayor: item.Precio_Mayor ? parseFloat(item.Precio_Mayor.toString()) : null,
+          Costo: parseFloat(item.Costo.toString()),
+          Costo_Neto: item.Costo_Neto ? parseFloat(item.Costo_Neto.toString()) : null,
+          Stock: item.Stock,
+          Stock_Minimo: item.Stock_Minimo || 0,
+          Unidad_Medida: item.Unidad_Medida,
           Categoria: item.Categoria,
           familia_nombre: item.familias?.nombre || '',
-          Codigo_proveedor: item.Codigo_proveedor || null,
-          Codigo_proveedor2: item.Codigo_proveedor2 || null,
-          Codigo_proveedor3: item.Codigo_proveedor3 || null,
-          cantidad_mayor: item.cantidad_mayor || null,
-          ajuste: item.ajuste || 0,
-          promocion: Boolean(item.promocion),
-          servicio: Boolean(item.servicio),
-          con_impuesto: Boolean(item.con_impuesto),
-          tipo_impuesto: item.tipo_impuesto || 0,
-          valor_impuesto: item.valor_impuesto ? parseFloat(item.valor_impuesto.toString()) : 0,
+          Codigo_proveedor: item.Codigo_Proveedor || null,
+          Codigo_proveedor2: item.Codigo_Proveedor2 || null,
+          Codigo_proveedor3: item.Codigo_Proveedor3 || null,
+          Cantidad_Mayor: item.Cantidad_Mayor || null,
+          Ajuste: item.Ajuste || 0,
+          Promocion: Boolean(item.Promocion),
+          Servicio: Boolean(item.Servicio),
+          Con_Impuesto: Boolean(item.Con_Impuesto),
+          Tipo_Impuesto: item.Tipo_Impuesto || 0,
+          Valor_Impuesto: item.Valor_Impuesto ? parseFloat(item.Valor_Impuesto.toString()) : 0,
           featured: Boolean(item.featured),
           oferta: Boolean(item.oferta),
           vigencia: Boolean(item.vigencia),
@@ -265,7 +265,7 @@ const AdminPaginatedProductList = ({
                  <div className="relative">
                   {product.image_url ? <img 
                     src={product.image_url} 
-                    alt={product.descripcion} 
+                    alt={product.Descripcion} 
                     className="w-full h-64 object-contain bg-gray-50" 
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
@@ -283,7 +283,7 @@ const AdminPaginatedProductList = ({
                     {product.oferta && <Badge variant="destructive">
                         Oferta
                       </Badge>}
-                    {product.precio_mayor && product.precio_mayor > 100 && <Badge variant="outline" className="bg-blue-500 text-blue-50">
+                    {product.Precio_Mayor && product.Precio_Mayor > 100 && <Badge variant="outline" className="bg-blue-500 text-blue-50">
                         Por Mayor
                       </Badge>}
                   </div>
@@ -291,7 +291,7 @@ const AdminPaginatedProductList = ({
                 
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-lg mb-2 line-clamp-2">
-                    {product.descripcion}
+                    {product.Descripcion}
                   </h3>
                   
                   {product.descripcion_larga && <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
@@ -300,11 +300,11 @@ const AdminPaginatedProductList = ({
                   
                   <div className="space-y-2">
                     <p className="text-xl font-bold text-primary">
-                      {formatPrice(product.precio)}
+                      {formatPrice(product.Precio)}
                     </p>
                     
-                    {product.precio_mayor && product.precio_mayor > 0 && <p className="text-lg font-semibold text-blue-600">
-                        Por Mayor: {formatPrice(product.precio_mayor)}
+                    {product.Precio_Mayor && product.Precio_Mayor > 0 && <p className="text-lg font-semibold text-blue-600">
+                        Por Mayor: {formatPrice(product.Precio_Mayor)}
                       </p>}
                     
                     <p className="text-sm text-muted-foreground">

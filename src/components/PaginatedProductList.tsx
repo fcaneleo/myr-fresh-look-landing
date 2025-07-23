@@ -71,8 +71,8 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
 
       if (filters.priceRange) {
         countQuery = countQuery
-          .gte('precio', filters.priceRange[0])
-          .lte('precio', filters.priceRange[1]);
+          .gte('Precio', filters.priceRange[0])
+          .lte('Precio', filters.priceRange[1]);
       }
 
       const { count } = await countQuery;

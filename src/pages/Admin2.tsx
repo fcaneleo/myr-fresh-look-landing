@@ -120,7 +120,7 @@ const Admin2 = () => {
       category: string;
       featured: boolean;
       oferta: boolean;
-      precio_mayor?: string;
+      Precio_Mayor?: string;
     },
     imageFile: File | null | 'REMOVE_IMAGE'
   ) => {
