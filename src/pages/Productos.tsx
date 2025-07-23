@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import ProductCarousel from "../components/ProductCarousel";
 import ProductFilters from "../components/ProductFilters";
 import PaginatedProductList from "../components/PaginatedProductList";
+import SearchInput from "../components/SearchInput";
 import Footer from "../components/Footer";
 
 const Productos = () => {
@@ -18,6 +19,8 @@ const Productos = () => {
     priceRange: [0, 55000],
     sortBy: "name"
   });
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Update filters when URL parameter changes
   useEffect(() => {
@@ -64,6 +67,13 @@ const Productos = () => {
       <div className="container mx-auto px-4 mb-8 lg:mb-12">
         <h2 className="text-2xl font-bold text-foreground mb-6">Productos Destacados</h2>
         <ProductCarousel />
+      </div>
+
+      {/* Search Bar */}
+      <div className="container mx-auto px-4 mb-6">
+        <div className="flex justify-center">
+          <SearchInput />
+        </div>
       </div>
 
       {/* Mobile Filters - Show only on mobile, below featured products */}

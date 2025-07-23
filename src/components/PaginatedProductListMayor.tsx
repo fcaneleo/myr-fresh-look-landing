@@ -145,7 +145,7 @@ const PaginatedProductListMayor = ({ filters }: PaginatedProductListMayorProps) 
                     
                     <Badge 
                       variant="outline" 
-                      className={`text-xs ${getProductColor(product.categoria_nombre)}`}
+                      className="text-xs"
                     >
                       {product.categoria_nombre}
                     </Badge>
@@ -156,25 +156,9 @@ const PaginatedProductListMayor = ({ filters }: PaginatedProductListMayorProps) 
                   </p>
                   
                   <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <div className="text-xl font-bold text-primary">
-                        {formatPrice(product.precio_mayor)}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Precio por mayor
-                      </div>
+                    <div className="text-xl font-bold text-primary">
+                      {formatPrice(product.precio_mayor)}
                     </div>
-                    
-                    <Button 
-                      size="sm" 
-                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleProductClick(product.id);
-                      }}
-                    >
-                      Ver detalles
-                    </Button>
                   </div>
                 </div>
               </CardContent>
