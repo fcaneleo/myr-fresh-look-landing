@@ -151,7 +151,7 @@ const PaginatedProductListMayor = ({ filters }: PaginatedProductListMayorProps) 
                     </Badge>
                   </div>                  
                     <p className="text-xs text-muted-foreground line-clamp-2">
-                      {product.descripcion}
+                      {product.descripcion_larga}
                     </p>
                   
                   
