@@ -57,7 +57,7 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
       // Apply category filter
       if (category && category !== "all") {
         if (!isNaN(Number(category))) {
-          queryBuilder = queryBuilder.eq('familia_id', Number(category));
+          queryBuilder = queryBuilder.eq('Categoria', Number(category));
         } else {
           queryBuilder = queryBuilder.eq('categoria_nombre', category);
         }

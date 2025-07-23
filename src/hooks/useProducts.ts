@@ -40,10 +40,10 @@ export const useProducts = (options: UseProductsOptions = {}) => {
         const isNumericId = !isNaN(Number(options.category));
         
         if (isNumericId) {
-          // Filter directly by familia_id
-          query = query.eq('familia_id', parseInt(options.category));
+          // Filter directly by Categoria
+          query = query.eq('Categoria', parseInt(options.category));
         } else {
-          // Get familia_id by name first, then filter by it
+          // Get Categoria by name first, then filter by it
           const { data: familiaData } = await supabase
             .from('familias')
             .select('id')
@@ -51,7 +51,7 @@ export const useProducts = (options: UseProductsOptions = {}) => {
             .single();
           
           if (familiaData) {
-            query = query.eq('familia_id', familiaData.id);
+            query = query.eq('Categoria', familiaData.id);
           }
         }
       }

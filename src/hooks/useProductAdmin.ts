@@ -9,7 +9,7 @@ export interface AdminProduct {
   precio: number;
   precio_mayor: number | null;
   familia_nombre: string;
-  familia_id: number;
+  Categoria: number;
   image_url: string | null;
   featured: boolean | null;
   oferta: boolean | null;
@@ -46,7 +46,7 @@ export const useProductAdmin = () => {
         descripcion_larga,
         precio,
         precio_mayor,
-        familia_id,
+        Categoria,
         image_url,
         featured,
         oferta,
@@ -79,7 +79,7 @@ export const useProductAdmin = () => {
       precio: parseFloat(item.precio.toString()),
       precio_mayor: item.precio_mayor ? parseFloat(item.precio_mayor.toString()) : null,
       familia_nombre: (item.familias as any)?.nombre || '',
-      familia_id: item.familia_id,
+      Categoria: item.Categoria,
       image_url: item.image_url,
       featured: item.featured,
       oferta: item.oferta,
@@ -227,7 +227,7 @@ export const useProductAdmin = () => {
         }
       }
 
-      // Find familia_id by category name
+      // Find Categoria by category name
       const familias = await fetchFamilies();
       const familia = familias.find(f => f.nombre.toLowerCase() === formData.category.toLowerCase());
       
@@ -245,7 +245,7 @@ export const useProductAdmin = () => {
         descripcion_larga: formData.description || null,
         precio: parseFloat(formData.price),
         precio_mayor: formData.precio_mayor ? parseFloat(formData.precio_mayor) : null,
-        familia_id: familia?.id || editingProduct?.familia_id,
+        Categoria: familia?.id || editingProduct?.Categoria,
         image_url: imageUrl,
         featured: formData.featured,
         oferta: formData.oferta

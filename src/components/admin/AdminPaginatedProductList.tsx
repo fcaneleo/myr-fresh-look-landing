@@ -62,7 +62,7 @@ const AdminPaginatedProductList = ({
         if (filters.category && filters.category !== 'all') {
           const isNumericId = !isNaN(Number(filters.category));
           if (isNumericId) {
-            query = query.eq('familia_id', parseInt(filters.category));
+            query = query.eq('Categoria', parseInt(filters.category));
           } else {
             query = query.eq('familias.nombre', filters.category);
           }
@@ -137,7 +137,7 @@ const AdminPaginatedProductList = ({
         if (filters.category && filters.category !== 'all') {
           const isNumericId = !isNaN(Number(filters.category));
           if (isNumericId) {
-            finalCountQuery = finalCountQuery.eq('familia_id', parseInt(filters.category));
+            finalCountQuery = finalCountQuery.eq('Categoria', parseInt(filters.category));
           }
         }
         if (filters.featured) {
@@ -187,7 +187,7 @@ const AdminPaginatedProductList = ({
           stock: item.stock,
           stock_minimo: item.stock_minimo || 0,
           unidad_medida: item.unidad_medida,
-          familia_id: item.familia_id,
+          Categoria: item.Categoria,
           familia_nombre: item.familias?.nombre || '',
           codigo_proveedor: item.codigo_proveedor || null,
           codigo_proveedor2: item.codigo_proveedor2 || null,

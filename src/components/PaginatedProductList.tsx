@@ -53,10 +53,10 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
         const isNumericId = !isNaN(Number(filters.category));
         
         if (isNumericId) {
-          // Filter directly by familia_id
-          countQuery = countQuery.eq('familia_id', parseInt(filters.category));
+          // Filter directly by Categoria
+          countQuery = countQuery.eq('Categoria', parseInt(filters.category));
         } else {
-          // Get familia_id by name first, then filter by it
+          // Get Categoria by name first, then filter by it
           const { data: familiaData } = await supabase
             .from('familias')
             .select('id')
@@ -64,7 +64,7 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
             .single();
           
           if (familiaData) {
-            countQuery = countQuery.eq('familia_id', familiaData.id);
+            countQuery = countQuery.eq('Categoria', familiaData.id);
           }
         }
       }

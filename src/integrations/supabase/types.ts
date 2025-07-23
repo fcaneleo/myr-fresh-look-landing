@@ -56,7 +56,7 @@ export type Database = {
           created_at: string | null
           descripcion: string
           descripcion_larga: string | null
-          familia_id: number
+          Categoria: number
           featured: boolean | null
           id: number
           image_url: string | null
@@ -87,7 +87,7 @@ export type Database = {
           created_at?: string | null
           descripcion: string
           descripcion_larga?: string | null
-          familia_id: number
+          Categoria: number
           featured?: boolean | null
           id?: number
           image_url?: string | null
@@ -118,7 +118,7 @@ export type Database = {
           created_at?: string | null
           descripcion?: string
           descripcion_larga?: string | null
-          familia_id?: number
+          Categoria?: number
           featured?: boolean | null
           id?: number
           image_url?: string | null
@@ -138,7 +138,7 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "productos_familia_id_fkey"
-            columns: ["familia_id"]
+            columns: ["Categoria"]
             isOneToOne: false
             referencedRelation: "familias"
             referencedColumns: ["id"]
@@ -205,7 +205,7 @@ export type Database = {
           created_at: string | null
           descripcion: string | null
           descripcion_larga: string | null
-          familia_id: number | null
+          Categoria: number | null
           featured: boolean | null
           id: number | null
           image_url: string | null
@@ -225,7 +225,7 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "productos_familia_id_fkey"
-            columns: ["familia_id"]
+            columns: ["Categoria"]
             isOneToOne: false
             referencedRelation: "familias"
             referencedColumns: ["id"]
