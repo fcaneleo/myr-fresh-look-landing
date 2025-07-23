@@ -96,13 +96,12 @@ export const useProducts = (options: UseProductsOptions = {}) => {
         default:
           query = query.order('descripcion', { ascending: true });
       }
-       if (!options.limit) {
-        query = query.limit(2000); // 👈 ESTA ES LA LÍNEA CLAVE
-      }
 
-      // Apply pagination
+      // 👇 SOLUCIÓN DIRECTA: LÍMITE FIJO ALTO
       if (options.limit) {
-        query = query.limit(options.limit);
+        query = query.limit(Math.max(options.limit, 2000)); // Usar el mayor entre el solicitado y 2000
+      } else {
+        query = query.limit(2000); // Por defecto, límite alto
       }
 
       if (options.offset) {

@@ -28,7 +28,7 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
   // 👇 OBTENER TODOS LOS PRODUCTOS PARA FILTRAR LOCALMENTE
   const { products: allProducts, loading, error } = useProducts({
     category: "all", // Obtener todos para filtrar localmente
-    limit: 5000 // Límite alto para obtener todos
+    limit: 2000 // Límite alto para obtener todos
   });
 
   // 👇 FILTRADO LOCAL CON BÚSQUEDA
