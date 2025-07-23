@@ -160,7 +160,7 @@ const ProductDetail = () => {
               <img 
                 src={product.image_url} 
                 alt={product.descripcion}
-                className="w-full h-full object-cover rounded-lg shadow-lg"
+                className="w-full h-full object-contain bg-gray-50 rounded-lg shadow-lg"
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/30 rounded-lg shadow-lg flex items-center justify-center">
