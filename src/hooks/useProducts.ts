@@ -96,6 +96,9 @@ export const useProducts = (options: UseProductsOptions = {}) => {
         default:
           query = query.order('descripcion', { ascending: true });
       }
+       if (!options.limit) {
+        query = query.limit(2000); // 👈 ESTA ES LA LÍNEA CLAVE
+      }
 
       // Apply pagination
       if (options.limit) {
