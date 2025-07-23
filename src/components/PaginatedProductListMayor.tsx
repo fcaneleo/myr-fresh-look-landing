@@ -152,7 +152,7 @@ const PaginatedProductListMayor = ({ filters }: PaginatedProductListMayorProps) 
                   </div>
                   
                   <p className="text-xs text-muted-foreground line-clamp-2">
-                    {product.description}
+                    {product.descripcion_larga}
                   </p>
                   
                   <div className="flex items-center justify-between">
