@@ -150,10 +150,12 @@ const Productos = () => {
       </div>
 
       {/* Featured Products Carousel */}
-      <div className="container mx-auto px-4 mb-8 lg:mb-12">
-        <h2 className="text-2xl font-bold text-foreground mb-6">Productos Destacados</h2>
-        <ProductCarousel />
-      </div>
+      {!searchTerm && ( // Solo mostrar carousel si no hay búsqueda
+        <div className="container mx-auto px-4 mb-8 lg:mb-12">
+          <h2 className="text-2xl font-bold text-foreground mb-6">Productos Destacados</h2>
+          <ProductCarousel />
+        </div>
+      )}
 
       {/* Mobile Filters - Show only on mobile, below featured products */}
       <div className="container mx-auto px-4 mb-6 lg:hidden">
@@ -176,6 +178,7 @@ const Productos = () => {
           
           {/* Product List */}
           <div className="lg:col-span-3">
+            {/* 👇 Usar el componente existente pero pasarle productos filtrados */}
             {loading ? (
               <div className="text-center py-12">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -191,65 +194,16 @@ const Productos = () => {
                 </p>
               </div>
             ) : (
-              // 👇 RENDERIZAR PRODUCTOS FILTRADOS DIRECTAMENTE
-              <div className="space-y-6">
-                {/* Results info */}
-                <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-semibold">
-                    Productos ({filteredProducts.length})
-                  </h2>
-                </div>
-
-                {/* Products Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-                  {filteredProducts.map((product) => (
-                    <div 
-                      key={product.id}
-                      className="hover:shadow-lg transition-shadow cursor-pointer border rounded-lg overflow-hidden"
-                      onClick={() => window.location.href = `/producto/${product.id}`}
-                    >
-                      <div className="aspect-square bg-gradient-to-br from-secondary/30 to-accent/20 rounded-lg mb-2 sm:mb-3 flex items-center justify-center relative">
-                        <img 
-                          src={product.image} 
-                          alt={product.name}
-                          className="w-full h-full object-cover rounded-lg"
-                        />
-                        {/* Badges */}
-                        {product.featured && (
-                          <div className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded">
-                            Destacado
-                          </div>
-                        )}
-                        {product.oferta && (
-                          <div className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-accent text-accent-foreground text-xs px-2 py-1 rounded">
-                            Oferta
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="p-3 sm:p-4">
-                        <h3 className="font-semibold text-foreground mb-1 line-clamp-2 text-sm sm:text-base">
-                          {product.name}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-muted-foreground mb-1 sm:mb-2 capitalize">
-                          {product.category}
-                        </p>
-                        <p className="text-xs text-muted-foreground mb-2 sm:mb-3 line-clamp-2">
-                          {product.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-base sm:text-lg font-bold text-primary">
-                            ${product.price?.toLocaleString()}
-                          </span>
-                          <div className="text-xs text-muted-foreground capitalize bg-muted px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
-                            {product.category}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              // Aquí puedes usar el componente PaginatedProductList existente
+              // O crear una versión simple que muestre los productos filtrados
+              <PaginatedProductList 
+                filters={{
+                  ...selectedFilters,
+                  // Pasar una flag para indicar que ya están filtrados
+                  preFiltered: true,
+                  filteredProducts: filteredProducts
+                }}
+              />
             )}
           </div>
         </div>
