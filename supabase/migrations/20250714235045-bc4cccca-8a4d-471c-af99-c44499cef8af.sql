@@ -16,7 +16,7 @@ SELECT
     p.stock,
     p.stock_minimo,
     p.unidad_medida,
-    p.familia_id,
+    p.Categoria,
     p.codigo_proveedor,
     p.codigo_proveedor2,
     p.codigo_proveedor3,
@@ -35,4 +35,4 @@ SELECT
     p.updated_at,
     f.descripcion as categoria_nombre
 FROM productos p
-LEFT JOIN familias f ON p.familia_id = f.id;
+LEFT JOIN familias f ON p.Categoria = f.id;
