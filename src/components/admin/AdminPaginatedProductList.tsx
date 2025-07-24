@@ -49,7 +49,7 @@ const AdminPaginatedProductList = ({
         setError(null);
         let query = supabase.from('productos').select(`
             *,
-            familias!inner(nombre, descripcion)
+            familias!inner(nombre)
           `).eq('vigencia', true);
 
         // Apply search filter
