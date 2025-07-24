@@ -39,7 +39,7 @@ const SearchInput = () => {
         `)
         .eq('vigencia', true)
         .or(`Descripcion.ilike.%${searchQuery}%,descripcion_larga.ilike.%${searchQuery}%`)
-        .limit(8);
+        .limit(20);
 
       if (error) throw error;
 
