@@ -11,6 +11,7 @@ interface UseProductsOptions {
   offset?: number;
   priceRange?: [number, number];
   sortBy?: string;
+  searchTerm?: string;
 }
 
 export const useProducts = (options: UseProductsOptions = {}) => {
@@ -71,6 +72,12 @@ export const useProducts = (options: UseProductsOptions = {}) => {
         } else {
           query = query.or('Precio_Mayor.is.null,Precio_Mayor.lte.100');
         }
+      }
+
+      // Apply search filter
+      if (options.searchTerm && options.searchTerm.trim()) {
+        const searchTerm = options.searchTerm.toLowerCase();
+        query = query.or(`Descripcion.ilike.%${searchTerm}%,descripcion_larga.ilike.%${searchTerm}%`);
       }
 
       if (options.priceRange) {
@@ -156,7 +163,8 @@ export const useProducts = (options: UseProductsOptions = {}) => {
     options.offset,
     options.priceRange?.[0],
     options.priceRange?.[1],
-    options.sortBy
+    options.sortBy,
+    options.searchTerm
   ]);
 
   const refetch = () => {

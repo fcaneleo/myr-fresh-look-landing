@@ -21,6 +21,7 @@ interface UseProductsMayorOptions {
   offset?: number;
   priceRange?: number[];
   sortBy?: string;
+  searchTerm?: string;
 }
 
 export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
@@ -37,7 +38,8 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
     limit = 20,
     offset = 0,
     priceRange = [100, 100000],
-    sortBy = "Descripcion"
+    sortBy = "Descripcion",
+    searchTerm
   } = options;
 
   const fetchProducts = async () => {
@@ -71,6 +73,12 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
       // Apply oferta filter  
       if (oferta === true) {
         queryBuilder = queryBuilder.filter('oferta', 'eq', true);
+      }
+
+      // Apply search filter
+      if (searchTerm && searchTerm.trim()) {
+        const term = searchTerm.toLowerCase();
+        queryBuilder = queryBuilder.or(`Descripcion.ilike.%${term}%,descripcion_larga.ilike.%${term}%`);
       }
 
       // Apply price range filter
@@ -134,7 +142,7 @@ export const useProductsMayor = (options: UseProductsMayorOptions = {}) => {
 
   useEffect(() => {
     fetchProducts();
-  }, [category, featured, oferta, limit, offset, JSON.stringify(priceRange), sortBy]);
+  }, [category, featured, oferta, limit, offset, JSON.stringify(priceRange), sortBy, searchTerm]);
 
   return {
     products,

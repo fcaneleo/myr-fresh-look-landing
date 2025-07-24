@@ -12,6 +12,7 @@ interface FilterState {
   category: string;
   priceRange: number[];
   sortBy: string;
+  searchTerm?: string;
 }
 
 interface PaginatedProductListProps {
@@ -28,6 +29,7 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
     category: filters.category,
     priceRange: filters.priceRange as [number, number],
     sortBy: filters.sortBy,
+    searchTerm: filters.searchTerm,
     limit: itemsPerPage,
     offset: (currentPage - 1) * itemsPerPage
   });
@@ -35,7 +37,7 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters.category, filters.priceRange, filters.sortBy]);
+  }, [filters.category, filters.priceRange, filters.sortBy, filters.searchTerm]);
 
   // Get total count for pagination
   useEffect(() => {

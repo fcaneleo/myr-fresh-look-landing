@@ -12,6 +12,7 @@ interface PaginatedProductListMayorProps {
     category: string;
     priceRange: number[];
     sortBy: string;
+    searchTerm?: string;
   };
 }
 
@@ -30,6 +31,7 @@ const PaginatedProductListMayor = ({ filters }: PaginatedProductListMayorProps) 
     category: filters.category === "all" ? undefined : filters.category,
     priceRange: filters.priceRange,
     sortBy: filters.sortBy,
+    searchTerm: filters.searchTerm,
     limit: itemsPerPage,
     offset: (currentPage - 1) * itemsPerPage
   });

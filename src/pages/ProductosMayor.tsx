@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Search } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCategories } from "@/hooks/useCategories";
+import { Input } from "@/components/ui/input";
 import Header from "../components/Header";
 import ProductCarouselMayor from "../components/ProductCarouselMayor";
 import ProductFilters from "../components/ProductFilters";
 import PaginatedProductListMayor from "../components/PaginatedProductListMayor";
-import SearchInput from "../components/SearchInput";
 import Footer from "../components/Footer";
 
 const ProductosMayor = () => {
@@ -19,6 +19,8 @@ const ProductosMayor = () => {
     priceRange: [100, 100000], // Rango para Precios por mayor
     sortBy: "name"
   });
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Update filters when URL parameter changes
   useEffect(() => {
@@ -70,7 +72,16 @@ const ProductosMayor = () => {
       {/* Search Bar */}
       <div className="container mx-auto px-4 mb-6">
         <div className="flex justify-center">
-          <SearchInput />
+          <div className="relative w-full max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Buscar productos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 bg-muted border-none rounded-full"
+            />
+          </div>
         </div>
       </div>
 
@@ -96,7 +107,10 @@ const ProductosMayor = () => {
           {/* Product List */}
           <div className="lg:col-span-3">
             <PaginatedProductListMayor 
-              filters={selectedFilters}
+              filters={{
+                ...selectedFilters,
+                searchTerm
+              }}
             />
           </div>
         </div>
