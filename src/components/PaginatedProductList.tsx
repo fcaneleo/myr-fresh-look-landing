@@ -131,13 +131,16 @@ const PaginatedProductList = ({ filters }: PaginatedProductListProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-2 sm:gap-0">
-        <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-          Todos los Productos ({totalCount} productos)
-        </h2>
-        <div className="text-sm text-muted-foreground">
-          Página {currentPage} de {totalPages}
-        </div>
+      {/* Results info */}
+      <div className="flex justify-between items-center text-sm text-muted-foreground mb-6">
+        <span>
+          Mostrando {products.length} de {totalCount} productos
+        </span>
+        {totalPages > 1 && (
+          <span>
+            Página {currentPage} de {totalPages}
+          </span>
+        )}
       </div>
 
       {loading ? (
