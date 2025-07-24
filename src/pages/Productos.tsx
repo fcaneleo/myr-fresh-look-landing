@@ -8,18 +8,17 @@ import ProductCarousel from "../components/ProductCarousel";
 import ProductFilters from "../components/ProductFilters";
 import PaginatedProductList from "../components/PaginatedProductList";
 import Footer from "../components/Footer";
-
 const Productos = () => {
   const [searchParams] = useSearchParams();
-  const { categories } = useCategories();
+  const {
+    categories
+  } = useCategories();
   const categoriaId = searchParams.get('categoria');
-  
   const [selectedFilters, setSelectedFilters] = useState({
     category: categoriaId || "all",
     priceRange: [0, 55000],
     sortBy: "name"
   });
-
   const [searchTerm, setSearchTerm] = useState("");
 
   // Update filters when URL parameter changes
@@ -31,12 +30,8 @@ const Productos = () => {
   }, [categoriaId]);
 
   // Find the current category name for display
-  const currentCategory = categoriaId 
-    ? categories.find(cat => cat.id.toString() === categoriaId)
-    : null;
-
-  return (
-    <div className="min-h-screen bg-background pt-20">
+  const currentCategory = categoriaId ? categories.find(cat => cat.id.toString() === categoriaId) : null;
+  return <div className="min-h-screen bg-background pt-20">
       <Header />
       
       {/* Breadcrumb */}
@@ -56,10 +51,7 @@ const Productos = () => {
           {currentCategory ? currentCategory.nombre : "Todos los Productos"}
         </h1>
         <p className="text-muted-foreground">
-          {currentCategory 
-            ? `Productos de la categoría ${currentCategory.nombre}`
-            : "Explora nuestro catálogo completo de productos de aseo, perfumería y paquetería"
-          }
+          {currentCategory ? `Productos de la categoría ${currentCategory.nombre}` : "Explora nuestro catálogo completo de productos de aseo, perfumería y paquetería"}
         </p>
       </div>
 
@@ -74,23 +66,14 @@ const Productos = () => {
         <div className="flex justify-center">
           <div className="relative w-full max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Buscar productos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-muted border-none rounded-full"
-            />
+            <Input type="text" placeholder="Buscar productos..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10 border-none rounded-full bg-slate-300" />
           </div>
         </div>
       </div>
 
       {/* Mobile Filters - Show only on mobile, below featured products */}
       <div className="container mx-auto px-4 mb-6 lg:hidden">
-        <ProductFilters 
-          filters={selectedFilters}
-          onFiltersChange={setSelectedFilters}
-        />
+        <ProductFilters filters={selectedFilters} onFiltersChange={setSelectedFilters} />
       </div>
 
       {/* Filters and Product List */}
@@ -98,27 +81,20 @@ const Productos = () => {
         <div className="flex flex-col lg:grid lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Desktop Filters Sidebar - Hidden on mobile */}
           <div className="hidden lg:block lg:col-span-1">
-            <ProductFilters 
-              filters={selectedFilters}
-              onFiltersChange={setSelectedFilters}
-            />
+            <ProductFilters filters={selectedFilters} onFiltersChange={setSelectedFilters} />
           </div>
           
           {/* Product List */}
           <div className="lg:col-span-3">
-            <PaginatedProductList 
-              filters={{
-                ...selectedFilters,
-                searchTerm
-              }}
-            />
+            <PaginatedProductList filters={{
+            ...selectedFilters,
+            searchTerm
+          }} />
           </div>
         </div>
       </div>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Productos;
