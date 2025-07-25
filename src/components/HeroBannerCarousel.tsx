@@ -68,7 +68,7 @@ const HeroBannerCarousel = () => {
                 <img
                   src={banner.image}
                   alt={banner.alt}
-                  className="w-full h-[250px] md:h-[350px] lg:h-[450px] object-contain bg-gradient-to-br from-primary/5 to-secondary/10 group-hover:scale-[1.02] transition-transform duration-500"
+                  className="w-full h-[250px] md:h-[350px] lg:h-[450px] object-contain group-hover:scale-[1.02] transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-300" />
               </div>
