@@ -16,25 +16,25 @@ export type Database = {
     Tables: {
       familias: {
         Row: {
-          Codigo: number
+          codigo: number
           created_at: string | null
-          Descripcion: string
+          descripcion: string
           id: number
           nombre: string | null
           updated_at: string | null
         }
         Insert: {
-          Codigo: number
+          codigo: number
           created_at?: string | null
-          Descripcion: string
+          descripcion: string
           id?: number
           nombre?: string | null
           updated_at?: string | null
         }
         Update: {
-          Codigo?: number
+          codigo?: number
           created_at?: string | null
-          Descripcion?: string
+          descripcion?: string
           id?: number
           nombre?: string | null
           updated_at?: string | null
@@ -45,6 +45,7 @@ export type Database = {
         Row: {
           Ajuste: number | null
           Cantidad_Mayor: number | null
+          Categoria: number
           Codigo: number
           Codigo_Proveedor: number | null
           Codigo_Proveedor2: string | null
@@ -56,7 +57,6 @@ export type Database = {
           created_at: string | null
           Descripcion: string
           descripcion_larga: string | null
-          Categoria: number
           featured: boolean | null
           id: number
           image_url: string | null
@@ -76,6 +76,7 @@ export type Database = {
         Insert: {
           Ajuste?: number | null
           Cantidad_Mayor?: number | null
+          Categoria: number
           Codigo: number
           Codigo_Proveedor?: number | null
           Codigo_Proveedor2?: string | null
@@ -87,7 +88,6 @@ export type Database = {
           created_at?: string | null
           Descripcion: string
           descripcion_larga?: string | null
-          Categoria: number
           featured?: boolean | null
           id?: number
           image_url?: string | null
@@ -107,6 +107,7 @@ export type Database = {
         Update: {
           Ajuste?: number | null
           Cantidad_Mayor?: number | null
+          Categoria?: number
           Codigo?: number
           Codigo_Proveedor?: number | null
           Codigo_Proveedor2?: string | null
@@ -118,7 +119,6 @@ export type Database = {
           created_at?: string | null
           Descripcion?: string
           descripcion_larga?: string | null
-          Categoria?: number
           featured?: boolean | null
           id?: number
           image_url?: string | null
@@ -145,57 +145,16 @@ export type Database = {
           },
         ]
       }
-      products: {
-        Row: {
-          category: string
-          created_at: string | null
-          description: string | null
-          featured: boolean | null
-          id: number
-          image_url: string | null
-          name: string
-          oferta: boolean | null
-          price: number
-          updated_at: string | null
-          vigencia: boolean | null
-        }
-        Insert: {
-          category: string
-          created_at?: string | null
-          description?: string | null
-          featured?: boolean | null
-          id?: number
-          image_url?: string | null
-          name: string
-          oferta?: boolean | null
-          price: number
-          updated_at?: string | null
-          vigencia?: boolean | null
-        }
-        Update: {
-          category?: string
-          created_at?: string | null
-          description?: string | null
-          featured?: boolean | null
-          id?: number
-          image_url?: string | null
-          name?: string
-          oferta?: boolean | null
-          price?: number
-          updated_at?: string | null
-          vigencia?: boolean | null
-        }
-        Relationships: []
-      }
     }
     Views: {
       vista_productos_completa: {
         Row: {
           Ajuste: number | null
           Cantidad_Mayor: number | null
+          Categoria: number | null
           categoria_nombre: string | null
           Codigo: number | null
-          Codigo_proveedor: number | null
+          Codigo_Proveedor: number | null
           Codigo_Proveedor2: string | null
           Codigo_Proveedor3: string | null
           Codigo_Texto: string | null
@@ -205,7 +164,6 @@ export type Database = {
           created_at: string | null
           Descripcion: string | null
           descripcion_larga: string | null
-          Categoria: number | null
           featured: boolean | null
           id: number | null
           image_url: string | null
