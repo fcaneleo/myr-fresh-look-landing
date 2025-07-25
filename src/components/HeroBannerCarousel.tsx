@@ -62,7 +62,7 @@ const HeroBannerCarousel = () => {
           {banners.map((banner) => (
             <CarouselItem key={banner.id} className="pl-0">
               <div 
-                className="relative w-full cursor-pointer group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                className="relative w-full cursor-pointer group overflow-hidden rounded-lg"
                 onClick={() => handleBannerClick(banner.route)}
               >
                 <img
@@ -70,7 +70,6 @@ const HeroBannerCarousel = () => {
                   alt={banner.alt}
                   className="w-full h-[250px] md:h-[350px] lg:h-[450px] object-contain group-hover:scale-[1.02] transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-300" />
               </div>
             </CarouselItem>
           ))}
