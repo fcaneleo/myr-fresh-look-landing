@@ -1,7 +1,7 @@
 
 import Header from "../components/Header";
 import Hero from "../components/Hero";
-import AllProductsCarousel from "../components/AllProductsCarousel";
+import HeroBannerCarousel from "../components/HeroBannerCarousel";
 import ProductGrid from "../components/ProductGrid";
 import Footer from "../components/Footer";
 
@@ -25,11 +25,8 @@ const Index = () => {
     <div className="min-h-screen bg-background pt-20">
       <Header />
       
-      {/* Products Carousel */}
-      <div className="container mx-auto px-4 py-6">
-        <h2 className="text-2xl font-bold text-foreground mb-6">Nuestros Productos</h2>
-        <AllProductsCarousel />
-      </div>
+      {/* Hero Banner Carousel */}
+      <HeroBannerCarousel />
       
       <Hero />
       
